@@ -1,0 +1,16 @@
+# Jeżeli nie chcesz mieć opóźnienia, zmień wartość cooldown'u danej komendy na zero.
+
+tools:
+  cooldown: 0
+  aliases:
+    - 'tools-info'
+list:
+  cooldown: 1
+  aliases:
+  - 'lista'
+gamemode:
+  cooldown: 5
+  aliases:
+  - 'gm'
+tools-reload:
+  cooldown: 30

@@ -1,0 +1,6 @@
+name: Tools
+version: ${project.version}
+main: pl.bmstefanski.tools.Tools
+authors: [BMStefanski]
+description: Tools plugin
+website: www.bmstefanski.pl

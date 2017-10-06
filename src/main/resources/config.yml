@@ -1,0 +1,11 @@
+# pl - PL; en - EN;
+language: pl
+# MySQL, SQLite lub Flat
+database: MySQL
+mysql:
+  hostname: "localhost"
+  database: "tools"
+  username: "root"
+  password: "root"
+  port: 3306
+  refresh: 1200 # w sekundach

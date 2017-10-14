@@ -1,19 +1,16 @@
 package pl.bmstefanski.tools;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.bmstefanski.tools.command.ToolsCommand;
 import pl.bmstefanski.tools.command.admin.DisableCommand;
 import pl.bmstefanski.tools.command.admin.ReloadCommand;
-import pl.bmstefanski.tools.command.normal.GamemodeCommand;
-import pl.bmstefanski.tools.command.normal.ListCommand;
+import pl.bmstefanski.tools.command.normal.*;
 import pl.bmstefanski.tools.database.MySQL;
 import pl.bmstefanski.tools.io.Files;
 import pl.bmstefanski.tools.io.MessageFile;
-import pl.bmstefanski.tools.listener.PlayerCommandPreprocess;
-import pl.bmstefanski.tools.listener.PlayerJoin;
-import pl.bmstefanski.tools.listener.PlayerLogin;
-import pl.bmstefanski.tools.listener.PlayerQuit;
+import pl.bmstefanski.tools.listener.*;
 import pl.bmstefanski.tools.manager.CommandManager;
 import pl.bmstefanski.tools.manager.DatabaseManager;
 
@@ -37,13 +34,14 @@ public final class Tools extends JavaPlugin {
 
         getLogger().info(ChatColor.YELLOW + "Enabling " + ChatColor.GRAY + " (" + getDescription().getName() + ")");
 
+        saveDefaultConfig();
+
         databaseManager.establishConnection();
         MessageFile.loadMessages();
         tryToCheck();
         registerListeners();
         registerCommands();
         loadDatabases();
-        saveDefaultConfig();
     }
 
     @Override
@@ -56,19 +54,27 @@ public final class Tools extends JavaPlugin {
         instance = null;
     }
 
-    public void registerCommands() {
+    private void registerCommands() {
         CommandManager.registerCommand(new ToolsCommand());
         CommandManager.registerCommand(new ListCommand());
         CommandManager.registerCommand(new GamemodeCommand());
         CommandManager.registerCommand(new ReloadCommand());
         CommandManager.registerCommand(new DisableCommand());
+        CommandManager.registerCommand(new FeedCommand());
+        CommandManager.registerCommand(new HealCommand());
+        CommandManager.registerCommand(new FlyCommand());
+        CommandManager.registerCommand(new SetSpawnCommand());
+        CommandManager.registerCommand(new SpawnCommand());
     }
 
-    public void registerListeners() {
-        getServer().getPluginManager().registerEvents(new PlayerCommandPreprocess(), this);
-        getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
-        getServer().getPluginManager().registerEvents(new PlayerLogin(), this);
-        getServer().getPluginManager().registerEvents(new PlayerQuit(), this);
+    private void registerListeners() {
+        Bukkit.getPluginManager().registerEvents(new PlayerCommandPreprocess(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerJoin(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerLogin(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerQuit(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerMove(), this);
+        Bukkit.getPluginManager().registerEvents(new EntityDamage(), this);
+
     }
 
     private void tryToCheck() {

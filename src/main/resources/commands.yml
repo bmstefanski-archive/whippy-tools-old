@@ -5,12 +5,24 @@ tools:
   aliases:
     - 'tools-info'
 list:
-  cooldown: 1
+  cooldown: 0
   aliases:
   - 'lista'
 gamemode:
-  cooldown: 5
+  cooldown: 0
   aliases:
   - 'gm'
 tools-reload:
   cooldown: 30
+tools-disable:
+  cooldown: 30
+feed:
+  cooldown: 0
+heal:
+  cooldown: 0
+fly:
+  cooldown: 0
+setspawn:
+  cooldown: 30
+spawn:
+  cooldown: 5

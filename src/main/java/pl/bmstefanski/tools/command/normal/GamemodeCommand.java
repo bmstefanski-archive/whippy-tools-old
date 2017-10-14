@@ -27,6 +27,7 @@ public class GamemodeCommand extends CommandImpl{
 
         if (args.length == 0 || args.length > 2) {
             Utils.sendMessage(player, Messages.CORRECT_USAGE.replace("%usage%", getUsage()));
+            return;
         }
 
         if (args.length == 1) {
@@ -39,7 +40,7 @@ public class GamemodeCommand extends CommandImpl{
 
             player.setGameMode(gameMode);
             Utils.sendMessage(player, Messages.GAMEMODE_SUCCESS.replace("%gamemode%", gameMode.toString()));
-        } else if (args.length == 2) {
+        } else {
             if (Bukkit.getPlayer(args[1]) == null) {
                 Utils.sendMessage(player, Messages.PLAYER_NOT_FOUND.replace("%player%", args[1]));
                 return;

@@ -4,10 +4,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import pl.bmstefanski.tools.impl.configuration.Messages;
 
 public class Utils {
 
-    private static String fixColor(String string) {
+    public static String fixColor(String string) {
         return ChatColor.translateAlternateColorCodes('&', string);
     }
 
@@ -21,5 +22,9 @@ public class Utils {
 
     public static void sendMessageToConsole(String string) {
         Bukkit.getConsoleSender().sendMessage(fixColor(string));
+    }
+
+    public static String parseBoolean(boolean bool) {
+        return bool ? Messages.BOOLEAN_ON : Messages.BOOLEAN_OFF;
     }
 }

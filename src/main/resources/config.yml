@@ -9,3 +9,11 @@ mysql:
   password: "root"
   port: 3306
   refresh: 1200 # w sekundach
+spawn:
+  x: 0
+  y: 64
+  z: 0
+  world: "world"
+  setted: false
+countdowns:
+  spawn: 5

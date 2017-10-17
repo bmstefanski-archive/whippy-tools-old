@@ -17,7 +17,6 @@ import java.util.HashMap;
 public class SpawnCommand extends CommandImpl {
 
     private FileConfiguration fileConfiguration = Tools.getInstance().getConfig();
-    private HashMap<Player, BukkitTask> countdown;
 
     public SpawnCommand() {
         super("spawn", "spawn command", "/spawn [player]", "spawn", Collections.singletonList(""), true);

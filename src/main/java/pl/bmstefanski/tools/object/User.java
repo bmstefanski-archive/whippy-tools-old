@@ -9,9 +9,10 @@ import java.util.UUID;
 
 public class User {
 
-    private UUID uuid;
+    private final UUID uuid;
     private String name;
     private String ip;
+    private boolean god;
 
     private User(Player player) {
         this.uuid = player.getUniqueId();
@@ -26,7 +27,6 @@ public class User {
 
         UserUtils.addUser(this);
     }
-
 
     public UUID getUUID() {
         return uuid;
@@ -46,6 +46,14 @@ public class User {
 
     public void setIp(String ip) {
         this.ip = ip;
+    }
+
+    public boolean isGod() {
+        return god;
+    }
+
+    public void setGod(boolean god) {
+        this.god = god;
     }
 
     public boolean isOnline() {

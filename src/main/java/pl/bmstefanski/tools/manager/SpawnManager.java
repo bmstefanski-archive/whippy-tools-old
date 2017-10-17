@@ -18,22 +18,21 @@ import java.util.HashMap;
 
 public class SpawnManager {
 
-    private FileConfiguration fileConfiguration = Tools.getInstance().getConfig();
+    private final FileConfiguration fileConfiguration;
     private static HashMap<Player, BukkitTask> countdown;
+    private Player player;
+    private int count;
 
     static {
         countdown = new HashMap<>();
     }
 
-    private Player player;
-    private int count;
-
     public SpawnManager(Player player) {
+        this.fileConfiguration = Tools.getInstance().getConfig();
         this.player = player;
         this.count = this.fileConfiguration.getInt("countdowns.spawn");
     }
 
-    // TODO make types of message (normal, game-info, bossbar, etc.)
     public void start() {
         if (countdown.containsKey(player)) {
             Utils.sendMessage(player, Messages.SPAWN_CURRENTLY_TELEPORTING);

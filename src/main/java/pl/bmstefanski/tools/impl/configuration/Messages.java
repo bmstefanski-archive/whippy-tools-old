@@ -30,4 +30,6 @@ public class Messages {
     public static String SPAWN_CANCELLED = "&cTeleportacja zostala przerwana!";
     public static String SPAWN_CURRENTLY_TELEPORTING = "&cJuz sie teleportujesz!";
     public static String SPAWN_COUNTING = "&cZostaniesz teleportowany za &7%count% sekund&c!";
+    public static String GOD_SWITCHED = "&7God zostal %state%&7!";
+    public static String GOD_SWITCHED_OTHER = "&7God zostal %state% &7dla &e%player%&7!";
 }

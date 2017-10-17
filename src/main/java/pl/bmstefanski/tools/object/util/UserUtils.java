@@ -10,7 +10,7 @@ public class UserUtils {
 
     private final static List<User> users = new ArrayList<>();
 
-    public static void addUser(final User user) {
+    public static void addUser(User user) {
         Validate.notNull(user, "User cannot be null!");
 
         if (!users.contains(user)) {

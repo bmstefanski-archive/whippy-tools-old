@@ -18,7 +18,7 @@ public class ReloadCommand extends CommandImpl {
     private Tools tools;
 
     public ReloadCommand() {
-        super("tools-reload", "reload", "/tools-reload", "reload", Collections.singletonList(""), false);
+        super("tools-reload", "reload", "/tools-reload", "reload", Collections.singletonList(""));
     }
 
     @Override

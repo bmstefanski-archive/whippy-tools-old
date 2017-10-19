@@ -1,5 +1,8 @@
 package pl.bmstefanski.tools.impl.configuration;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Messages {
 
     public static String BOOLEAN_ON = "&awlaczone";
@@ -32,4 +35,18 @@ public class Messages {
     public static String SPAWN_COUNTING = "&cZostaniesz teleportowany za &7%count% sekund&c!";
     public static String GOD_SWITCHED = "&7God zostal %state%&7!";
     public static String GOD_SWITCHED_OTHER = "&7God zostal %state% &7dla &e%player%&7!";
+    public static List<String> WHOIS = Arrays.asList(
+            "&8&m-----------------------------------------",
+            "  &7Nickname: &e%nickname%",
+            "  &7UUID: &e%uuid%",
+            "  &7IP: &e%ip%",
+            "  &7Zarejestrowany: &e%registered%",
+            "  &7Ostatnio widziany: &e%last%",
+            "  &7Lokacja: &e%location%",
+            "  &7HP: &e%hp%",
+            "  &7Glod: &e%hunger%",
+            "  &7Tryb gry: &e%gamemode%",
+            "  &7God: %god%",
+            "  &7Fly: %fly%",
+            "&8&m-----------------------------------------");
 }

@@ -14,7 +14,7 @@ import java.util.*;
 public class ListCommand extends CommandImpl {
 
     public ListCommand() {
-        super("list", "list command", "/list full/basic", "list", Collections.singletonList(""), true);
+        super("list", "list command", "/list full/basic", "list", Collections.singletonList(""));
     }
 
     @Override

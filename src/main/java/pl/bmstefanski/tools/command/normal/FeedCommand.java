@@ -12,7 +12,7 @@ import java.util.Collections;
 public class FeedCommand extends CommandImpl {
 
     public FeedCommand() {
-        super("feed", "feed command", "/feed [player]", "feed", Collections.singletonList(""), true);
+        super("feed", "feed command", "/feed [player]", "feed", Collections.singletonList(""));
     }
 
     @Override

@@ -16,7 +16,7 @@ import java.util.HashMap;
 public class ToolsCommand extends CommandImpl {
 
     public ToolsCommand() {
-        super("tools", "tools command", "tools", "tools", Collections.singletonList(""), true);
+        super("tools", "tools command", "tools", "tools", Collections.singletonList(""));
     }
 
     @Override

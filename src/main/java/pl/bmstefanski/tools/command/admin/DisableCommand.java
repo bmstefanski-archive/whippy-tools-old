@@ -11,7 +11,7 @@ import java.util.Collections;
 public class DisableCommand extends CommandImpl {
 
     public DisableCommand() {
-        super("tools-disable", "disable plugin", "/tools-disable", "disable", Collections.singletonList(""), false);
+        super("tools-disable", "disable plugin", "/tools-disable", "disable", Collections.singletonList(""));
     }
 
     @Override

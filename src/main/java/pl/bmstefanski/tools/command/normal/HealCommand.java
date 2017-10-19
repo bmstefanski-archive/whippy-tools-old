@@ -12,7 +12,7 @@ import java.util.Collections;
 public class HealCommand extends CommandImpl {
 
     public HealCommand() {
-        super("heal", "heal command", "/heal [player]", "heal", Collections.singletonList(""), true);
+        super("heal", "heal command", "/heal [player]", "heal", Collections.singletonList(""));
     }
 
     @Override

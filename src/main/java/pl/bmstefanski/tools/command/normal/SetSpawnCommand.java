@@ -17,7 +17,7 @@ public class SetSpawnCommand extends CommandImpl {
     private FileConfiguration fileConfiguration = Tools.getInstance().getConfig();
 
     public SetSpawnCommand() {
-        super("setspawn", "setspawn command", "/setspawn", "setspawn", Collections.singletonList(""), true);
+        super("setspawn", "setspawn command", "/setspawn", "setspawn", Collections.singletonList(""));
     }
 
     @Override

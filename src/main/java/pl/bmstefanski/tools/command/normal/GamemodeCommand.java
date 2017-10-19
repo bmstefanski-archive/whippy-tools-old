@@ -17,7 +17,7 @@ import java.util.List;
 public class GamemodeCommand extends CommandImpl{
 
     public GamemodeCommand() {
-        super("gamemode", "gamemode command", "/gamemode 0/1/2/3 [player]", "gamemode", Collections.singletonList(""), true);
+        super("gamemode", "gamemode command", "/gamemode 0/1/2/3 [player]", "gamemode", Collections.singletonList(""));
     }
 
     @Override

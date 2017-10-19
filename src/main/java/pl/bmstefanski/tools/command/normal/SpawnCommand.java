@@ -19,7 +19,7 @@ public class SpawnCommand extends CommandImpl {
     private FileConfiguration fileConfiguration = Tools.getInstance().getConfig();
 
     public SpawnCommand() {
-        super("spawn", "spawn command", "/spawn [player]", "spawn", Collections.singletonList(""), true);
+        super("spawn", "spawn command", "/spawn [player]", "spawn", Collections.singletonList(""));
     }
 
     @Override

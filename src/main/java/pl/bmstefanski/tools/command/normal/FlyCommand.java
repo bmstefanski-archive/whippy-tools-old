@@ -12,7 +12,7 @@ import java.util.Collections;
 public class FlyCommand extends CommandImpl {
 
     public FlyCommand() {
-        super("fly", "fly command", "/fly [player]", "fly", Collections.singletonList(""), true);
+        super("fly", "fly command", "/fly [player]", "fly", Collections.singletonList(""));
     }
 
     @Override

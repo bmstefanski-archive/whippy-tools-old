@@ -14,14 +14,12 @@ public abstract class CommandImpl extends Command {
 
     private final HashMap<String, Long> cooldown = new HashMap<>();
     private final YamlConfiguration yamlConfiguration = Files.getCommandsFile();
-    private boolean playerOnly;
 
-    public CommandImpl(String name, String description, String usage, String permission, List<String> aliases, boolean playerOnly) {
+    public CommandImpl(String name, String description, String usage, String permission, List<String> aliases) {
         super(name, description, usage, aliases);
 
         setPermission("tools.command." + permission);
         setAliases(yamlConfiguration.getStringList(getName() + ".aliases"));
-        this.playerOnly = playerOnly;
     }
 
     public abstract void onExecute(CommandSender commandSender, String[] args);
@@ -33,7 +31,7 @@ public abstract class CommandImpl extends Command {
             return true;
         }
 
-        if ((this.playerOnly) && (!(commandSender instanceof Player))) {
+        if (!(commandSender instanceof Player)) {
             Utils.sendMessage(commandSender, Messages.ONLY_PLAYER);
             return true;
         }

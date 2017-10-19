@@ -66,6 +66,9 @@ public final class Tools extends JavaPlugin {
         CommandManager.registerCommand(new SetSpawnCommand());
         CommandManager.registerCommand(new SpawnCommand());
         CommandManager.registerCommand(new GodCommand());
+        CommandManager.registerCommand(new EnderchestCommand());
+        CommandManager.registerCommand(new WorkbenchCommand());
+        CommandManager.registerCommand(new WhoisCommand());
     }
 
     private void registerListeners() {

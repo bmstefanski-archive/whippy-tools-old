@@ -21,11 +21,11 @@ public class MySQL implements Database {
     @Override
     public void checkTable() {
         try {
-            String sql = "CREATE TABLE IF NOT EXISTS players(" +
-                    "uuid VARCHAR(100) NOT NULL," +
-                    "name VARCHAR(50) NOT NULL," +
-                    "ip VARCHAR(32)," +
-                    "PRIMARY KEY (uuid));";
+            String sql = "CREATE TABLE IF NOT EXISTS `players`(" +
+                    "`uuid` VARCHAR(100) NOT NULL," +
+                    "`name` VARCHAR(50) NOT NULL," +
+                    "`ip` VARCHAR(32)," +
+                    "PRIMARY KEY (`uuid`));";
 
             PreparedStatement preparedStatement = databaseManager.getConnection().prepareStatement(sql);
             preparedStatement.executeUpdate();
@@ -40,7 +40,7 @@ public class MySQL implements Database {
         int loaded = 0;
 
         try {
-            String sql = "SELECT * FROM players";
+            String sql = "SELECT * FROM `players`";
 
             PreparedStatement preparedStatement = databaseManager.getConnection().prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -66,13 +66,13 @@ public class MySQL implements Database {
 
         try {
             for (User user : UserUtils.getUsers()) {
-                String sql = "INSERT INTO players (uuid, name, ip) VALUES ('"
+                String sql = "INSERT INTO `players` (`uuid`, `name`, `ip`) VALUES ('"
                         + user.getUUID().toString()
                         + "','" + user.getName()
                         + "','" + user.getIp()
                         + "') ON DUPLICATE KEY UPDATE name='" + user.getName()
-                        + "',name='" + user.getName()
-                        + "',ip='" + user.getIp() + "';";
+                        + "',`name`='" + user.getName()
+                        + "',`ip`='" + user.getIp() + "';";
 
                 PreparedStatement preparedStatement = databaseManager.getConnection().prepareStatement(sql);
                 preparedStatement.executeUpdate();

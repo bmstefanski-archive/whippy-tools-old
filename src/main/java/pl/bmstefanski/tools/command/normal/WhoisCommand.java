@@ -2,6 +2,7 @@ package pl.bmstefanski.tools.command.normal;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import pl.bmstefanski.tools.impl.CommandImpl;
@@ -28,7 +29,9 @@ public class WhoisCommand extends CommandImpl {
         }
 
         if (args.length == 0) {
-            send(player);
+            final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(player.getUniqueId());
+
+            send(player, offlinePlayer);
         } else {
 
             if (Bukkit.getPlayer(args[0]) == null) {
@@ -37,37 +40,40 @@ public class WhoisCommand extends CommandImpl {
             }
 
             final Player target = Bukkit.getPlayer(args[0]);
+            final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(target.getUniqueId());
 
-            send(target);
+            send(target, offlinePlayer);
         }
     }
 
-    private void send(Player player) {
-        User user = User.get(player.getUniqueId());
+    private void send(Player player, OfflinePlayer offlinePlayer) {
+        final User user = User.get(offlinePlayer.getUniqueId());
 
-        final Location location = player.getLocation();
-        final String playerHealth = player.getHealth() + "/20";
-        final String playerFoodLevel = player.getFoodLevel() + "/20";
-        final String playerGamemode = player.getGameMode().toString().toLowerCase();
+        final Location location = offlinePlayer.getPlayer().getLocation();
+        final String playerHealth = offlinePlayer.getPlayer().getHealth() + "/20";
+        final String playerFoodLevel = offlinePlayer.getPlayer().getFoodLevel() + "/20";
+        final String playerGamemode = offlinePlayer.getPlayer().getGameMode().toString().toLowerCase();
         final String playerLocation = "("
-                + player.getWorld().getName() + ", "
+                + offlinePlayer.getPlayer().getWorld().getName() + ", "
                 + location.getBlockX() + ", "
                 + location.getBlockY() + ", "
                 + location.getBlockZ() + ")";
+        final String playerJoin = Utils.parseTime(offlinePlayer.getFirstPlayed());
+        final String playerLast = user.isOnline() ? "online" : Utils.parseTime(offlinePlayer.getLastPlayed());
 
-        for (String string : Messages.WHOIS) {
-            Utils.sendMessage(player, string
-                    .replace("%nickname%", user.getName())
-                    .replace("%uuid%", user.getUUID().toString())
-                    .replace("%ip%", user.getIp())
-                    .replace("%registered%", Utils.parseTime(user.getJoin()))
-                    .replace("%last%", Utils.parseTime(user.getLast()))
-                    .replace("%location%", playerLocation)
-                    .replace("%hp%", playerHealth)
-                    .replace("%hunger%", playerFoodLevel)
-                    .replace("%gamemode%", playerGamemode)
-                    .replace("%god%", Utils.parseBoolean(user.isGod()))
-                    .replace("%fly%", Utils.parseBoolean(player.isFlying())));
-        }
+        final String whois = Utils.listToString(Messages.WHOIS);
+
+        Utils.sendMessage(player, whois
+                .replace("%nickname%", offlinePlayer.getName())
+                .replace("%uuid%", offlinePlayer.getUniqueId().toString())
+                .replace("%ip%", offlinePlayer.getPlayer().getAddress().getHostName())
+                .replace("%registered%", playerJoin)
+                .replace("%last%", playerLast)
+                .replace("%location%", playerLocation)
+                .replace("%hp%", playerHealth)
+                .replace("%hunger%", playerFoodLevel)
+                .replace("%gamemode%", playerGamemode)
+                .replace("%god%", Utils.parseBoolean(user.isGod()))
+                .replace("%fly%", Utils.parseBoolean(offlinePlayer.getPlayer().isFlying())));
     }
 }

@@ -28,13 +28,15 @@ public class Messages {
     public static String FLY_SWITCHED_OTHER = "&7Latanie zostalo %state% &7dla gracza &e%player%&7!";
     public static String SETSPAWN_SUCCESS = "&7Pomyslnie utworzono spawn na koordynatach: &e%x%&7, &e%y%&7, &e%z%&7, &e%world%&7!";
     public static String SPAWN_FAILED =  "&cSpawn nie jest utworzony! Uzyj komendy &7/setspawn&c, aby utworzyc";
-    public static String SPAWN_SUCCESS = "&7Pomyslnie teleportowano na spawn!";
-    public static String SPAWN_SUCCESS_OTHER = "&7Gracz &e%player%&7 zostal teleportowany na spawn!";
-    public static String SPAWN_CANCELLED = "&cTeleportacja zostala przerwana!";
-    public static String SPAWN_CURRENTLY_TELEPORTING = "&cJuz sie teleportujesz!";
-    public static String SPAWN_COUNTING = "&cZostaniesz teleportowany za &7%count% sekund&c!";
+    public static String TELEPORT_CANCELLED = "&cTeleportacja zostala przerwana!";
+    public static String TELEPORT_CURRENTLY_TELEPORTING = "&cJuz sie teleportujesz!";
+    public static String TELEPORT_COUNTING = "&cZostaniesz teleportowany za &7%count% sekund&c!";
     public static String GOD_SWITCHED = "&7God zostal %state%&7!";
     public static String GOD_SWITCHED_OTHER = "&7God zostal %state% &7dla &e%player%&7!";
+    public static String TELEPORT_SUCCESS = "&7Pomyslnie teleportowano!";
+    public static String BROADCAST_FORMAT = "&8[&3MEGA&9KILOF&8] &7%message%";
+    public static String CLEAR = "&7Wyczyszczono twoj ekwipunek!";
+    public static String CLEAR_OTHER = "&7Wyczyszczono ekwipunek gracza &e%player%&7!";
     public static List<String> WHOIS = Arrays.asList(
             "&8&m-----------------------------------------",
             "  &7Nickname: &e%nickname%",

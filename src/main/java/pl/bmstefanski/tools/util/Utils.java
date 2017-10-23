@@ -27,14 +27,6 @@ public class Utils {
         sender.sendMessage(fixColor(string));
     }
 
-    public static void sendMessage(Player player, List<String> list) {
-        for (String string : list) {
-            stringBuilder.append(string).append("\n");
-        }
-
-        player.sendMessage(fixColor(stringBuilder.toString()));
-    }
-
     public static void sendMessageToConsole(String string) {
         Bukkit.getConsoleSender().sendMessage(fixColor(string));
     }
@@ -43,9 +35,19 @@ public class Utils {
         return bool ? Messages.BOOLEAN_ON : Messages.BOOLEAN_OFF;
     }
 
-    public static String parseTime(long time)
-    {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.GERMAN);
+    public static String listToString(List<String> list) {
+        stringBuilder.setLength(0);
+        String result = null;
+
+        for (String string : list) {
+            stringBuilder.append(string + "\n");
+        }
+
+        return Utils.fixColor(stringBuilder.toString());
+    }
+
+    public static String parseTime(long time) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.GERMAN);
         Date date = new Date(time);
 
         return simpleDateFormat.format(date);

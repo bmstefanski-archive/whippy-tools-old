@@ -11,9 +11,5 @@ public class PlayerJoin implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         User.get(event.getPlayer());
         User user = User.get(event.getPlayer().getUniqueId());
-
-        if (!event.getPlayer().hasPlayedBefore()) {
-            user.setJoin(System.currentTimeMillis());
-        }
     }
 }

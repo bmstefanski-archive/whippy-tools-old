@@ -69,6 +69,9 @@ public final class Tools extends JavaPlugin {
         CommandManager.registerCommand(new EnderchestCommand());
         CommandManager.registerCommand(new WorkbenchCommand());
         CommandManager.registerCommand(new WhoisCommand());
+        CommandManager.registerCommand(new BackCommand());
+        CommandManager.registerCommand(new BroadcastCommand());
+        CommandManager.registerCommand(new ClearCommand());
     }
 
     private void registerListeners() {
@@ -78,6 +81,7 @@ public final class Tools extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerQuit(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerMove(), this);
         Bukkit.getPluginManager().registerEvents(new EntityDamage(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerDeath(), this);
 
     }
 

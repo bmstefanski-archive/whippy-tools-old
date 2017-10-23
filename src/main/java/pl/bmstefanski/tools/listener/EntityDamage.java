@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import pl.bmstefanski.tools.manager.SpawnManager;
+import pl.bmstefanski.tools.manager.TeleportManager;
 import pl.bmstefanski.tools.object.User;
 
 public class EntityDamage implements Listener {
@@ -15,7 +16,7 @@ public class EntityDamage implements Listener {
             return;
         }
 
-        new SpawnManager((Player) event.getEntity()).stop();
+        new TeleportManager((Player) event.getEntity()).stop();
 
         final Player player = (Player) event.getEntity();
         final User user = User.get(player.getUniqueId());

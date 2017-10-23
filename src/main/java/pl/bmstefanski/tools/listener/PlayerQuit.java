@@ -12,6 +12,5 @@ public class PlayerQuit implements Listener {
         User user = User.get(event.getPlayer().getUniqueId());
 
         user.setIp(user.getPlayer().getAddress().getHostName());
-        user.setLast(System.currentTimeMillis());
     }
 }

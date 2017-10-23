@@ -4,15 +4,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitTask;
 import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.impl.CommandImpl;
 import pl.bmstefanski.tools.impl.configuration.Messages;
 import pl.bmstefanski.tools.manager.SpawnManager;
+import pl.bmstefanski.tools.manager.TeleportManager;
 import pl.bmstefanski.tools.util.Utils;
 
 import java.util.Collections;
-import java.util.HashMap;
 
 public class SpawnCommand extends CommandImpl {
 
@@ -26,6 +25,7 @@ public class SpawnCommand extends CommandImpl {
     public void onExecute(CommandSender commandSender, String[] args) {
 
         final Player player = (Player) commandSender;
+        final SpawnManager spawnManager = new SpawnManager();
 
         if (args.length > 1) {
             Utils.sendMessage(player, Messages.CORRECT_USAGE.replace("%usage%", getUsage()));
@@ -35,7 +35,7 @@ public class SpawnCommand extends CommandImpl {
         if (fileConfiguration.getBoolean("spawn.setted")) {
 
             if (args.length == 0) {
-                new SpawnManager(player).start();
+                new TeleportManager(player).start(spawnManager.getSpawn());
             } else {
 
                 if (Bukkit.getPlayer(args[0]) == null) {
@@ -45,10 +45,7 @@ public class SpawnCommand extends CommandImpl {
 
                 final Player target = Bukkit.getPlayer(args[0]);
 
-                player.teleport(new SpawnManager(target).getSpawn());
-
-                Utils.sendMessage(target, Messages.SPAWN_SUCCESS);
-                Utils.sendMessage(player, Messages.SPAWN_SUCCESS_OTHER.replace("%player%", target.getName()));
+                player.teleport(spawnManager.getSpawn());
             }
 
         } else {

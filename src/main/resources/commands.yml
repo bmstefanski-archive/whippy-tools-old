@@ -39,3 +39,14 @@ workbench:
   - 'wb'
 whois:
   cooldown: 0
+back:
+  cooldown: 0
+broadcast:
+  cooldown: 0
+  aliases:
+  - 'bc'
+clear:
+  cooldown: 0
+  aliases:
+  - 'ci'
+  - 'clearinventory'

@@ -15,5 +15,4 @@ spawn:
   z: 0
   world: "world"
   setted: false
-countdowns:
-  spawn: 5
+countdown: 10

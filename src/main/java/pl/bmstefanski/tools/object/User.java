@@ -13,8 +13,6 @@ public class User {
     private String name;
     private String ip;
     private boolean god;
-    private long join;
-    private long last;
 
     private User(Player player) {
         this.uuid = player.getUniqueId();
@@ -56,22 +54,6 @@ public class User {
 
     public void setGod(boolean god) {
         this.god = god;
-    }
-
-    public long getJoin() {
-        return join;
-    }
-
-    public void setJoin(long join) {
-        this.join = join;
-    }
-
-    public long getLast() {
-        return last;
-    }
-
-    public void setLast(long last) {
-        this.last = last;
     }
 
     public boolean isOnline() {

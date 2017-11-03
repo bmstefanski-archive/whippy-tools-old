@@ -1,11 +1,7 @@
 package pl.bmstefanski.tools.manager;
 
-import net.minecraft.server.v1_12_R1.ChatMessageType;
-import net.minecraft.server.v1_12_R1.IChatBaseComponent;
-import net.minecraft.server.v1_12_R1.PacketPlayOutChat;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 import pl.bmstefanski.tools.Tools;
@@ -42,7 +38,8 @@ public class TeleportManager {
             for (int i = 0; i < count; i++) {
                 bar = Utils.fixColor(Messages.TELEPORT_COUNTING.replace("%count%", i + ""));
             }
-            sendBar(player, bar);
+/*
+            new PlayOutChatPacket().sendPacket(player, bar, ChatMessageType.GAME_INFO);*/
 
             if (count == 0) {
                 player.teleport(location);
@@ -67,15 +64,7 @@ public class TeleportManager {
         countdown.remove(player);
 
         Utils.sendMessage(player, Messages.TELEPORT_CANCELLED);
-        sendBar(player, Utils.fixColor(Messages.TELEPORT_CANCELLED));
-    }
-
-
-    private void sendBar(Player player, String message) {
-        IChatBaseComponent iChatBaseComponent = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + message + "\"}");
-        PacketPlayOutChat packetPlayOutChat = new PacketPlayOutChat(iChatBaseComponent, ChatMessageType.GAME_INFO);
-
-        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packetPlayOutChat);
+/*        new PlayOutChatPacket().sendPacket(player, Utils.fixColor(Messages.TELEPORT_CANCELLED), ChatMessageType.GAME_INFO);*/
     }
 
 }

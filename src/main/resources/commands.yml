@@ -2,14 +2,10 @@
 
 tools:
   cooldown: 0
-  aliases:
-    - 'tools-info'
 list:
   cooldown: 0
 gamemode:
   cooldown: 0
-  aliases:
-  - 'gm'
 tools-reload:
   cooldown: 30
 tools-disable:
@@ -28,25 +24,13 @@ god:
   cooldown: 0
 enderchest:
   cooldown: 0
-  aliases:
-  - 'ec'
-  - 'ender'
 workbench:
   cooldown: 0
-  aliases:
-  - 'crafting'
-  - 'craft'
-  - 'wb'
 whois:
   cooldown: 0
 back:
   cooldown: 0
 broadcast:
   cooldown: 0
-  aliases:
-  - 'bc'
 clear:
   cooldown: 0
-  aliases:
-  - 'ci'
-  - 'clearinventory'

@@ -25,7 +25,6 @@ public class Config {
         this.mysqlRefresh = fileConfiguration.getInt("mysql.refresh");
     }
 
-
     public static Config getInstance() {
         if (instance == null) instance = new Config();
         return instance;

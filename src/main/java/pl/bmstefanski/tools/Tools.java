@@ -3,10 +3,11 @@ package pl.bmstefanski.tools;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
+import pl.bmstefanski.tools.command.*;
 import pl.bmstefanski.tools.command.ToolsCommand;
-import pl.bmstefanski.tools.command.admin.DisableCommand;
-import pl.bmstefanski.tools.command.admin.ReloadCommand;
-import pl.bmstefanski.tools.command.normal.*;
+import pl.bmstefanski.tools.command.ReloadCommand;
+import pl.bmstefanski.tools.command.basic.BukkitCommands;
+import pl.bmstefanski.tools.command.basic.Commands;
 import pl.bmstefanski.tools.database.MySQL;
 import pl.bmstefanski.tools.io.Files;
 import pl.bmstefanski.tools.io.MessageFile;
@@ -25,15 +26,13 @@ public final class Tools extends JavaPlugin {
     @Override
     public void onLoad() {
         instance = this;
+
+        this.databaseManager = DatabaseManager.getInstance();
+        this.mySQL = MySQL.getInstance();
     }
 
     @Override
     public void onEnable() {
-        this.databaseManager = DatabaseManager.getInstance();
-        this.mySQL = MySQL.getInstance();
-
-        getLogger().info(ChatColor.YELLOW + "Enabling " + ChatColor.GRAY + " (" + getDescription().getName() + ")");
-
         saveDefaultConfig();
 
         databaseManager.establishConnection();
@@ -46,8 +45,6 @@ public final class Tools extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        getLogger().info(ChatColor.YELLOW + "Disabling" + ChatColor.GRAY + " (" + getDescription().getName() + ")");
-
         MessageFile.saveMessages();
         saveDatabases();
 
@@ -55,7 +52,8 @@ public final class Tools extends JavaPlugin {
     }
 
     private void registerCommands() {
-        CommandManager.registerCommand(new ToolsCommand());
+        Commands commands = new BukkitCommands(this);
+        commands.registerCommandObject(new ToolsCommand());
         CommandManager.registerCommand(new ListCommand());
         CommandManager.registerCommand(new GamemodeCommand());
         CommandManager.registerCommand(new ReloadCommand());
@@ -82,7 +80,6 @@ public final class Tools extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerMove(), this);
         Bukkit.getPluginManager().registerEvents(new EntityDamage(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerDeath(), this);
-
     }
 
     private void tryToCheck() {

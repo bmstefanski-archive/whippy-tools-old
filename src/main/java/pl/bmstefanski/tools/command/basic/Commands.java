@@ -13,8 +13,6 @@ import pl.bmstefanski.tools.util.Utils;
 public abstract class Commands {
 
     private final Map<String, Command> commandMap = new HashMap<>();
-    private final HashMap<String, Long> cooldown = new HashMap<>();
-    private final YamlConfiguration yamlConfiguration = Files.getCommandsFile();
 
     public Command getCommand(String command) {
         return this.commandMap.get(command.toLowerCase());
@@ -43,16 +41,6 @@ public abstract class Commands {
     }
 
     public void handleCommand(CommandSender sender, Command command, String label, String[] args, CommandContext.IContextParser parser) {
-        int cooldownTime = yamlConfiguration.getInt(command.getCommand() + ".cooldown");
-        if (cooldown.containsKey(sender.getName())) {
-            long secondsLeft = ((cooldown.get(sender.getName()) / 1000) + cooldownTime) - (System.currentTimeMillis() / 1000);
-            if (secondsLeft > 0) {
-                Utils.sendMessage(sender, Messages.TIME_LEFT.replace("%time%", secondsLeft + ""));
-                return;
-            }
-        }
-        cooldown.put(sender.getName(), System.currentTimeMillis());
-
         this.handleCommand(sender, parser.parse(command, label, args));
     }
 

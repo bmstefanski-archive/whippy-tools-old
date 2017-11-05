@@ -7,6 +7,7 @@ import pl.bmstefanski.tools.command.*;
 import pl.bmstefanski.tools.command.ToolsCommand;
 import pl.bmstefanski.tools.command.ReloadCommand;
 import pl.bmstefanski.tools.command.basic.BukkitCommands;
+import pl.bmstefanski.tools.command.basic.Command;
 import pl.bmstefanski.tools.command.basic.Commands;
 import pl.bmstefanski.tools.database.MySQL;
 import pl.bmstefanski.tools.io.Files;
@@ -53,7 +54,12 @@ public final class Tools extends JavaPlugin {
 
     private void registerCommands() {
         Commands commands = new BukkitCommands(this);
+
         commands.registerCommandObject(new ToolsCommand());
+        commands.registerCommandObject(new WhoisCommand());
+        commands.registerCommandObject(new WorkbenchCommand());
+        commands.registerCommandObject(new SpawnCommand());
+
         CommandManager.registerCommand(new ListCommand());
         CommandManager.registerCommand(new GamemodeCommand());
         CommandManager.registerCommand(new ReloadCommand());
@@ -62,11 +68,8 @@ public final class Tools extends JavaPlugin {
         CommandManager.registerCommand(new HealCommand());
         CommandManager.registerCommand(new FlyCommand());
         CommandManager.registerCommand(new SetSpawnCommand());
-        CommandManager.registerCommand(new SpawnCommand());
         CommandManager.registerCommand(new GodCommand());
         CommandManager.registerCommand(new EnderchestCommand());
-        CommandManager.registerCommand(new WorkbenchCommand());
-        CommandManager.registerCommand(new WhoisCommand());
         CommandManager.registerCommand(new BackCommand());
         CommandManager.registerCommand(new BroadcastCommand());
         CommandManager.registerCommand(new ClearCommand());

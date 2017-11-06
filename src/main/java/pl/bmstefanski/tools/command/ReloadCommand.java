@@ -1,44 +1,44 @@
 package pl.bmstefanski.tools.command;
 
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 import pl.bmstefanski.tools.Tools;
+import pl.bmstefanski.tools.command.basic.CommandContext;
+import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.impl.CommandImpl;
 import pl.bmstefanski.tools.impl.configuration.Messages;
 import pl.bmstefanski.tools.io.Files;
 import pl.bmstefanski.tools.io.MessageFile;
 import pl.bmstefanski.tools.manager.DatabaseManager;
-import pl.bmstefanski.tools.util.Utils;
+import pl.bmstefanski.tools.util.MessageUtils;
 
+import javax.tools.Tool;
 import java.io.IOException;
 import java.util.Collections;
 
-public class ReloadCommand extends CommandImpl {
+public class ReloadCommand {
 
-    public ReloadCommand() {
-        super("tools-reload", "reload", "/tools-reload", "reload", Collections.singletonList(""));
-    }
+    private final DatabaseManager database = DatabaseManager.getInstance();
+    private final Tools plugin = Tools.getInstance();
 
-    @Override
-    public void onExecute(CommandSender commandSender, String[] args) {
+    @CommandInfo(name = "tools-reload", description = "reload command", permission = "reload", userOnly = true)
+    public void reload(CommandSender commandSender, CommandContext context) {
         long startedTime = System.currentTimeMillis();
-
-        DatabaseManager databaseManager = DatabaseManager.getInstance();
-        Tools tools = Tools.getInstance();
 
         tryToCheck();
 
         MessageFile.loadMessages();
         MessageFile.saveMessages();
 
-        tools.loadDatabases();
-        tools.saveDatabases();
+        plugin.loadDatabases();
+        plugin.saveDatabases();
 
-        databaseManager.establishConnection();
+        database.establishConnection();
 
         long elapsedTime = (System.currentTimeMillis() - startedTime);
         float elapsedTimeSecond = elapsedTime / 1000F;
 
-        Utils.sendMessage(commandSender, Messages.SUCCESSFULLY_RELOADED.replace("%time%", elapsedTimeSecond + ""));
+        MessageUtils.sendMessage(commandSender, StringUtils.replace(Messages.SUCCESSFULLY_RELOADED, "%time%", elapsedTimeSecond + ""));
     }
 
     private void tryToCheck() {

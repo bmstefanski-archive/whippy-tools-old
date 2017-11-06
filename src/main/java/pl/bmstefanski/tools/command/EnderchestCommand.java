@@ -5,7 +5,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import pl.bmstefanski.tools.impl.CommandImpl;
 import pl.bmstefanski.tools.impl.configuration.Messages;
-import pl.bmstefanski.tools.util.Utils;
+import pl.bmstefanski.tools.util.MessageUtils;
 
 import java.util.Collections;
 
@@ -21,7 +21,7 @@ public class EnderchestCommand extends CommandImpl {
         final Player player = (Player) commandSender;
 
         if (args.length > 1) {
-            Utils.sendMessage(player, Messages.CORRECT_USAGE.replace("%usage%", getUsage()));
+            MessageUtils.sendMessage(player, Messages.CORRECT_USAGE.replace("%usage%", getUsage()));
             return;
         }
 
@@ -30,7 +30,7 @@ public class EnderchestCommand extends CommandImpl {
         } else {
 
             if (Bukkit.getPlayer(args[0]) == null) {
-                Utils.sendMessage(player, Messages.PLAYER_NOT_FOUND.replace("%player%", args[0]));
+                MessageUtils.sendMessage(player, Messages.PLAYER_NOT_FOUND.replace("%player%", args[0]));
                 return;
             }
 

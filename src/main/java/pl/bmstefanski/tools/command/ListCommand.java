@@ -1,37 +1,33 @@
 package pl.bmstefanski.tools.command;
 
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import pl.bmstefanski.tools.command.basic.CommandContext;
+import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.impl.CommandImpl;
 import pl.bmstefanski.tools.impl.configuration.Messages;
 import pl.bmstefanski.tools.object.User;
 import pl.bmstefanski.tools.object.util.UserUtils;
-import pl.bmstefanski.tools.util.Utils;
+import pl.bmstefanski.tools.util.MessageUtils;
 
 import java.util.*;
 
-public class ListCommand extends CommandImpl {
+public class ListCommand {
 
-    public ListCommand() {
-        super("list", "list command", "/list full/basic", "list", Collections.singletonList(""));
-    }
+    @CommandInfo(name = "list", description = "list command", usage = "[full/basic]", userOnly = true, completer = "listCompleter", min = 1)
+    public void list(CommandSender commandSender, CommandContext context) {
+        Player player = (Player) commandSender;
+        Collection<? extends Player> playersOnline = Bukkit.getOnlinePlayers();
 
-    @Override
-    public void onExecute(CommandSender commandSender, String[] args) {
+        int playersOnlineSize = playersOnline.size();
+        int maxPlayers = Bukkit.getMaxPlayers();
 
-        final Player player = (Player) commandSender;
-        final Collection<? extends Player> playersOnline = Bukkit.getOnlinePlayers();
-        final int playersOnlineSize = playersOnline.size();
-        final int maxPlayers = Bukkit.getMaxPlayers();
         List<String> onlinePlayers = new ArrayList<>();
 
-        if (args.length == 0 || args.length > 1) {
-            Utils.sendMessage(player, Messages.CORRECT_USAGE.replace("%usage%", getUsage()));
-        }
-
-        if (args.length == 1) {
-            if (args[0].equalsIgnoreCase("full")) {
+        if (context.getArgs().length == 1) {
+            if (context.getParam(0).equalsIgnoreCase("full")) {
 
                 for (User user : UserUtils.getUsers()) {
                     if (!user.isOnline()) return;
@@ -40,19 +36,17 @@ public class ListCommand extends CommandImpl {
                     onlinePlayers.add(user.getName());
                 }
 
-                Utils.sendMessage(player, Messages.LIST_FULL.replace("%online%", onlinePlayers.toString()));
-
-            } else if (args[0].equalsIgnoreCase("basic")) {
-                Utils.sendMessage(player, Messages.LIST_BASIC
-                        .replace("%online%", playersOnlineSize + "")
-                        .replace("%max%", maxPlayers + ""));
+                MessageUtils.sendMessage(player, StringUtils.replace(Messages.LIST_FULL, "%online%", onlinePlayers.toString()));
+            } else if (context.getParam(0).equalsIgnoreCase("basic")) {
+                MessageUtils.sendMessage(player, StringUtils.replaceEach(Messages.LIST_BASIC,
+                        new String[] {"%online%", "%max%"},
+                        new String[] {playersOnlineSize + "", maxPlayers + ""}));
             }
         }
     }
 
-    @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
-        if (args.length == 1) {
+    public List<String> listCompleter(CommandSender commandSender, CommandContext context) {
+        if (context.getArgs().length == 1) {
             final List<String> availableList = Arrays.asList("basic", "full");
 
             Collections.sort(availableList);

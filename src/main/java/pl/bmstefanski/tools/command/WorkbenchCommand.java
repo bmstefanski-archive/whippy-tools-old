@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.impl.configuration.Messages;
-import pl.bmstefanski.tools.util.Utils;
+import pl.bmstefanski.tools.util.MessageUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,7 +26,7 @@ public class WorkbenchCommand {
         }
 
         if (Bukkit.getPlayer(context.getParam(0)) == null) {
-            Utils.sendMessage(player, StringUtils.replace(Messages.PLAYER_NOT_FOUND, "%player%", context.getParam(0)));
+            MessageUtils.sendMessage(player, StringUtils.replace(Messages.PLAYER_NOT_FOUND, "%player%", context.getParam(0)));
             return;
         }
 

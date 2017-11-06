@@ -1,53 +1,69 @@
 package pl.bmstefanski.tools.command;
 
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import pl.bmstefanski.tools.command.basic.CommandContext;
+import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.impl.CommandImpl;
 import pl.bmstefanski.tools.impl.configuration.Messages;
 import pl.bmstefanski.tools.object.User;
-import pl.bmstefanski.tools.util.Utils;
+import pl.bmstefanski.tools.util.BooleanUtils;
+import pl.bmstefanski.tools.util.MessageUtils;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
-public class GodCommand extends CommandImpl {
+public class GodCommand {
 
-    public GodCommand() {
-        super("god", "god command", "/god [player]", "god", Collections.singletonList(""));
-    }
+    @CommandInfo(name = "god", description = "god command", usage = "[player]", userOnly = true, permission = "god", completer = "godCompleter")
+    public void god(CommandSender commandSender, CommandContext context) {
 
-    @Override
-    public void onExecute(CommandSender commandSender, String[] args) {
+        Player player = (Player) commandSender;
 
-        final Player player = (Player) commandSender;
+        if (context.getArgs().length == 0) {
+            User user = User.get(player.getUniqueId());
 
-        if (args.length > 1) {
-            Utils.sendMessage(player, Messages.CORRECT_USAGE.replace("%usage%", getUsage()));
-            return;
-        }
-
-        if (args.length == 0) {
-            final User user = User.get(player.getUniqueId());
-            final boolean godState = !user.isGod();
+            boolean godState = !user.isGod();
             user.setGod(godState);
 
-            Utils.sendMessage(player, Messages.GOD_SWITCHED.replace("%state%", Utils.parseBoolean(godState)));
+            MessageUtils.sendMessage(player, StringUtils.replace(Messages.GOD_SWITCHED, "%state%", BooleanUtils.parse(godState)));
         } else {
-            if (Bukkit.getPlayer(args[0]) == null) {
-                Utils.sendMessage(player, Messages.PLAYER_NOT_FOUND.replace("%player%", args[0]));
+            if (Bukkit.getPlayer(context.getParam(0)) == null) {
+                MessageUtils.sendMessage(player, StringUtils.replace(Messages.PLAYER_NOT_FOUND, "%player%", context.getParam(0)));
                 return;
             }
 
-            final Player target = Bukkit.getPlayer(args[0]);
-            final User user = User.get(target.getUniqueId());
-            final boolean godState = !user.isGod();
+            Player target = Bukkit.getPlayer(context.getParam(0));
+            User user = User.get(target.getUniqueId());
 
+            boolean godState = !user.isGod();
             user.setGod(godState);
 
-            Utils.sendMessage(player, Messages.GOD_SWITCHED_OTHER
-                    .replace("%state%", Utils.parseBoolean(godState))
-                    .replace("%player%", target.getName()));
-            Utils.sendMessage(target, Messages.GOD_SWITCHED.replace("%state%", Utils.parseBoolean(godState)));
+
+            MessageUtils.sendMessage(player, StringUtils.replaceEach(Messages.GOD_SWITCHED_OTHER,
+                    new String[] {"%state%", "%player%"},
+                    new String[] {BooleanUtils.parse(godState), target.getName()}));
+            MessageUtils.sendMessage(target, StringUtils.replace(Messages.GOD_SWITCHED, "%state%", BooleanUtils.parse(godState)));
         }
+    }
+
+    public List<String> godCompleter(CommandSender commandSender, CommandContext context) {
+        if (context.getArgs().length == 1) {
+            List<String> availableList = new ArrayList<>();
+
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                if (player.getName().startsWith(context.getParam(0).toLowerCase())) {
+                    availableList.add(player.getName());
+                }
+            }
+
+            Collections.sort(availableList);
+            return availableList;
+        }
+
+        return null;
     }
 }

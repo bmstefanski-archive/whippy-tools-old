@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.impl.configuration.Messages;
-import pl.bmstefanski.tools.util.Utils;
+import pl.bmstefanski.tools.util.MessageUtils;
 
 import java.util.HashMap;
 
@@ -28,7 +28,7 @@ public class TeleportManager {
 
     public void start(Location location) {
         if (countdown.containsKey(player)) {
-            Utils.sendMessage(player, Messages.TELEPORT_CURRENTLY_TELEPORTING);
+            MessageUtils.sendMessage(player, Messages.TELEPORT_CURRENTLY_TELEPORTING);
             return;
         }
 
@@ -36,7 +36,7 @@ public class TeleportManager {
 
             String bar = "";
             for (int i = 0; i < count; i++) {
-                bar = Utils.fixColor(Messages.TELEPORT_COUNTING.replace("%count%", i + ""));
+                bar = MessageUtils.fixColor(Messages.TELEPORT_COUNTING.replace("%count%", i + ""));
             }
 /*
             new PlayOutChatPacket().sendPacket(player, bar, ChatMessageType.GAME_INFO);*/
@@ -46,7 +46,7 @@ public class TeleportManager {
                 countdown.get(player).cancel();
                 countdown.remove(player);
 
-                Utils.sendMessage(player, Messages.TELEPORT_SUCCESS);
+                MessageUtils.sendMessage(player, Messages.TELEPORT_SUCCESS);
                 return;
             }
             count--;
@@ -63,8 +63,8 @@ public class TeleportManager {
         countdown.get(player).cancel();
         countdown.remove(player);
 
-        Utils.sendMessage(player, Messages.TELEPORT_CANCELLED);
-/*        new PlayOutChatPacket().sendPacket(player, Utils.fixColor(Messages.TELEPORT_CANCELLED), ChatMessageType.GAME_INFO);*/
+        MessageUtils.sendMessage(player, Messages.TELEPORT_CANCELLED);
+/*        new PlayOutChatPacket().sendPacket(player, MessageUtils.fixColor(Messages.TELEPORT_CANCELLED), ChatMessageType.GAME_INFO);*/
     }
 
 }

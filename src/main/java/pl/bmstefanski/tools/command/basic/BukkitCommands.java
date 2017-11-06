@@ -5,7 +5,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.help.GenericCommandHelpTopic;
 import org.bukkit.help.HelpTopic;
@@ -13,8 +12,6 @@ import org.bukkit.help.HelpTopicComparator;
 import org.bukkit.help.IndexHelpTopic;
 import org.bukkit.plugin.Plugin;
 import pl.bmstefanski.tools.impl.configuration.Messages;
-import pl.bmstefanski.tools.io.Files;
-import pl.bmstefanski.tools.util.Utils;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -46,7 +43,7 @@ public class BukkitCommands extends Commands implements CommandExecutor, TabComp
             } else if (context.getCommand().hasPermission() && !sender.hasPermission(context.getCommand().getPermission())) {
                 throw new CommandPermissionException(context.getCommand().getPermission());
             } else if (context.getCommand().getMin() > context.getParamsLength()) {
-                throw new CommandUsageException("Zbyt malo argumentow.");
+                throw new CommandUsageException("Zbyt malo argumentow §7" + context.getCommand().getUsage());
             } else {
                 context.getCommand().handleCommand(sender, context);
             }
@@ -64,7 +61,6 @@ public class BukkitCommands extends Commands implements CommandExecutor, TabComp
                 sender.sendMessage(ChatColor.RED + ex.getMessage());
             }
 
-            sender.sendMessage(context.getCommand().getUsage());
         } catch (CommandException ex) {
             if (ex.getMessage() != null) {
                 sender.sendMessage(ex.getMessage());

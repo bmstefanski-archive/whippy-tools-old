@@ -4,7 +4,7 @@ import org.bukkit.command.CommandSender;
 import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.impl.CommandImpl;
 import pl.bmstefanski.tools.impl.configuration.Messages;
-import pl.bmstefanski.tools.util.Utils;
+import pl.bmstefanski.tools.util.MessageUtils;
 
 import java.util.Collections;
 
@@ -17,6 +17,6 @@ public class DisableCommand extends CommandImpl {
     @Override
     public void onExecute(CommandSender commandSender, String[] args) {
         Tools.getInstance().getServer().getPluginManager().disablePlugin(Tools.getInstance());
-        Utils.sendMessage(commandSender, Messages.SUCCESSFULLY_DISABLED);
+        MessageUtils.sendMessage(commandSender, Messages.SUCCESSFULLY_DISABLED);
     }
 }

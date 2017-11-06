@@ -51,4 +51,5 @@ public class Messages {
             "  &7God: %god%",
             "  &7Fly: %fly%",
             "&8&m-----------------------------------------");
+    public static String GAMEMODE_FAIL = "&cMusisz wybrac tryb!";
 }

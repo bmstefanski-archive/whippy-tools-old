@@ -17,6 +17,7 @@ import pl.bmstefanski.tools.manager.CommandManager;
 import pl.bmstefanski.tools.manager.DatabaseManager;
 
 import java.io.IOException;
+import java.util.List;
 
 public final class Tools extends JavaPlugin {
 
@@ -59,16 +60,16 @@ public final class Tools extends JavaPlugin {
         commands.registerCommandObject(new WhoisCommand());
         commands.registerCommandObject(new WorkbenchCommand());
         commands.registerCommandObject(new SpawnCommand());
+        commands.registerCommandObject(new SetSpawnCommand());
+        commands.registerCommandObject(new ReloadCommand());
+        commands.registerCommandObject(new ListCommand());
+        commands.registerCommandObject(new HealCommand());
+        commands.registerCommandObject(new GodCommand());
+        commands.registerCommandObject(new GamemodeCommand());
 
-        CommandManager.registerCommand(new ListCommand());
-        CommandManager.registerCommand(new GamemodeCommand());
-        CommandManager.registerCommand(new ReloadCommand());
         CommandManager.registerCommand(new DisableCommand());
         CommandManager.registerCommand(new FeedCommand());
-        CommandManager.registerCommand(new HealCommand());
         CommandManager.registerCommand(new FlyCommand());
-        CommandManager.registerCommand(new SetSpawnCommand());
-        CommandManager.registerCommand(new GodCommand());
         CommandManager.registerCommand(new EnderchestCommand());
         CommandManager.registerCommand(new BackCommand());
         CommandManager.registerCommand(new BroadcastCommand());

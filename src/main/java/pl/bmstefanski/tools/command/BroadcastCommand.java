@@ -4,7 +4,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import pl.bmstefanski.tools.impl.CommandImpl;
 import pl.bmstefanski.tools.impl.configuration.Messages;
-import pl.bmstefanski.tools.util.Utils;
+import pl.bmstefanski.tools.util.MessageUtils;
 
 import java.util.Collections;
 
@@ -21,7 +21,7 @@ public class BroadcastCommand extends CommandImpl {
         final Player player = (Player) commandSender;
 
         if (args.length == 0) {
-            Utils.sendMessage(commandSender, Messages.CORRECT_USAGE.replace("%usage%", getUsage()));
+            MessageUtils.sendMessage(commandSender, Messages.CORRECT_USAGE.replace("%usage%", getUsage()));
             return;
         }
 
@@ -33,7 +33,7 @@ public class BroadcastCommand extends CommandImpl {
             } else if (args[0].equalsIgnoreCase("subtitle")) {
                 new PlayOutChatPacket().sendPacket(player, getMessage(stringBuilder, args), ChatMessageType.CHAT);
             } else if (args[0].equalsIgnoreCase("chat")) {
-                Bukkit.broadcastMessage(Utils.fixColor(Messages.BROADCAST_FORMAT
+                Bukkit.broadcastMessage(MessageUtils.fixColor(Messages.BROADCAST_FORMAT
                         .replace("%message%", getMessage(stringBuilder, args))));
             }
         }*/

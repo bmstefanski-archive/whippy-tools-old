@@ -5,10 +5,6 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.YamlConfiguration;
-import pl.bmstefanski.tools.impl.configuration.Messages;
-import pl.bmstefanski.tools.io.Files;
-import pl.bmstefanski.tools.util.Utils;
 
 public abstract class Commands {
 

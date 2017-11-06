@@ -10,7 +10,10 @@ import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.impl.configuration.Messages;
 import pl.bmstefanski.tools.object.User;
-import pl.bmstefanski.tools.util.Utils;
+import pl.bmstefanski.tools.util.BooleanUtils;
+import pl.bmstefanski.tools.util.MessageUtils;
+import pl.bmstefanski.tools.util.TextUtils;
+import pl.bmstefanski.tools.util.TimeUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,7 +32,7 @@ public class WhoisCommand {
             send(player, offlinePlayer);
         } else {
             if (Bukkit.getPlayer(context.getParam(0)) == null) {
-                Utils.sendMessage(player, StringUtils.replace(Messages.PLAYER_NOT_FOUND, "%player%", context.getParam(0)));
+                MessageUtils.sendMessage(player, StringUtils.replace(Messages.PLAYER_NOT_FOUND, "%player%", context.getParam(0)));
                 return;
             }
 
@@ -52,16 +55,16 @@ public class WhoisCommand {
                 + location.getBlockX() + ", "
                 + location.getBlockY() + ", "
                 + location.getBlockZ() + ")";
-        String playerJoin = Utils.parseTime(offlinePlayer.getFirstPlayed());
-        String playerLast = user.isOnline() ? "online" : Utils.parseTime(offlinePlayer.getLastPlayed());
+        String playerJoin = TimeUtils.parse(offlinePlayer.getFirstPlayed());
+        String playerLast = user.isOnline() ? "online" : TimeUtils.parse(offlinePlayer.getLastPlayed());
 
-        String whois = Utils.listToString(Messages.WHOIS);
+        String whois = TextUtils.listToString(Messages.WHOIS);
 
-        Utils.sendMessage(player, StringUtils.replaceEach(whois,
+        MessageUtils.sendMessage(player, StringUtils.replaceEach(whois,
                 new String[] {"%nickname%", "%uuid%", "%ip%", "%registered%", "%last%", "%location%", "%hp%", "%hunger%", "%gamemode%", "%god%", "%fly%"},
                 new String[] {offlinePlayer.getName(), offlinePlayer.getUniqueId().toString(), offlinePlayer.getPlayer().getAddress().getHostName(),
-                        playerJoin, playerLast, playerLocation, playerHealth, playerFoodLevel, playerGamemode, Utils.parseBoolean(user.isGod()),
-                        Utils.parseBoolean(offlinePlayer.getPlayer().isFlying())
+                        playerJoin, playerLast, playerLocation, playerHealth, playerFoodLevel, playerGamemode, BooleanUtils.parse(user.isGod()),
+                        BooleanUtils.parse(offlinePlayer.getPlayer().isFlying())
                 }));
     }
 

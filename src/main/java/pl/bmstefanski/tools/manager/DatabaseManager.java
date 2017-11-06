@@ -3,7 +3,7 @@ package pl.bmstefanski.tools.manager;
 import org.bukkit.configuration.file.FileConfiguration;
 import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.impl.configuration.Config;
-import pl.bmstefanski.tools.util.Utils;
+import pl.bmstefanski.tools.util.MessageUtils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -37,12 +37,12 @@ public class DatabaseManager {
                         + Tools.getInstance().getName() + "/players.db");
             }
 
-            Utils.sendMessageToConsole("&ePomyslnie polaczono z baza danych! &7("
+            MessageUtils.sendMessageToConsole("&ePomyslnie polaczono z baza danych! &7("
                     + Tools.getInstance().getDescription().getName() + ")" +
                     " (" + DatabaseType.MYSQL.name() + ")");
 
         } catch (Exception ex) {
-            Utils.sendMessageToConsole("&cBlad podczas laczenia z baza danych! &7("
+            MessageUtils.sendMessageToConsole("&cBlad podczas laczenia z baza danych! &7("
                     + Tools.getInstance().getDescription().getName() + ")" +
                     " (" + DatabaseType.MYSQL.name() + ")");
 

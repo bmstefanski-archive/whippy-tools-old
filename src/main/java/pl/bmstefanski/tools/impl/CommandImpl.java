@@ -2,11 +2,9 @@ package pl.bmstefanski.tools.impl;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import pl.bmstefanski.tools.impl.configuration.Messages;
-import pl.bmstefanski.tools.io.Files;
-import pl.bmstefanski.tools.util.Utils;
+import pl.bmstefanski.tools.util.MessageUtils;
 
 import java.util.*;
 
@@ -25,12 +23,12 @@ public abstract class CommandImpl extends Command {
     public boolean execute(CommandSender commandSender, String string, String[] args) {
 
         if (!commandSender.hasPermission(getPermission())) {
-            Utils.sendMessage(commandSender, Messages.NO_PERMISSIONS.replace("%permission%", getPermission()));
+            MessageUtils.sendMessage(commandSender, Messages.NO_PERMISSIONS.replace("%permission%", getPermission()));
             return true;
         }
 
         if (!(commandSender instanceof Player)) {
-            Utils.sendMessage(commandSender, Messages.ONLY_PLAYER);
+            MessageUtils.sendMessage(commandSender, Messages.ONLY_PLAYER);
             return true;
         }
 

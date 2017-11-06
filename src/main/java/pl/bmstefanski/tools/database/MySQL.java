@@ -3,7 +3,7 @@ package pl.bmstefanski.tools.database;
 import pl.bmstefanski.tools.manager.DatabaseManager;
 import pl.bmstefanski.tools.object.User;
 import pl.bmstefanski.tools.object.util.UserUtils;
-import pl.bmstefanski.tools.util.Utils;
+import pl.bmstefanski.tools.util.MessageUtils;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -54,7 +54,7 @@ public class MySQL implements Database {
             }
             resultSet.close();
             preparedStatement.close();
-            Utils.sendMessageToConsole("&eZaladowano &7" + loaded + " &egraczy.");
+            MessageUtils.sendMessageToConsole("&eZaladowano &7" + loaded + " &egraczy.");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -80,7 +80,7 @@ public class MySQL implements Database {
 
                 saved++;
             }
-            Utils.sendMessageToConsole("&eZapisano &7" + saved + " &egraczy.");
+            MessageUtils.sendMessageToConsole("&eZapisano &7" + saved + " &egraczy.");
         } catch (Exception ex) {
             ex.printStackTrace();
         }

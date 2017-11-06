@@ -6,7 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.help.HelpTopic;
 import pl.bmstefanski.tools.impl.configuration.Messages;
-import pl.bmstefanski.tools.util.Utils;
+import pl.bmstefanski.tools.util.MessageUtils;
 
 public class PlayerCommandPreprocess implements Listener {
 
@@ -17,7 +17,7 @@ public class PlayerCommandPreprocess implements Listener {
 
         if (helpTopic == null) {
             event.setCancelled(true);
-            Utils.sendMessage(event.getPlayer(), Messages.UNKNOWN_COMMAND.replace("%command%", command));
+            MessageUtils.sendMessage(event.getPlayer(), Messages.UNKNOWN_COMMAND.replace("%command%", command));
         }
     }
 }

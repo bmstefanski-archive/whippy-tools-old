@@ -5,7 +5,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import pl.bmstefanski.tools.impl.CommandImpl;
 import pl.bmstefanski.tools.impl.configuration.Messages;
-import pl.bmstefanski.tools.util.Utils;
+import pl.bmstefanski.tools.util.BooleanUtils;
+import pl.bmstefanski.tools.util.MessageUtils;
 
 import java.util.Collections;
 
@@ -21,7 +22,7 @@ public class FlyCommand extends CommandImpl {
         final Player player = (Player) commandSender;
 
         if (args.length > 1) {
-            Utils.sendMessage(player, Messages.CORRECT_USAGE.replace("%usage%", getUsage()));
+            MessageUtils.sendMessage(player, Messages.CORRECT_USAGE.replace("%usage%", getUsage()));
             return;
         }
 
@@ -29,10 +30,10 @@ public class FlyCommand extends CommandImpl {
             final boolean flyState = !player.isFlying();
             player.setAllowFlight(flyState);
 
-            Utils.sendMessage(player, Messages.FLY_SWITCHED.replace("%state%", Utils.parseBoolean(flyState)));
+            MessageUtils.sendMessage(player, Messages.FLY_SWITCHED.replace("%state%", BooleanUtils.parse(flyState)));
         } else {
             if (Bukkit.getPlayer(args[0]) == null) {
-                Utils.sendMessage(player, Messages.PLAYER_NOT_FOUND.replace("%player%", args[0]));
+                MessageUtils.sendMessage(player, Messages.PLAYER_NOT_FOUND.replace("%player%", args[0]));
                 return;
             }
 
@@ -41,10 +42,10 @@ public class FlyCommand extends CommandImpl {
 
             target.setAllowFlight(flyState);
 
-            Utils.sendMessage(player, Messages.FLY_SWITCHED_OTHER
-                    .replace("%state%", Utils.parseBoolean(flyState))
+            MessageUtils.sendMessage(player, Messages.FLY_SWITCHED_OTHER
+                    .replace("%state%", BooleanUtils.parse(flyState))
                     .replace("%player%", target.getName()));
-            Utils.sendMessage(target, Messages.FLY_SWITCHED.replace("%state%", Utils.parseBoolean(flyState)));
+            MessageUtils.sendMessage(target, Messages.FLY_SWITCHED.replace("%state%", BooleanUtils.parse(flyState)));
         }
     }
 }

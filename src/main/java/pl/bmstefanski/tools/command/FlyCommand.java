@@ -1,51 +1,64 @@
 package pl.bmstefanski.tools.command;
 
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import pl.bmstefanski.tools.impl.CommandImpl;
+import pl.bmstefanski.tools.command.basic.CommandContext;
+import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.impl.configuration.Messages;
 import pl.bmstefanski.tools.util.BooleanUtils;
 import pl.bmstefanski.tools.util.MessageUtils;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
-public class FlyCommand extends CommandImpl {
+public class FlyCommand {
 
-    public FlyCommand() {
-        super("fly", "fly command", "/fly [player]", "fly", Collections.singletonList(""));
-    }
+    @CommandInfo(name = "fly", description = "fly command", usage = "[player]", userOnly = true, permission = "fly", completer = "flyCompleter")
+    public void fly(CommandSender commandSender, CommandContext context) {
 
-    @Override
-    public void onExecute(CommandSender commandSender, String[] args) {
+        Player player = (Player) commandSender;
 
-        final Player player = (Player) commandSender;
-
-        if (args.length > 1) {
-            MessageUtils.sendMessage(player, Messages.CORRECT_USAGE.replace("%usage%", getUsage()));
-            return;
-        }
-
-        if (args.length == 0) {
-            final boolean flyState = !player.isFlying();
+        if (context.getArgs().length == 0) {
+            boolean flyState = !player.isFlying();
             player.setAllowFlight(flyState);
 
-            MessageUtils.sendMessage(player, Messages.FLY_SWITCHED.replace("%state%", BooleanUtils.parse(flyState)));
+            MessageUtils.sendMessage(player, StringUtils.replace(Messages.FLY_SWITCHED, "%state", BooleanUtils.parse(flyState)));
         } else {
-            if (Bukkit.getPlayer(args[0]) == null) {
-                MessageUtils.sendMessage(player, Messages.PLAYER_NOT_FOUND.replace("%player%", args[0]));
+            if (Bukkit.getPlayer(context.getParam(0)) == null) {
+                MessageUtils.sendMessage(player, StringUtils.replace(Messages.PLAYER_NOT_FOUND, "%player%", context.getParam(0)));
                 return;
             }
 
-            final Player target = Bukkit.getPlayer(args[0]);
-            final boolean flyState = !target.isFlying();
+            Player target = Bukkit.getPlayer(context.getParam(0));
+            boolean flyState = !target.isFlying();
 
             target.setAllowFlight(flyState);
 
-            MessageUtils.sendMessage(player, Messages.FLY_SWITCHED_OTHER
-                    .replace("%state%", BooleanUtils.parse(flyState))
-                    .replace("%player%", target.getName()));
-            MessageUtils.sendMessage(target, Messages.FLY_SWITCHED.replace("%state%", BooleanUtils.parse(flyState)));
+            MessageUtils.sendMessage(player, StringUtils.replaceEach(Messages.FLY_SWITCHED_OTHER,
+                    new String[] {"%state%", "%player%"},
+                    new String[] {BooleanUtils.parse(flyState), target.getName()}));
+
+            MessageUtils.sendMessage(target, StringUtils.replace(Messages.FLY_SWITCHED, "%state%", BooleanUtils.parse(flyState)));
         }
+    }
+
+    public List<String> flyCompleter(CommandSender commandSender, CommandContext context) {
+        if (context.getArgs().length == 1) {
+            List<String> availableList = new ArrayList<>();
+
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                if (player.getName().startsWith(context.getParam(0).toLowerCase())) {
+                    availableList.add(player.getName());
+                }
+            }
+
+            Collections.sort(availableList);
+            return availableList;
+        }
+
+        return null;
     }
 }

@@ -6,7 +6,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
-import pl.bmstefanski.tools.impl.CommandImpl;
 import pl.bmstefanski.tools.impl.configuration.Messages;
 import pl.bmstefanski.tools.object.User;
 import pl.bmstefanski.tools.object.util.UserUtils;
@@ -47,7 +46,7 @@ public class ListCommand {
 
     public List<String> listCompleter(CommandSender commandSender, CommandContext context) {
         if (context.getArgs().length == 1) {
-            final List<String> availableList = Arrays.asList("basic", "full");
+            List<String> availableList = Arrays.asList("basic", "full");
 
             Collections.sort(availableList);
             return availableList;

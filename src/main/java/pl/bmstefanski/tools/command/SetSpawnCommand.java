@@ -33,7 +33,7 @@ public class SetSpawnCommand {
         config.set("spawn.y", y);
         config.set("spawn.z", z);
         config.set("spawn.world", world.getName());
-        config.set("spawn.setted", true);
+        config.set("spawn.set", true);
 
         config.options().copyDefaults(true);
         plugin.saveConfig();

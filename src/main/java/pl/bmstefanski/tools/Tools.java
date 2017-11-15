@@ -1,23 +1,19 @@
 package pl.bmstefanski.tools;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.bmstefanski.tools.command.*;
 import pl.bmstefanski.tools.command.ToolsCommand;
 import pl.bmstefanski.tools.command.ReloadCommand;
 import pl.bmstefanski.tools.command.basic.BukkitCommands;
-import pl.bmstefanski.tools.command.basic.Command;
 import pl.bmstefanski.tools.command.basic.Commands;
 import pl.bmstefanski.tools.database.MySQL;
 import pl.bmstefanski.tools.io.Files;
 import pl.bmstefanski.tools.io.MessageFile;
 import pl.bmstefanski.tools.listener.*;
-import pl.bmstefanski.tools.manager.CommandManager;
 import pl.bmstefanski.tools.manager.DatabaseManager;
 
 import java.io.IOException;
-import java.util.List;
 
 public final class Tools extends JavaPlugin {
 
@@ -66,14 +62,13 @@ public final class Tools extends JavaPlugin {
         commands.registerCommandObject(new HealCommand());
         commands.registerCommandObject(new GodCommand());
         commands.registerCommandObject(new GamemodeCommand());
-
-        CommandManager.registerCommand(new DisableCommand());
-        CommandManager.registerCommand(new FeedCommand());
-        CommandManager.registerCommand(new FlyCommand());
-        CommandManager.registerCommand(new EnderchestCommand());
-        CommandManager.registerCommand(new BackCommand());
-        CommandManager.registerCommand(new BroadcastCommand());
-        CommandManager.registerCommand(new ClearCommand());
+        commands.registerCommandObject(new FlyCommand());
+        commands.registerCommandObject(new FeedCommand());
+        commands.registerCommandObject(new EnderchestCommand());
+        commands.registerCommandObject(new DisableCommand());
+        commands.registerCommandObject(new ClearCommand());
+        commands.registerCommandObject(new BroadcastCommand());
+        commands.registerCommandObject(new BackCommand());
     }
 
     private void registerListeners() {

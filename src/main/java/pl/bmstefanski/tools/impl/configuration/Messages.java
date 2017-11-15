@@ -22,8 +22,8 @@ public class Messages {
     public static String SUCCESSFULLY_DISABLED = "&cPomyslnie wylaczono plugin!";
     public static String HEALED = "&7Zostales uleczony!";
     public static String HEALED_OTHER = "&7Uleczono gracza o nicku &e%player%&7!";
-    public static String FEEDED = "&7Zostales nakarmiony!";
-    public static String FEEDED_OTHER = "&7Nakarmiono gracza o nicku &e%player%&7!";
+    public static String FED = "&7Zostales nakarmiony!";
+    public static String FED_OTHER = "&7Nakarmiono gracza o nicku &e%player%&7!";
     public static String FLY_SWITCHED = "&7Latanie zostalo %state%&7!";
     public static String FLY_SWITCHED_OTHER = "&7Latanie zostalo %state% &7dla gracza &e%player%&7!";
     public static String SETSPAWN_SUCCESS = "&7Pomyslnie utworzono spawn na koordynatach: &e%x%&7, &e%y%&7, &e%z%&7, &e%world%&7!";

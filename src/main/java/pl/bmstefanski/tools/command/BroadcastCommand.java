@@ -2,29 +2,30 @@ package pl.bmstefanski.tools.command;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import pl.bmstefanski.tools.impl.CommandImpl;
-import pl.bmstefanski.tools.impl.configuration.Messages;
-import pl.bmstefanski.tools.util.MessageUtils;
+import pl.bmstefanski.tools.command.basic.CommandContext;
+import pl.bmstefanski.tools.command.basic.CommandInfo;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
-public class BroadcastCommand extends CommandImpl {
+public class BroadcastCommand {
 
-    public BroadcastCommand() {
-        super("broadcast", "broadcast command", "/broadcast action/title/subtitle/chat [message]", "broadcast", Collections.singletonList(""));
-    }
+    @CommandInfo (
+            name = {"broadcast", "bc"},
+            description = "broadcast command",
+            usage = "<action/title/subtitle/chat>",
+            userOnly = true,
+            permission = "broadcast",
+            completer = "broadcastCompleter"
+    )
 
-    @Override
-    public void onExecute(CommandSender commandSender, String[] args) {
+    public void broadcast(CommandSender commandSender, CommandContext context) {
 
-        final StringBuilder stringBuilder = new StringBuilder();
-        final Player player = (Player) commandSender;
+        StringBuilder stringBuilder = new StringBuilder();
+        Player player = (Player) commandSender;
 
-        if (args.length == 0) {
-            MessageUtils.sendMessage(commandSender, Messages.CORRECT_USAGE.replace("%usage%", getUsage()));
-            return;
-        }
-
+        // TODO FUUU BRZYDKIE KURDĘ ASAP
 /*        if (args.length == 1) {
             if (args[0].equalsIgnoreCase("action")) {
                 new PlayOutChatPacket().sendPacket(player, getMessage(stringBuilder, args), ChatMessageType.GAME_INFO);
@@ -40,17 +41,14 @@ public class BroadcastCommand extends CommandImpl {
 
     }
 
-    private String getMessage(StringBuilder stringBuilder, String[] args) {
+    public List<String> broadcastCompleter(CommandSender commandSender, CommandContext context) {
+        if (context.getArgs().length == 1) {
+            List<String> availableGamemodes = Arrays.asList("action", "title", "subtitle", "chat");
 
-        stringBuilder.setLength(0);
-
-        for (String string : args) {
-            if (stringBuilder.length() > 0) {
-                stringBuilder.append(" ");
-            }
-            stringBuilder.append(string);
+            Collections.sort(availableGamemodes);
+            return availableGamemodes;
         }
 
-        return stringBuilder.toString();
+        return null;
     }
 }

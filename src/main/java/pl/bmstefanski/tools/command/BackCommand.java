@@ -1,48 +1,46 @@
 package pl.bmstefanski.tools.command;
 
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import pl.bmstefanski.tools.impl.CommandImpl;
+import pl.bmstefanski.tools.command.basic.CommandContext;
+import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.impl.configuration.Messages;
 import pl.bmstefanski.tools.manager.TeleportManager;
 import pl.bmstefanski.tools.util.TeleportUtils;
 import pl.bmstefanski.tools.util.MessageUtils;
 
-import java.util.Collections;
+public class BackCommand {
 
-public class BackCommand extends CommandImpl {
+    @CommandInfo (
+            name = "back",
+            description = "back command",
+            usage = "[player]",
+            userOnly = true,
+            permission = "back",
+            completer = "backCompleter"
+    )
+    public void back(CommandSender commandSender, CommandContext context) {
 
-    public BackCommand() {
-        super("back", "back command", "/back [player]", "back", Collections.singletonList(""));
-    }
+        Player player = (Player) commandSender;
 
-    @Override
-    public void onExecute(CommandSender commandSender, String[] args) {
+        if (context.getArgs().length == 0) {
+            Location location = new TeleportUtils().getLocation(player);
+            new TeleportManager(player).start(location);
 
-        final Player player = (Player) commandSender;
-
-        if (args.length > 1) {
-            MessageUtils.sendMessage(player, Messages.CORRECT_USAGE.replace("%usage%", getUsage()));
             return;
         }
 
-        if (args.length == 0) {
-            final Location location = new TeleportUtils().getLocation(player);
-
-            new TeleportManager(player).start(location);
-        } else {
-
-            if (Bukkit.getPlayer(args[0]) == null) {
-                MessageUtils.sendMessage(player, Messages.PLAYER_NOT_FOUND.replace("%player%", args[0]));
-                return;
-            }
-
-            final Player target = Bukkit.getPlayer(args[0]);
-            final Location location = new TeleportUtils().getLocation(target);
-
-            target.teleport(location);
+        if (Bukkit.getPlayer(context.getParam(0)) == null) {
+            MessageUtils.sendMessage(player, StringUtils.replace(Messages.PLAYER_NOT_FOUND, "%player%", context.getParam(0)));
+            return;
         }
+
+        Player target = Bukkit.getPlayer(context.getParam(0));
+        Location location = new TeleportUtils().getLocation(target);
+
+        target.teleport(location);
     }
 }

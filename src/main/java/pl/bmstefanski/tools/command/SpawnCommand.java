@@ -27,7 +27,7 @@ public class SpawnCommand {
         Player player = (Player) commandSender;
         SpawnManager spawnManager = new SpawnManager();
 
-        if (config.getBoolean("spawn.setted")) {
+        if (config.getBoolean("spawn.set")) {
 
             if (context.getArgs().length == 0) {
                 new TeleportManager(player).start(spawnManager.getSpawn());

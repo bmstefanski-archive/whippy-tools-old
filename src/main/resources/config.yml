@@ -14,5 +14,5 @@ spawn:
   y: 64
   z: 0
   world: "world"
-  setted: false
+  set: false
 countdown: 10

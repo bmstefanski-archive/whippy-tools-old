@@ -33,7 +33,7 @@ public class FlyCommand {
             boolean flyState = !player.isFlying();
             player.setAllowFlight(flyState);
 
-            MessageUtils.sendMessage(player, StringUtils.replace(Messages.FLY_SWITCHED, "%state", BooleanUtils.parse(flyState)));
+            MessageUtils.sendMessage(player, StringUtils.replace(Messages.FLY_SWITCHED, "%state%", BooleanUtils.parse(flyState)));
         } else {
             if (Bukkit.getPlayer(context.getParam(0)) == null) {
                 MessageUtils.sendMessage(player, StringUtils.replace(Messages.PLAYER_NOT_FOUND, "%player%", context.getParam(0)));

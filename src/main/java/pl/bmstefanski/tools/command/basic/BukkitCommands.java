@@ -1,5 +1,6 @@
 package pl.bmstefanski.tools.command.basic;
 
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandMap;
@@ -12,6 +13,8 @@ import org.bukkit.help.HelpTopicComparator;
 import org.bukkit.help.IndexHelpTopic;
 import org.bukkit.plugin.Plugin;
 import pl.bmstefanski.tools.impl.configuration.Messages;
+import pl.bmstefanski.tools.util.MessageUtils;
+import pl.bmstefanski.tools.util.TextUtils;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -55,7 +58,8 @@ public class BukkitCommands extends Commands implements CommandExecutor, TabComp
                 permission = " - " + ex.getPermission();
             }
 
-            sender.sendMessage(Messages.NO_PERMISSIONS + permission);
+            String permissionString = StringUtils.replace(permission, " - ", "");
+            sender.sendMessage(StringUtils.replace(MessageUtils.fixColor(Messages.NO_PERMISSIONS), "%permission%", permissionString));
         } catch (CommandUsageException ex) {
             if (ex.getMessage() != null) {
                 sender.sendMessage(ChatColor.RED + ex.getMessage());

@@ -12,6 +12,10 @@ import pl.bmstefanski.tools.manager.TeleportManager;
 import pl.bmstefanski.tools.util.TeleportUtils;
 import pl.bmstefanski.tools.util.MessageUtils;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class BackCommand {
 
     @CommandInfo (
@@ -43,5 +47,22 @@ public class BackCommand {
         Location location = new TeleportUtils().getLocation(target);
 
         target.teleport(location);
+    }
+
+    public List<String> backCompleter(CommandSender commandSender, CommandContext context) {
+        if (context.getArgs().length == 1) {
+            List<String> availableList = new ArrayList<>();
+
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                if (player.getName().startsWith(context.getParam(0).toLowerCase())) {
+                    availableList.add(player.getName());
+                }
+            }
+
+            Collections.sort(availableList);
+            return availableList;
+        }
+
+        return null;
     }
 }

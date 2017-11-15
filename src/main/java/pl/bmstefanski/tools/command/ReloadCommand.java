@@ -18,7 +18,13 @@ public class ReloadCommand {
     private final DatabaseManager database = DatabaseManager.getInstance();
     private final Tools plugin = Tools.getInstance();
 
-    @CommandInfo(name = "tools-reload", description = "reload command", permission = "reload", userOnly = true)
+    @CommandInfo (
+            name = "tools-reload",
+            description = "reload command",
+            permission = "reload",
+            userOnly = true
+    )
+
     public void reload(CommandSender commandSender, CommandContext context) {
         long startedTime = System.currentTimeMillis();
 

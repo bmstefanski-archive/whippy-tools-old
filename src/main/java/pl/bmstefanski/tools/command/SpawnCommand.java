@@ -19,9 +19,17 @@ import java.util.List;
 
 public class SpawnCommand {
 
-    private FileConfiguration config = Tools.getInstance().getConfig();
+    private final FileConfiguration config = Tools.getInstance().getConfig();
 
-    @CommandInfo(name = "spawn", description = "spawn command", permission = "spawn", userOnly = true, usage = "[player]", completer = "spawnCompleter")
+    @CommandInfo (
+            name = "spawn",
+            description = "spawn command",
+            permission = "spawn",
+            userOnly = true,
+            usage = "[player]",
+            completer = "spawnCompleter"
+    )
+
     public void spawn(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;

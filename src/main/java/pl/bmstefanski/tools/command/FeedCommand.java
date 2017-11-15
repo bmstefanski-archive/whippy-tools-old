@@ -15,7 +15,15 @@ import java.util.List;
 
 public class FeedCommand {
 
-    @CommandInfo(name = "feed", description = "feed command", usage = "[player]", userOnly = true, permission = "feed", completer = "feedCompleter")
+    @CommandInfo (
+            name = "feed",
+            description = "feed command",
+            usage = "[player]",
+            userOnly = true,
+            permission = "feed",
+            completer = "feedCompleter"
+    )
+
     public void feed(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;

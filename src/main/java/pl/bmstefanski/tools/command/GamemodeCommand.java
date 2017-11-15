@@ -18,7 +18,16 @@ import java.util.List;
 
 public class GamemodeCommand {
 
-    @CommandInfo(name = {"gamemode", "gm"}, description = "gamemode command", usage = "0/1/2/3 [player]", userOnly = true, permission = "gamemode", completer = "gamemodeCompleter", min = 1)
+    @CommandInfo (
+            name = {"gamemode", "gm"},
+            description = "gamemode command",
+            usage = "0/1/2/3 [player]",
+            userOnly = true,
+            permission = "gamemode",
+            completer = "gamemodeCompleter",
+            min = 1
+    )
+
     public void gamemode(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;

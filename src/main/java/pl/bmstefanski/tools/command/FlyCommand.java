@@ -16,7 +16,15 @@ import java.util.List;
 
 public class FlyCommand {
 
-    @CommandInfo(name = "fly", description = "fly command", usage = "[player]", userOnly = true, permission = "fly", completer = "flyCompleter")
+    @CommandInfo (
+            name = "fly",
+            description = "fly command",
+            usage = "[player]",
+            userOnly = true,
+            permission = "fly",
+            completer = "flyCompleter"
+    )
+
     public void fly(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;

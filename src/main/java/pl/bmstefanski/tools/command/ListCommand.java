@@ -15,7 +15,15 @@ import java.util.*;
 
 public class ListCommand {
 
-    @CommandInfo(name = "list", description = "list command", usage = "[full/basic]", userOnly = true, completer = "listCompleter", min = 1)
+    @CommandInfo (
+            name = "list",
+            description = "list command",
+            usage = "[full/basic]",
+            userOnly = true,
+            completer = "listCompleter",
+            min = 1
+    )
+
     public void list(CommandSender commandSender, CommandContext context) {
         Player player = (Player) commandSender;
         Collection<? extends Player> playersOnline = Bukkit.getOnlinePlayers();

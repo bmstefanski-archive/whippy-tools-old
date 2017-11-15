@@ -11,7 +11,12 @@ public class DisableCommand {
 
     private final Tools plugin = Tools.getInstance();
 
-    @CommandInfo(name = "tools-disable", description = "disable command", permission = "disable")
+    @CommandInfo (
+            name = "tools-disable",
+            description = "disable command",
+            permission = "disable"
+    )
+
     public void disable(CommandSender commandSender, CommandContext context) {
         plugin.getServer().getPluginManager().disablePlugin(Tools.getInstance());
         MessageUtils.sendMessage(commandSender, Messages.SUCCESSFULLY_DISABLED);

@@ -15,7 +15,15 @@ import java.util.List;
 
 public class HealCommand {
 
-    @CommandInfo(name = "heal", description = "heal command", usage = "[player]", userOnly = true, permission = "heal", completer = "healCompleter")
+    @CommandInfo (
+            name = "heal",
+            description = "heal command",
+            usage = "[player]",
+            userOnly = true,
+            permission = "heal",
+            completer = "healCompleter"
+    )
+
     public void heal(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;

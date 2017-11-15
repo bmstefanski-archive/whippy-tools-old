@@ -15,7 +15,15 @@ import java.util.List;
 
 public class EnderchestCommand {
 
-    @CommandInfo(name = {"enderchest", "ender", "ec"}, description = "enderchest command", usage = "[player]", userOnly = true, permission = "enderchest", completer = "enderchestCompleter")
+    @CommandInfo (
+            name = {"enderchest", "ender", "ec"},
+            description = "enderchest command",
+            usage = "[player]",
+            userOnly = true,
+            permission = "enderchest",
+            completer = "enderchestCompleter"
+    )
+
     public void enderchest(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;

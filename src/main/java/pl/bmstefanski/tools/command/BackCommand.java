@@ -22,6 +22,7 @@ public class BackCommand {
             permission = "back",
             completer = "backCompleter"
     )
+
     public void back(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;

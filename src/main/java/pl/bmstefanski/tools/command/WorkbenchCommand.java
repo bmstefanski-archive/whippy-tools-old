@@ -15,7 +15,15 @@ import java.util.List;
 
 public class WorkbenchCommand {
 
-    @CommandInfo(name = {"workbench", "wb", "crafting"}, description = "workbench command", permission = "workbench", userOnly = true, usage = "[player]", completer = "workbenchCompleter")
+    @CommandInfo (
+            name = {"workbench", "wb", "crafting"},
+            description = "workbench command",
+            permission = "workbench",
+            userOnly = true,
+            usage = "[player]",
+            completer = "workbenchCompleter"
+    )
+
     public void workbench(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;

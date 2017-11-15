@@ -9,7 +9,13 @@ import pl.bmstefanski.tools.util.MessageUtils;
 
 public class ToolsCommand {
 
-    @CommandInfo(name = {"tools"}, description = "tools command", permission = "tools", userOnly = true)
+    @CommandInfo (
+            name = {"tools"},
+            description = "tools command",
+            permission = "tools",
+            userOnly = true
+    )
+
     public void tools(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;

@@ -17,7 +17,13 @@ public class SetSpawnCommand {
     private final FileConfiguration config = Tools.getInstance().getConfig();
     private final Tools plugin = Tools.getInstance();
 
-    @CommandInfo(name = "setspawn", description = "setspawn command", permission = "setspawn", userOnly = true)
+    @CommandInfo (
+            name = "setspawn",
+            description = "setspawn command",
+            permission = "setspawn",
+            userOnly = true
+    )
+
     public void setSpawn(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;

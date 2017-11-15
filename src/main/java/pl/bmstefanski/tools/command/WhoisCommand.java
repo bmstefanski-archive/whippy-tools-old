@@ -21,7 +21,15 @@ import java.util.List;
 
 public class WhoisCommand {
 
-    @CommandInfo(name = "whois", description = "whois command", permission = "whois", userOnly = true, usage = "[player]", completer = "whoisCompleter")
+    @CommandInfo (
+            name = "whois",
+            description = "whois command",
+            permission = "whois",
+            userOnly = true,
+            usage = "[player]",
+            completer = "whoisCompleter"
+    )
+
     public void whois(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;

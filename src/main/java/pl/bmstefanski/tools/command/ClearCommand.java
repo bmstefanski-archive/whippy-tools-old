@@ -15,7 +15,15 @@ import java.util.List;
 
 public class ClearCommand {
 
-    @CommandInfo(name = {"clear", "ci"}, description = "clear command", usage = "[player]", userOnly = true, permission = "clear", completer = "clearCompleter")
+    @CommandInfo (
+            name = {"clear", "ci"},
+            description = "clear command",
+            usage = "[player]",
+            userOnly = true,
+            permission = "clear",
+            completer = "clearCompleter"
+    )
+
     public void clear(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;

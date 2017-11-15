@@ -17,7 +17,15 @@ import java.util.List;
 
 public class GodCommand {
 
-    @CommandInfo(name = "god", description = "god command", usage = "[player]", userOnly = true, permission = "god", completer = "godCompleter")
+    @CommandInfo (
+            name = "god",
+            description = "god command",
+            usage = "[player]",
+            userOnly = true,
+            permission = "god",
+            completer = "godCompleter"
+    )
+
     public void god(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;

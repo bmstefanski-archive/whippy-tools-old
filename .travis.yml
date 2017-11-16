@@ -5,3 +5,6 @@ matrix:
   include:
     - jdk: oraclejdk8
     - jdk: oraclejdk9
+
+script:
+  - wget https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar -O BuildTools.jar && java -jar BuildTools.jar

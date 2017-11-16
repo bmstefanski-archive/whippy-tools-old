@@ -1,10 +1,14 @@
-language: java
-sudo: required
-
-matrix:
-  include:
-    - jdk: oraclejdk8
-    - jdk: oraclejdk9
-
+language: java,
+sudo: required,
+jdk: oraclejdk9,
+install: true
 script:
-  - wget https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar -O BuildTools.jar && java -jar BuildTools.jar
+  - "sudo apt-get update && sudo apt-get install oracle-java9-installer",
+  - "sudo apt install oracle-java9-set-default",
+  - "java -version",
+  - "wget https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar -O BuildTools.jar && java -jar BuildTools.jar"
+  - "mvn validate",
+  - "mvn clean test"
+group: stable,
+dist: trusty,
+os: linux

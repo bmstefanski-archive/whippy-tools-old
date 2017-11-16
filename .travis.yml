@@ -1,11 +1,7 @@
 language: java
 sudo: required
-jdk:
-- oraclejdk9
-install: true
-script:
-- sudo apt-get update && sudo apt-get install oracle-java9-installer
-- sudo apt install oracle-java9-set-default
-- java -version
-- mvn validate
-- mvn clean test
+
+matrix:
+  include:
+    - jdk: oraclejdk8
+    - jdk: oraclejdk9

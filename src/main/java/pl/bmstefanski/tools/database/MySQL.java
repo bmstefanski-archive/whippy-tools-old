@@ -1,8 +1,8 @@
 package pl.bmstefanski.tools.database;
 
 import pl.bmstefanski.tools.manager.DatabaseManager;
-import pl.bmstefanski.tools.object.User;
-import pl.bmstefanski.tools.object.util.UserUtils;
+import pl.bmstefanski.tools.basic.User;
+import pl.bmstefanski.tools.basic.util.UserUtils;
 import pl.bmstefanski.tools.util.MessageUtils;
 
 import java.sql.PreparedStatement;

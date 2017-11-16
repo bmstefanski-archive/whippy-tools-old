@@ -3,7 +3,7 @@ package pl.bmstefanski.tools.listener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
-import pl.bmstefanski.tools.object.User;
+import pl.bmstefanski.tools.basic.User;
 
 public class PlayerLogin implements Listener {
 

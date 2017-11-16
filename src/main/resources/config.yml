@@ -1,18 +1,34 @@
-# pl - PL; en - EN;
+##########################################################
+##                                                      ##
+##                        Tools                         ##
+##                     Version: BETA                    ##
+##                                                      ##
+##########################################################
+
+# You can choose pl, en or make own file.
 language: pl
-# MySQL, SQLite lub Flat
+
+# MySQL/SQLite
 database: MySQL
+
 mysql:
   hostname: "localhost"
   database: "tools"
   username: "root"
   password: "root"
   port: 3306
-  refresh: 1200 # w sekundach
+
+# If you want set default spawn position, put true in set variable.
 spawn:
   x: 0
   y: 64
   z: 0
   world: "world"
   set: false
+
+# Time that you must wait until you will be teleported.
 countdown: 10
+
+# Join and quit format. If you don't need it, leave it blank.
+join-format: "&e%player% &adolaczyl do gierki!"
+quit-format: "&e%player% &cwyszedl z gierki!"

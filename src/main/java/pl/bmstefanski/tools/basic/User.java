@@ -1,6 +1,7 @@
 package pl.bmstefanski.tools.basic;
 
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import pl.bmstefanski.tools.basic.util.UserUtils;
 
@@ -28,19 +29,15 @@ public class User {
     }
 
     public static User get(UUID uuid) {
-        for (User u : UserUtils.getUsers()) {
-            if (u.getName() == null) continue;
-            if (uuid.equals(u.getUUID())) return u;
-        }
-        return new User(uuid);
+        User user = UserUtils.get(uuid);
+
+        return user != null ? user : new User(uuid);
     }
 
     public static User get(Player player) {
-        for (User u : UserUtils.getUsers()) {
-            if (u.getName() == null) continue;
-            if (u.getName().equalsIgnoreCase(player.getName())) return u;
-        }
-        return new User(player);
+        User user = UserUtils.get(player.getName());
+
+        return user != null ? user : new User(player);
     }
 
     public UUID getUUID() {
@@ -94,4 +91,5 @@ public class User {
     public String toString() {
         return this.name;
     }
+
 }

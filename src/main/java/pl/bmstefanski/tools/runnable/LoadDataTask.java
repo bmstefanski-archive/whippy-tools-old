@@ -14,7 +14,6 @@ public class LoadDataTask extends BukkitRunnable {
     private final User user;
     private final DatabaseManager databaseManager;
 
-
     public LoadDataTask(User user) {
         this.user = user;
         this.databaseManager = DatabaseManager.getInstance();
@@ -23,15 +22,16 @@ public class LoadDataTask extends BukkitRunnable {
     @Override
     public void run() {
         try {
-            String sql = "SELECT * FROM `players` WHERE `name` = ?";
+            String sql = "SELECT * FROM `players` WHERE `uuid` = ?";
 
             PreparedStatement preparedStatement = databaseManager.getConnection().prepareStatement(sql);
-            preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(1, user.getUUID().toString());
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 user.setUUID(UUID.fromString(resultSet.getString("uuid")));
+                user.setName(resultSet.getString("name"));
                 user.setIp(resultSet.getString("ip"));
             }
 

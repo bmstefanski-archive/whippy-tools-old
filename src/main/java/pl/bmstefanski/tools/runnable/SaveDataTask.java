@@ -24,7 +24,7 @@ public class SaveDataTask extends BukkitRunnable {
                     + user.getUUID().toString()
                     + "','" + user.getName()
                     + "','" + user.getIp()
-                    + "') ON DUPLICATE KEY UPDATE `uuid`='" + user.getUUID()
+                    + "') ON DUPLICATE KEY UPDATE `name`='" + user.getName()
                     + "',`name`='" + user.getName()
                     + "',`ip`='" + user.getIp() + "';";
 

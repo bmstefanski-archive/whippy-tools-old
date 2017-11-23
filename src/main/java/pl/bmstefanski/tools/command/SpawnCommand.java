@@ -3,11 +3,10 @@ package pl.bmstefanski.tools.command;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
+import pl.bmstefanski.tools.configuration.Config;
 import pl.bmstefanski.tools.configuration.Messages;
 import pl.bmstefanski.tools.manager.SpawnManager;
 import pl.bmstefanski.tools.manager.TeleportManager;
@@ -19,7 +18,7 @@ import java.util.List;
 
 public class SpawnCommand {
 
-    private final FileConfiguration config = Tools.getInstance().getConfig();
+    private final Config config = Config.getInstance();
 
     @CommandInfo (
             name = "spawn",
@@ -35,7 +34,7 @@ public class SpawnCommand {
         Player player = (Player) commandSender;
         SpawnManager spawnManager = new SpawnManager();
 
-        if (config.getBoolean("spawn.set")) {
+        if (config.spawnSet) {
 
             if (context.getArgs().length == 0) {
                 new TeleportManager(player).start(spawnManager.getSpawn());

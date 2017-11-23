@@ -7,26 +7,21 @@ import pl.bmstefanski.tools.command.ToolsCommand;
 import pl.bmstefanski.tools.command.ReloadCommand;
 import pl.bmstefanski.tools.command.basic.BukkitCommands;
 import pl.bmstefanski.tools.command.basic.Commands;
-import pl.bmstefanski.tools.database.MySQL;
 import pl.bmstefanski.tools.io.Files;
 import pl.bmstefanski.tools.io.MessageFile;
 import pl.bmstefanski.tools.listener.*;
 import pl.bmstefanski.tools.manager.DatabaseManager;
 
-import java.io.IOException;
-
 public final class Tools extends JavaPlugin {
 
     private static Tools instance;
     private DatabaseManager databaseManager;
-    private MySQL mySQL;
 
     @Override
     public void onLoad() {
         instance = this;
 
         this.databaseManager = DatabaseManager.getInstance();
-        this.mySQL = MySQL.getInstance();
     }
 
     @Override
@@ -35,7 +30,6 @@ public final class Tools extends JavaPlugin {
 
         databaseManager.establishConnection();
         MessageFile.loadMessages();
-        tryToCheck();
         registerListeners();
         registerCommands();
     }
@@ -77,14 +71,6 @@ public final class Tools extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerMove(), this);
         Bukkit.getPluginManager().registerEvents(new EntityDamage(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerDeath(), this);
-    }
-
-    private void tryToCheck() {
-        try {
-            Files.check();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public static Tools getInstance() {

@@ -9,8 +9,10 @@ import java.util.List;
 
 public class MessageFile {
 
+    private static Files files = new Files();
+
     public static void saveMessages() {
-        final FileConfiguration data = Files.getMessageFileConfiguration();
+        final FileConfiguration data = files.getMessageFileConfiguration();
 
         for (Field fld : Messages.class.getFields()) {
             if (!data.isSet(fld.getName())) {
@@ -23,7 +25,7 @@ public class MessageFile {
         }
 
         try {
-            data.save(Files.getMessageFile());
+            data.save(files.getMessageFile());
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -32,7 +34,7 @@ public class MessageFile {
     public static void loadMessages()
     {
         try {
-            final FileConfiguration data = Files.getMessageFileConfiguration();
+            final FileConfiguration data = files.getMessageFileConfiguration();
 
             for (final Field field : Messages.class.getFields()) {
                 if (data.isSet(field.getName())) {
@@ -43,7 +45,7 @@ public class MessageFile {
                     }
                 }
             }
-        } catch (Exception ex) {
+        } catch (IllegalAccessException ex) {
             ex.printStackTrace();
         }
 

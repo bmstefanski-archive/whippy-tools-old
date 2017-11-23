@@ -3,22 +3,17 @@ package pl.bmstefanski.tools.manager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.configuration.file.FileConfiguration;
-import pl.bmstefanski.tools.Tools;
+import pl.bmstefanski.tools.configuration.Config;
 
 public class SpawnManager {
 
-    private final FileConfiguration fileConfiguration;
-
-    public SpawnManager() {
-        this.fileConfiguration = Tools.getInstance().getConfig();
-    }
+    private final Config config = Config.getInstance();
 
     public Location getSpawn() {
-        final int x = fileConfiguration.getInt("spawn.x");
-        final int y = fileConfiguration.getInt("spawn.y");
-        final int z = fileConfiguration.getInt("spawn.z");
-        final World world = Bukkit.getWorld(fileConfiguration.getString("spawn.world"));
+        int x = config.spawnBlockX;
+        int y = config.spawnBlockY;
+        int z = config.spawnBlockZ;
+        World world = Bukkit.getWorld(config.spawnWorld);
 
         return new Location(world, x, y, z);
     }

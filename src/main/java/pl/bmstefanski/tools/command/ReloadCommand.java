@@ -28,8 +28,6 @@ public class ReloadCommand {
     public void reload(CommandSender commandSender, CommandContext context) {
         long startedTime = System.currentTimeMillis();
 
-        tryToCheck();
-
         MessageFile.loadMessages();
         MessageFile.saveMessages();
 
@@ -39,13 +37,5 @@ public class ReloadCommand {
         float elapsedTimeSecond = elapsedTime / 1000F;
 
         MessageUtils.sendMessage(commandSender, StringUtils.replace(Messages.SUCCESSFULLY_RELOADED, "%time%", elapsedTimeSecond + ""));
-    }
-
-    private void tryToCheck() {
-        try {
-            Files.check();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

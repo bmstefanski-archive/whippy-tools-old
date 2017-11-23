@@ -1,6 +1,6 @@
 package pl.bmstefanski.tools.util;
 
-import pl.bmstefanski.tools.impl.configuration.Messages;
+import pl.bmstefanski.tools.configuration.Messages;
 
 public class BooleanUtils {
 

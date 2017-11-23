@@ -1,7 +1,7 @@
 package pl.bmstefanski.tools.io;
 
 import org.bukkit.configuration.file.FileConfiguration;
-import pl.bmstefanski.tools.impl.configuration.Messages;
+import pl.bmstefanski.tools.configuration.Messages;
 
 import java.io.IOException;
 import java.lang.reflect.Field;

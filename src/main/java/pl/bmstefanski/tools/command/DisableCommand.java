@@ -4,7 +4,7 @@ import org.bukkit.command.CommandSender;
 import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
-import pl.bmstefanski.tools.impl.configuration.Messages;
+import pl.bmstefanski.tools.configuration.Messages;
 import pl.bmstefanski.tools.util.MessageUtils;
 
 public class DisableCommand {

@@ -5,7 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.help.HelpTopic;
-import pl.bmstefanski.tools.impl.configuration.Messages;
+import pl.bmstefanski.tools.configuration.Messages;
 import pl.bmstefanski.tools.util.MessageUtils;
 
 public class PlayerCommandPreprocess implements Listener {

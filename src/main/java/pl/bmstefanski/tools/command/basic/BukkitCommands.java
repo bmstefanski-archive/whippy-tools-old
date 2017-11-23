@@ -12,9 +12,8 @@ import org.bukkit.help.HelpTopic;
 import org.bukkit.help.HelpTopicComparator;
 import org.bukkit.help.IndexHelpTopic;
 import org.bukkit.plugin.Plugin;
-import pl.bmstefanski.tools.impl.configuration.Messages;
+import pl.bmstefanski.tools.configuration.Messages;
 import pl.bmstefanski.tools.util.MessageUtils;
-import pl.bmstefanski.tools.util.TextUtils;
 
 import java.lang.reflect.Field;
 import java.util.*;

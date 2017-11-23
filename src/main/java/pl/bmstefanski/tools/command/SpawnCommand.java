@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
-import pl.bmstefanski.tools.impl.configuration.Messages;
+import pl.bmstefanski.tools.configuration.Messages;
 import pl.bmstefanski.tools.manager.SpawnManager;
 import pl.bmstefanski.tools.manager.TeleportManager;
 import pl.bmstefanski.tools.util.MessageUtils;

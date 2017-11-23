@@ -2,7 +2,7 @@ package pl.bmstefanski.tools.manager;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import pl.bmstefanski.tools.Tools;
-import pl.bmstefanski.tools.impl.configuration.Config;
+import pl.bmstefanski.tools.configuration.Config;
 import pl.bmstefanski.tools.util.MessageUtils;
 
 import java.sql.Connection;

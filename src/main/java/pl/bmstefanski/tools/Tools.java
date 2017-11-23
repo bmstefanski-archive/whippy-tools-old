@@ -7,7 +7,7 @@ import pl.bmstefanski.tools.command.ToolsCommand;
 import pl.bmstefanski.tools.command.ReloadCommand;
 import pl.bmstefanski.tools.command.basic.BukkitCommands;
 import pl.bmstefanski.tools.command.basic.Commands;
-import pl.bmstefanski.tools.io.Files;
+import pl.bmstefanski.tools.database.MySQL;
 import pl.bmstefanski.tools.io.MessageFile;
 import pl.bmstefanski.tools.listener.*;
 import pl.bmstefanski.tools.manager.DatabaseManager;
@@ -16,12 +16,14 @@ public final class Tools extends JavaPlugin {
 
     private static Tools instance;
     private DatabaseManager databaseManager;
+    private MySQL mySQL;
 
     @Override
     public void onLoad() {
         instance = this;
 
         this.databaseManager = DatabaseManager.getInstance();
+        this.mySQL = MySQL.getInstance();
     }
 
     @Override
@@ -29,6 +31,7 @@ public final class Tools extends JavaPlugin {
         saveDefaultConfig();
 
         databaseManager.establishConnection();
+        mySQL.checkTable();
         MessageFile.loadMessages();
         registerListeners();
         registerCommands();

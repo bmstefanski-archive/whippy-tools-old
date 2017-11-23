@@ -6,12 +6,9 @@ import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.configuration.Messages;
-import pl.bmstefanski.tools.io.Files;
 import pl.bmstefanski.tools.io.MessageFile;
 import pl.bmstefanski.tools.manager.DatabaseManager;
 import pl.bmstefanski.tools.util.MessageUtils;
-
-import java.io.IOException;
 
 public class ReloadCommand {
 

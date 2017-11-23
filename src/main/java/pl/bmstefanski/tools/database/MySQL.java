@@ -1,13 +1,9 @@
 package pl.bmstefanski.tools.database;
 
 import pl.bmstefanski.tools.manager.DatabaseManager;
-import pl.bmstefanski.tools.basic.User;
-import pl.bmstefanski.tools.basic.util.UserUtils;
-import pl.bmstefanski.tools.util.MessageUtils;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.UUID;
+import java.sql.SQLException;
 
 public class MySQL implements Database {
 
@@ -30,58 +26,7 @@ public class MySQL implements Database {
             PreparedStatement preparedStatement = databaseManager.getConnection().prepareStatement(sql);
             preparedStatement.executeUpdate();
             preparedStatement.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    @Override
-    public void loadData() {
-        int loaded = 0;
-
-        try {
-            String sql = "SELECT * FROM `players`";
-
-            PreparedStatement preparedStatement = databaseManager.getConnection().prepareStatement(sql);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                User user = User.get(UUID.fromString(resultSet.getString("uuid")));
-                user.setName(resultSet.getString("name"));
-                user.setIp(resultSet.getString("ip"));
-
-                loaded++;
-            }
-            resultSet.close();
-            preparedStatement.close();
-            MessageUtils.sendMessageToConsole("&eZaladowano &7" + loaded + " &egraczy.");
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    @Override
-    public void saveData() {
-        int saved = 0;
-
-        try {
-            for (User user : UserUtils.getUsers()) {
-                String sql = "INSERT INTO `players` (`uuid`, `name`, `ip`) VALUES ('"
-                        + user.getUUID().toString()
-                        + "','" + user.getName()
-                        + "','" + user.getIp()
-                        + "') ON DUPLICATE KEY UPDATE name='" + user.getName()
-                        + "',`name`='" + user.getName()
-                        + "',`ip`='" + user.getIp() + "';";
-
-                PreparedStatement preparedStatement = databaseManager.getConnection().prepareStatement(sql);
-                preparedStatement.executeUpdate();
-                preparedStatement.close();
-
-                saved++;
-            }
-            MessageUtils.sendMessageToConsole("&eZapisano &7" + saved + " &egraczy.");
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }

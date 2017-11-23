@@ -3,7 +3,6 @@ package pl.bmstefanski.tools.listener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
-import pl.bmstefanski.tools.manager.SpawnManager;
 import pl.bmstefanski.tools.manager.TeleportManager;
 
 public class PlayerMove implements Listener {

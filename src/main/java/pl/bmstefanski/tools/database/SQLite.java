@@ -6,14 +6,4 @@ public class SQLite implements Database {
     public void checkTable() {
 
     }
-
-    @Override
-    public void loadData() {
-
-    }
-
-    @Override
-    public void saveData() {
-
-    }
 }

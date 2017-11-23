@@ -7,17 +7,17 @@ import pl.bmstefanski.tools.util.MessageUtils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class DatabaseManager {
 
     private static DatabaseManager instance;
-    private Config config;
+    private final Config config;
     private Connection connection;
 
     private DatabaseManager() {
         this.config = Config.getInstance();
     }
-
 
     public void establishConnection() {
         try {
@@ -37,11 +37,7 @@ public class DatabaseManager {
                         + Tools.getInstance().getName() + "/players.db");
             }
 
-            MessageUtils.sendMessageToConsole("&ePomyslnie polaczono z baza danych! &7("
-                    + Tools.getInstance().getDescription().getName() + ")" +
-                    " (" + DatabaseType.MYSQL.name() + ")");
-
-        } catch (Exception ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             MessageUtils.sendMessageToConsole("&cBlad podczas laczenia z baza danych! &7("
                     + Tools.getInstance().getDescription().getName() + ")" +
                     " (" + DatabaseType.MYSQL.name() + ")");
@@ -60,6 +56,7 @@ public class DatabaseManager {
 
         if (databaseType.equalsIgnoreCase("mysql")) return DatabaseType.MYSQL;
         else if (databaseType.equalsIgnoreCase("sqlite")) return DatabaseType.SQLITE;
+
         return null;
     }
 

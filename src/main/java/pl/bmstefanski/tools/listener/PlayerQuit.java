@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.basic.User;
+import pl.bmstefanski.tools.runnable.SaveDataTask;
 import pl.bmstefanski.tools.util.MessageUtils;
 
 public class PlayerQuit implements Listener {
@@ -23,5 +24,7 @@ public class PlayerQuit implements Listener {
 
         String quitMessage = config.getString("quit-format");
         event.setQuitMessage(MessageUtils.fixColor(StringUtils.replace(quitMessage, "%player%", player.getName())));
+
+        new SaveDataTask(user).runTaskAsynchronously(Tools.getInstance());
     }
 }

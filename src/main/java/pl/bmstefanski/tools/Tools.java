@@ -38,13 +38,11 @@ public final class Tools extends JavaPlugin {
         tryToCheck();
         registerListeners();
         registerCommands();
-        loadDatabases();
     }
 
     @Override
     public void onDisable() {
         MessageFile.saveMessages();
-        saveDatabases();
 
         instance = null;
     }
@@ -74,7 +72,7 @@ public final class Tools extends JavaPlugin {
     private void registerListeners() {
         Bukkit.getPluginManager().registerEvents(new PlayerCommandPreprocess(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerJoin(), this);
-        Bukkit.getPluginManager().registerEvents(new PlayerLogin(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerPreLogin(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerQuit(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerMove(), this);
         Bukkit.getPluginManager().registerEvents(new EntityDamage(), this);
@@ -86,25 +84,6 @@ public final class Tools extends JavaPlugin {
             Files.check();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    public void loadDatabases() {
-        if (databaseManager.databaseType() == DatabaseManager.DatabaseType.MYSQL) {
-            mySQL.checkTable();
-            mySQL.loadData();
-        } else if (databaseManager.databaseType() == DatabaseManager.DatabaseType.SQLITE) {
-            getLogger().info("blank");
-            // todo
-        }
-    }
-
-    public void saveDatabases() {
-        if (databaseManager.databaseType() == DatabaseManager.DatabaseType.MYSQL) {
-            mySQL.saveData();
-        } else if (databaseManager.databaseType() == DatabaseManager.DatabaseType.SQLITE) {
-            getLogger().info("blank");
-            // todo
         }
     }
 

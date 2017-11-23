@@ -8,10 +8,16 @@ import java.util.UUID;
 
 public class User {
 
-    private final UUID uuid;
+    private UUID uuid;
     private String name;
     private String ip;
     private boolean god;
+
+    private User(UUID uuid) {
+        this.uuid = uuid;
+
+        UserUtils.addUser(this);
+    }
 
     private User(Player player) {
         this.uuid = player.getUniqueId();
@@ -21,14 +27,28 @@ public class User {
         UserUtils.addUser(this);
     }
 
-    private User(UUID uuid) {
-        this.uuid = uuid;
+    public static User get(UUID uuid) {
+        for (User u : UserUtils.getUsers()) {
+            if (u.getName() == null) continue;
+            if (uuid.equals(u.getUUID())) return u;
+        }
+        return new User(uuid);
+    }
 
-        UserUtils.addUser(this);
+    public static User get(Player player) {
+        for (User u : UserUtils.getUsers()) {
+            if (u.getName() == null) continue;
+            if (u.getName().equalsIgnoreCase(player.getName())) return u;
+        }
+        return new User(player);
     }
 
     public UUID getUUID() {
         return uuid;
+    }
+
+    public void setUUID(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public String getName() {
@@ -68,19 +88,6 @@ public class User {
             return null;
         }
         return Bukkit.getPlayer(this.uuid);
-    }
-
-    public static User get(Player player) {
-        for(User u : UserUtils.getUsers()) {
-            if(u.getName() == null) continue;
-            if(u.getName().equalsIgnoreCase(player.getName())) return u;
-        }
-        return new User(player);
-    }
-
-    public static User get(UUID uuid) {
-        for(User u : UserUtils.getUsers()) if(uuid.equals(u.getUUID())) return u;
-        return new User(uuid);
     }
 
     @Override

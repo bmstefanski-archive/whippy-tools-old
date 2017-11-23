@@ -33,9 +33,6 @@ public class ReloadCommand {
         MessageFile.loadMessages();
         MessageFile.saveMessages();
 
-        plugin.loadDatabases();
-        plugin.saveDatabases();
-
         database.establishConnection();
 
         long elapsedTime = (System.currentTimeMillis() - startedTime);

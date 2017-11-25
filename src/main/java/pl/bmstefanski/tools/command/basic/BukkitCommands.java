@@ -50,7 +50,7 @@ public class BukkitCommands extends Commands implements CommandExecutor, TabComp
                 context.getCommand().handleCommand(sender, context);
             }
         } catch (CommandConsoleException ex) {
-            sender.sendMessage(Messages.ONLY_PLAYER);
+            sender.sendMessage(MessageUtils.fixColor(Messages.ONLY_PLAYER));
         } catch (CommandPermissionException ex) {
             String permission = ".";
             if (ex.getPermission() != null) {

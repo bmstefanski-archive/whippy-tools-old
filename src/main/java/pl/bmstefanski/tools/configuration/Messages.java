@@ -11,8 +11,6 @@ public class Messages {
     public static String NO_PERMISSIONS = "&cNie masz uprawnien do wykonania tej komendy! &7(%permission%)";
     public static String ONLY_PLAYER = "&cTa komende moze wykonac tylko gracz!";
     public static String UNKNOWN_COMMAND = "&cNie znaleziono takiej komendy! &7(%command%)";
-    public static String CORRECT_USAGE = "&cPoprawne uzycie komendy: &7%usage%";
-    public static String TIME_LEFT = "&cNie mozesz uzyc tej komendy przez kolejne &7%time% &csekund";
     public static String LIST_FULL = "&7Aktualnie na serwerze: &e%online%";
     public static String LIST_BASIC = "&7Aktualnie na serwerze jest &e%online%&7/&e%max% &7graczy!";
     public static String PLAYER_NOT_FOUND = "&cNie znaleziono gracza o nicku &7%player%&c!";
@@ -34,7 +32,7 @@ public class Messages {
     public static String GOD_SWITCHED = "&7God zostal %state%&7!";
     public static String GOD_SWITCHED_OTHER = "&7God zostal %state% &7dla &e%player%&7!";
     public static String TELEPORT_SUCCESS = "&7Pomyslnie teleportowano!";
-    public static String BROADCAST_FORMAT = "&8[&3MEGA&9KILOF&8] &7%message%";
+    public static String BROADCAST_FORMAT = "&8[&3OGLOSZENIE&8] &7%message%";
     public static String CLEAR = "&7Wyczyszczono twoj ekwipunek!";
     public static String CLEAR_OTHER = "&7Wyczyszczono ekwipunek gracza &e%player%&7!";
     public static List<String> WHOIS = Arrays.asList(

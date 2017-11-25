@@ -50,4 +50,10 @@ public class ReflectionUtils {
             ex.printStackTrace();
         }
     }
+
+    public static void sendPacket(Object object) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            sendPacket(player, object);
+        }
+    }
 }

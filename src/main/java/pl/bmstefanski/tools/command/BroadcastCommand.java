@@ -1,9 +1,15 @@
 package pl.bmstefanski.tools.command;
 
+import org.apache.commons.lang.StringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
+import pl.bmstefanski.tools.configuration.Messages;
+import pl.bmstefanski.tools.util.MessageUtils;
+import pl.bmstefanski.tools.util.ReflectionUtils;
+import pl.bmstefanski.tools.util.packet.PacketPlayOutTitle;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,6 +23,7 @@ public class BroadcastCommand {
             usage = "<action/title/subtitle/chat>",
             userOnly = true,
             permission = "broadcast",
+            min = 2,
             completer = "broadcastCompleter"
     )
 
@@ -25,20 +32,25 @@ public class BroadcastCommand {
         StringBuilder stringBuilder = new StringBuilder();
         Player player = (Player) commandSender;
 
-        // TODO FUUU BRZYDKIE KURDĘ ASAP
-/*        if (args.length == 1) {
-            if (args[0].equalsIgnoreCase("action")) {
-                new PlayOutChatPacket().sendPacket(player, getMessage(stringBuilder, args), ChatMessageType.GAME_INFO);
-            } else if (args[0].equalsIgnoreCase("title")) {
-                new PlayOutChatPacket().sendPacket(player, getMessage(stringBuilder, args), ChatMessageType.SYSTEM);
-            } else if (args[0].equalsIgnoreCase("subtitle")) {
-                new PlayOutChatPacket().sendPacket(player, getMessage(stringBuilder, args), ChatMessageType.CHAT);
-            } else if (args[0].equalsIgnoreCase("chat")) {
-                Bukkit.broadcastMessage(MessageUtils.fixColor(Messages.BROADCAST_FORMAT
-                        .replace("%message%", getMessage(stringBuilder, args))));
-            }
-        }*/
+        for (int i = 1; i < context.getArgs().length; i++) {
+            stringBuilder.append(" ");
+            stringBuilder.append(context.getArgs()[i]);
+        }
 
+        String message = MessageUtils.fixColor(stringBuilder.toString());
+
+        if (context.getArgs().length > 1) {
+            if (context.getParam(0).equalsIgnoreCase("action")) {
+                ReflectionUtils.sendPacket(new PacketPlayOutTitle(message, -1, -1, -1).getActionBar());
+            } else if (context.getParam(0).equalsIgnoreCase("title")) {
+                ReflectionUtils.sendPacket(new PacketPlayOutTitle(message, -1, -1, -1).getTitle());
+            } else if (context.getParam(0).equalsIgnoreCase("subtitle")) {
+                ReflectionUtils.sendPacket(new PacketPlayOutTitle("", -1, -1, -1).getTitle());
+                ReflectionUtils.sendPacket(new PacketPlayOutTitle(message, -1, -1, -1).getSubTitle());
+            } else if (context.getParam(0).equalsIgnoreCase("chat")) {
+                Bukkit.broadcastMessage(MessageUtils.fixColor(StringUtils.replace(Messages.BROADCAST_FORMAT, "%message%", stringBuilder.toString())));
+            }
+        }
     }
 
     public List<String> broadcastCompleter(CommandSender commandSender, CommandContext context) {

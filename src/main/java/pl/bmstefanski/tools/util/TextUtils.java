@@ -4,16 +4,16 @@ import java.util.List;
 
 public class TextUtils {
 
-    private final static StringBuilder stringBuilder = new StringBuilder();
+    private final static StringBuilder STRING_BUILDER = new StringBuilder();
 
     public static String listToString(List<String> list) {
-        stringBuilder.setLength(0);
+        STRING_BUILDER.setLength(0);
         String result = null;
 
         for (String string : list) {
-            stringBuilder.append(string + "\n");
+            STRING_BUILDER.append(string + "\n");
         }
 
-        return MessageUtils.fixColor(stringBuilder.toString());
+        return MessageUtils.fixColor(STRING_BUILDER.toString());
     }
 }

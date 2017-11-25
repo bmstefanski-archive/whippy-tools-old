@@ -8,16 +8,16 @@ import java.util.HashMap;
 
 public class TeleportUtils {
 
-    private static final HashMap<Player, Location> locations = new HashMap<>();
+    private static final HashMap<Player, Location> LOCATIONS = new HashMap<>();
 
     public Location getLocation(Player player) {
-        if (locations.get(player) != null) {
-            return locations.get(player);
+        if (LOCATIONS.get(player) != null) {
+            return LOCATIONS.get(player);
         } else return new SpawnManager().getSpawn();
     }
 
     public void setLocation(Player player) {
-        locations.put(player, player.getLocation());
+        LOCATIONS.put(player, player.getLocation());
         return;
     }
 }

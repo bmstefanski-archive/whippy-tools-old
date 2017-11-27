@@ -3,6 +3,7 @@ package pl.bmstefanski.tools.basic;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import pl.bmstefanski.tools.basic.util.BanUtils;
 import pl.bmstefanski.tools.basic.util.UserUtils;
 
 import java.util.UUID;

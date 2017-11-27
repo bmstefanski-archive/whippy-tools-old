@@ -3,7 +3,12 @@ package pl.bmstefanski.tools.database;
 public class SQLite implements Database {
 
     @Override
-    public void checkTable() {
+    public void checkUser() {
+
+    }
+
+    @Override
+    public void checkBan() {
 
     }
 }

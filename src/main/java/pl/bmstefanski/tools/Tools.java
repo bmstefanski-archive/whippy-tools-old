@@ -2,6 +2,8 @@ package pl.bmstefanski.tools;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import pl.bmstefanski.tools.basic.Ban;
+import pl.bmstefanski.tools.basic.util.BanUtils;
 import pl.bmstefanski.tools.command.*;
 import pl.bmstefanski.tools.command.ToolsCommand;
 import pl.bmstefanski.tools.command.ReloadCommand;
@@ -31,7 +33,10 @@ public final class Tools extends JavaPlugin {
         saveDefaultConfig();
 
         databaseManager.establishConnection();
-        mySQL.checkTable();
+        mySQL.checkUser();
+        mySQL.checkBan();
+        BanUtils.loadBans();
+
         MessageFile.loadMessages();
         registerListeners();
         registerCommands();
@@ -40,6 +45,8 @@ public final class Tools extends JavaPlugin {
     @Override
     public void onDisable() {
         MessageFile.saveMessages();
+
+        BanUtils.saveBans();
 
         instance = null;
     }
@@ -64,6 +71,7 @@ public final class Tools extends JavaPlugin {
         commands.registerCommandObject(new ClearCommand());
         commands.registerCommandObject(new BroadcastCommand());
         commands.registerCommandObject(new BackCommand());
+        commands.registerCommandObject(new BanCommand());
     }
 
     private void registerListeners() {

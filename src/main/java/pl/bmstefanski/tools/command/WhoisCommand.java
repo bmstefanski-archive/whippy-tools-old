@@ -10,10 +10,7 @@ import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.configuration.Messages;
 import pl.bmstefanski.tools.basic.User;
-import pl.bmstefanski.tools.util.BooleanUtils;
-import pl.bmstefanski.tools.util.MessageUtils;
-import pl.bmstefanski.tools.util.TextUtils;
-import pl.bmstefanski.tools.util.TimeUtils;
+import pl.bmstefanski.tools.util.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -77,18 +74,8 @@ public class WhoisCommand {
     }
 
     public List<String> whoisCompleter(CommandSender commandSender, CommandContext context) {
-        if (context.getArgs().length == 1) {
-            List<String> availableList = new ArrayList<>();
-
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                if (player.getName().startsWith(context.getParam(0).toLowerCase())) {
-                    availableList.add(player.getName());
-                }
-            }
-
-            Collections.sort(availableList);
-            return availableList;
-        }
+        List<String> availableList = TabCompleterUtils.getAvailableList(context);
+        if (availableList != null) return availableList;
 
         return null;
     }

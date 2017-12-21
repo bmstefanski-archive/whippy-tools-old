@@ -9,6 +9,7 @@ import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.configuration.Messages;
 import pl.bmstefanski.tools.manager.TeleportManager;
+import pl.bmstefanski.tools.util.TabCompleterUtils;
 import pl.bmstefanski.tools.util.TeleportUtils;
 import pl.bmstefanski.tools.util.MessageUtils;
 
@@ -50,18 +51,8 @@ public class BackCommand {
     }
 
     public List<String> backCompleter(CommandSender commandSender, CommandContext context) {
-        if (context.getArgs().length == 1) {
-            List<String> availableList = new ArrayList<>();
-
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                if (player.getName().startsWith(context.getParam(0).toLowerCase())) {
-                    availableList.add(player.getName());
-                }
-            }
-
-            Collections.sort(availableList);
-            return availableList;
-        }
+        List<String> availableList = TabCompleterUtils.getAvailableList(context);
+        if (availableList != null) return availableList;
 
         return null;
     }

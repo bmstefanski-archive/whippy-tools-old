@@ -11,6 +11,7 @@ import pl.bmstefanski.tools.configuration.Messages;
 import pl.bmstefanski.tools.manager.SpawnManager;
 import pl.bmstefanski.tools.manager.TeleportManager;
 import pl.bmstefanski.tools.util.MessageUtils;
+import pl.bmstefanski.tools.util.TabCompleterUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -53,18 +54,8 @@ public class SpawnCommand {
     }
 
     public List<String> spawnCompleter(CommandSender commandSender, CommandContext context) {
-        if (context.getArgs().length == 1) {
-            List<String> availableList = new ArrayList<>();
-
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                if (player.getName().startsWith(context.getParam(0).toLowerCase())) {
-                    availableList.add(player.getName());
-                }
-            }
-
-            Collections.sort(availableList);
-            return availableList;
-        }
+        List<String> availableList = TabCompleterUtils.getAvailableList(context);
+        if (availableList != null) return availableList;
 
         return null;
     }

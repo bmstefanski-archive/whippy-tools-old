@@ -9,6 +9,7 @@ import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.configuration.Messages;
 import pl.bmstefanski.tools.util.BooleanUtils;
 import pl.bmstefanski.tools.util.MessageUtils;
+import pl.bmstefanski.tools.util.TabCompleterUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,18 +55,8 @@ public class FlyCommand {
     }
 
     public List<String> flyCompleter(CommandSender commandSender, CommandContext context) {
-        if (context.getArgs().length == 1) {
-            List<String> availableList = new ArrayList<>();
-
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                if (player.getName().startsWith(context.getParam(0).toLowerCase())) {
-                    availableList.add(player.getName());
-                }
-            }
-
-            Collections.sort(availableList);
-            return availableList;
-        }
+        List<String> availableList = TabCompleterUtils.getAvailableList(context);
+        if (availableList != null) return availableList;
 
         return null;
     }

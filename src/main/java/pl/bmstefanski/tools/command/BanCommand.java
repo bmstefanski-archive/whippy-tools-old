@@ -28,10 +28,9 @@ public class BanCommand {
     )
 
     private void ban(CommandSender commandSender, CommandContext context) {
-        Player player = Bukkit.getPlayer(context.getParam(0));
-        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(player.getUniqueId());
+        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(context.getParam(0));
 
-        if (offlinePlayer == null) {
+        if (!offlinePlayer.hasPlayedBefore()) {
             MessageUtils.sendMessage(commandSender, StringUtils.replace(Messages.PLAYER_NOT_FOUND, "%player%", context.getParam(0)));
             return;
         }
@@ -54,6 +53,7 @@ public class BanCommand {
 
         if (offlinePlayer.isOnline()) {
             String banFormat = TextUtils.listToString(Messages.BAN_FORMAT);
+            Player player = Bukkit.getPlayer(offlinePlayer.getUniqueId());
 
             player.kickPlayer(StringUtils.replaceEach(banFormat,
                     new String[]{"%punisher%", "%until%", "%reason%"},

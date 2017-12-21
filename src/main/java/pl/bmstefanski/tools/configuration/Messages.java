@@ -36,7 +36,7 @@ public class Messages {
     public static String CLEAR = "&7Wyczyszczono twoj ekwipunek!";
     public static String CLEAR_OTHER = "&7Wyczyszczono ekwipunek gracza &e%player%&7!";
     public static List<String> WHOIS = Arrays.asList(
-            "&8&m-----------------------------------------",
+            "&8&m-----------------------------------------&r",
             "  &7Nickname: &e%nickname%",
             "  &7UUID: &e%uuid%",
             "  &7IP: &e%ip%",
@@ -50,4 +50,13 @@ public class Messages {
             "  &7Fly: %fly%",
             "&8&m-----------------------------------------");
     public static String GAMEMODE_FAIL = "&cMusisz wybrac tryb!";
+    public static List<String> BAN_FORMAT = Arrays.asList(
+            "&8&m---------------------------------------------------&r",
+            "  &cZostales zbanowany przez: &e%punisher% &cdo &e%until%",
+            "  &7Odbanuj sie na: &ewww.dzienkiStary.pl",
+            "  &7Powod: %reason%",
+            "&8&m---------------------------------------------------"
+    );
+    public static String ALREADY_BANNED = "&cGracz %player% jest juz zbanowany!";
+    public static String DEFAULT_REASON = "&cAdmin ma zawsze racje!";
 }

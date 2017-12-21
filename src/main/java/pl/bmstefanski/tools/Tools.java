@@ -2,7 +2,6 @@ package pl.bmstefanski.tools;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import pl.bmstefanski.tools.basic.Ban;
 import pl.bmstefanski.tools.basic.util.BanUtils;
 import pl.bmstefanski.tools.command.*;
 import pl.bmstefanski.tools.command.ToolsCommand;
@@ -45,8 +44,6 @@ public final class Tools extends JavaPlugin {
     @Override
     public void onDisable() {
         MessageFile.saveMessages();
-
-        BanUtils.saveBans();
 
         instance = null;
     }

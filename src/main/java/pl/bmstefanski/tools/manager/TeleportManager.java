@@ -8,10 +8,10 @@ import org.bukkit.scheduler.BukkitTask;
 import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.configuration.Messages;
 import pl.bmstefanski.tools.util.MessageUtils;
-import pl.bmstefanski.tools.util.ReflectionUtils;
-import pl.bmstefanski.tools.util.packet.PacketPlayOutTitle;
+import pl.bmstefanski.tools.util.reflect.PacketSender;
+import pl.bmstefanski.tools.util.reflect.transition.PacketPlayOutTitle;
 
-import java.util.HashMap;
+import java.util.*;
 
 public class TeleportManager {
 
@@ -42,8 +42,6 @@ public class TeleportManager {
                 bar = MessageUtils.fixColor(StringUtils.replace(Messages.TELEPORT_COUNTING,"%count%", i + ""));
             }
 
-            ReflectionUtils.sendPacket(player, new PacketPlayOutTitle(bar, -1, -1, -1).getActionBar());
-
             if (count == 0) {
                 player.teleport(location);
                 COUNTDOWN.get(player).cancel();
@@ -67,7 +65,7 @@ public class TeleportManager {
         COUNTDOWN.remove(player);
 
         MessageUtils.sendMessage(player, Messages.TELEPORT_CANCELLED);
-        ReflectionUtils.sendPacket(player, new PacketPlayOutTitle(MessageUtils.fixColor(Messages.TELEPORT_CANCELLED), -1, -1, -1).getActionBar());
+//        ReflectionUtils.sendPacket(player, new PacketPlayOutTitle(MessageUtils.fixColor(Messages.TELEPORT_CANCELLED), -1, -1, -1).getActionBar());
     }
 
 }

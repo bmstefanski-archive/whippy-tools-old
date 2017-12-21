@@ -8,8 +8,6 @@ import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.configuration.Messages;
 import pl.bmstefanski.tools.util.MessageUtils;
-import pl.bmstefanski.tools.util.ReflectionUtils;
-import pl.bmstefanski.tools.util.packet.PacketPlayOutTitle;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -41,12 +39,12 @@ public class BroadcastCommand {
 
         if (context.getArgs().length > 1) {
             if (context.getParam(0).equalsIgnoreCase("action")) {
-                ReflectionUtils.sendPacket(new PacketPlayOutTitle(message, -1, -1, -1).getActionBar());
+//                ReflectionUtils.sendPacket(new PacketPlayOutTitle(message, -1, -1, -1).getActionBar());
             } else if (context.getParam(0).equalsIgnoreCase("title")) {
-                ReflectionUtils.sendPacket(new PacketPlayOutTitle(message, -1, -1, -1).getTitle());
+//                ReflectionUtils.sendPacket(new PacketPlayOutTitle(message, -1, -1, -1).getTitle());
             } else if (context.getParam(0).equalsIgnoreCase("subtitle")) {
-                ReflectionUtils.sendPacket(new PacketPlayOutTitle("", -1, -1, -1).getTitle());
-                ReflectionUtils.sendPacket(new PacketPlayOutTitle(message, -1, -1, -1).getSubTitle());
+//                ReflectionUtils.sendPacket(new PacketPlayOutTitle("", -1, -1, -1).getTitle());
+//                ReflectionUtils.sendPacket(new PacketPlayOutTitle(message, -1, -1, -1).getSubTitle());
             } else if (context.getParam(0).equalsIgnoreCase("chat")) {
                 Bukkit.broadcastMessage(MessageUtils.fixColor(StringUtils.replace(Messages.BROADCAST_FORMAT, "%message%", stringBuilder.toString())));
             }

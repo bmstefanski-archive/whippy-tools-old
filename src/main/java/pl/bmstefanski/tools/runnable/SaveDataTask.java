@@ -20,15 +20,16 @@ public class SaveDataTask extends BukkitRunnable {
     @Override
     public void run() {
         try {
-            String sql = "INSERT INTO `players` (`uuid`, `name`, `ip`) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE `name`=?, `ip`=?";
+            String sql = "INSERT INTO `players` (`uuid`, `name`, `ip`) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE `uuid`=?, `name`=?, `ip`=?";
 
             PreparedStatement preparedStatement = databaseManager.getConnection().prepareStatement(sql);
 
             preparedStatement.setString(1, user.getUUID().toString());
             preparedStatement.setString(2, user.getName());
             preparedStatement.setString(3, user.getIp());
-            preparedStatement.setString(4, user.getName());
-            preparedStatement.setString(5, user.getIp());
+            preparedStatement.setString(4, user.getUUID().toString());
+            preparedStatement.setString(5, user.getName());
+            preparedStatement.setString(6, user.getIp());
 
             preparedStatement.executeUpdate();
             preparedStatement.close();

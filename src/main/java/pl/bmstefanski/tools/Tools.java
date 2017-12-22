@@ -69,6 +69,7 @@ public final class Tools extends JavaPlugin {
         commands.registerCommandObject(new BroadcastCommand());
         commands.registerCommandObject(new BackCommand());
         commands.registerCommandObject(new BanCommand());
+        commands.registerCommandObject(new UnbanCommand());
     }
 
     private void registerListeners() {

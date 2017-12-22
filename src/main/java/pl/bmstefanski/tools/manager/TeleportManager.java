@@ -1,5 +1,6 @@
 package pl.bmstefanski.tools.manager;
 
+import net.minecraft.server.v1_12_R1.PacketPlayOutTitle.EnumTitleAction;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -15,7 +16,7 @@ import java.util.*;
 
 public class TeleportManager {
 
-    private static HashMap<Player, BukkitTask> COUNTDOWN;
+    private static final HashMap<Player, BukkitTask> COUNTDOWN;
     private final Tools plugin = Tools.getInstance();
     private Player player;
     private int count;
@@ -42,6 +43,8 @@ public class TeleportManager {
                 bar = MessageUtils.fixColor(StringUtils.replace(Messages.TELEPORT_COUNTING,"%count%", i + ""));
             }
 
+            PacketSender.sendPacket(player, Collections.singletonList(PacketPlayOutTitle.getPacket(EnumTitleAction.ACTIONBAR, bar, -1, -1, -1)));
+
             if (count == 0) {
                 player.teleport(location);
                 COUNTDOWN.get(player).cancel();
@@ -65,7 +68,6 @@ public class TeleportManager {
         COUNTDOWN.remove(player);
 
         MessageUtils.sendMessage(player, Messages.TELEPORT_CANCELLED);
-//        ReflectionUtils.sendPacket(player, new PacketPlayOutTitle(MessageUtils.fixColor(Messages.TELEPORT_CANCELLED), -1, -1, -1).getActionBar());
     }
 
 }

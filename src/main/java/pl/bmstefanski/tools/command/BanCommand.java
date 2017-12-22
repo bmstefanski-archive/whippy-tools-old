@@ -53,12 +53,16 @@ public class BanCommand {
 
         if (offlinePlayer.isOnline()) {
             String banFormat = TextUtils.listToString(Messages.BAN_FORMAT);
+            String untilFormat = MessageUtils.fixColor(Messages.PERMANENT_BAN);
+
             Player player = Bukkit.getPlayer(offlinePlayer.getUniqueId());
 
             player.kickPlayer(StringUtils.replaceEach(banFormat,
                     new String[]{"%punisher%", "%until%", "%reason%"},
-                    new String[]{ban.getPunisherName(), ban.getUntil() + "", reason}));
+                    new String[]{ban.getPunisherName(), untilFormat, reason}));
         }
+
+        MessageUtils.sendMessage(commandSender, StringUtils.replace(Messages.SUCCESSFULLY_BANNED, "%player%", offlinePlayer.getName()));
     }
 
     public List<String> banCompleter(CommandSender commandSender, CommandContext context) {

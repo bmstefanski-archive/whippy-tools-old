@@ -17,7 +17,7 @@ public class PlayerQuit implements Listener {
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        User user = User.get(event.getPlayer().getUniqueId());
+        User user = User.get(event.getPlayer());
         Player player = user.getPlayer();
 
         user.setIp(user.getPlayer().getAddress().getHostName());

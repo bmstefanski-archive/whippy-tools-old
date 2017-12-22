@@ -57,6 +57,10 @@ public class Messages {
             "  &7Powod: %reason%",
             "&8&m---------------------------------------------------"
     );
-    public static String ALREADY_BANNED = "&cGracz %player% jest juz zbanowany!";
+    public static String ALREADY_BANNED = "&cGracz &7%player% &cjest juz zbanowany!";
     public static String DEFAULT_REASON = "&cAdmin ma zawsze racje!";
+    public static String PERMANENT_BAN = "&cna zawsze";
+    public static String NOT_BANNED = "&cGracz &7%player% &cnie jest zbanowany.";
+    public static String SUCCESSFULLY_UNBANNED = "&cPomyslnie odbanowano gracza &7%player%";
+    public static String SUCCESSFULLY_BANNED = "&cPomyslnie zbanowano gracza &7%player%";
 }

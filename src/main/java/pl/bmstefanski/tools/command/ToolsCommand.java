@@ -3,8 +3,10 @@ package pl.bmstefanski.tools.command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import pl.bmstefanski.tools.Tools;
+import pl.bmstefanski.tools.command.basic.BukkitCommands;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
+import pl.bmstefanski.tools.command.basic.Commands;
 import pl.bmstefanski.tools.util.MessageUtils;
 
 public class ToolsCommand {
@@ -19,6 +21,9 @@ public class ToolsCommand {
     public void tools(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;
+
+        Commands commands = new BukkitCommands(Tools.getInstance());
+        System.out.println(commands.getCommands());
 
         MessageUtils.sendMessage(player, "&e" + Tools.getInstance().getDescription().getName() +
                                         "&f(" + Tools.getInstance().getConfig().getString("language").toUpperCase() +

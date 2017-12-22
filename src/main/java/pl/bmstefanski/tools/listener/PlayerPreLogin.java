@@ -12,6 +12,7 @@ import pl.bmstefanski.tools.basic.User;
 import pl.bmstefanski.tools.basic.util.BanUtils;
 import pl.bmstefanski.tools.configuration.Messages;
 import pl.bmstefanski.tools.runnable.LoadDataTask;
+import pl.bmstefanski.tools.util.MessageUtils;
 import pl.bmstefanski.tools.util.TextUtils;
 
 public class PlayerPreLogin implements Listener {
@@ -25,10 +26,11 @@ public class PlayerPreLogin implements Listener {
         if (ban == null) return;
         if (BanUtils.isBanned(offlinePlayer)) {
             String banFormat = TextUtils.listToString(Messages.BAN_FORMAT);
+            String untilFormat = MessageUtils.fixColor(Messages.PERMANENT_BAN);
 
             event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, StringUtils.replaceEach(banFormat,
                     new String[]{"%punisher%", "%until%", "%reason%"},
-                    new String[]{ban.getPunisherName(), ban.getUntil() + "", ban.getReason()}));
+                    new String[]{ban.getPunisherName(), ban.getUntil() <= 0 ? untilFormat : ban.getUntil() + "", ban.getReason()}));
 
             return;
         } else BanUtils.removeBan(ban);

@@ -1,5 +1,6 @@
 package pl.bmstefanski.tools.command;
 
+import net.minecraft.server.v1_12_R1.PacketPlayOutTitle.EnumTitleAction;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -8,10 +9,13 @@ import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.configuration.Messages;
 import pl.bmstefanski.tools.util.MessageUtils;
+import pl.bmstefanski.tools.util.reflect.PacketSender;
+import pl.bmstefanski.tools.util.reflect.transition.PacketPlayOutTitle;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
 
 public class BroadcastCommand {
 
@@ -35,19 +39,42 @@ public class BroadcastCommand {
             stringBuilder.append(context.getArgs()[i]);
         }
 
-        String message = MessageUtils.fixColor(stringBuilder.toString());
+        String message = stringBuilder.toString();
+        Object reset = PacketPlayOutTitle.getPacket(EnumTitleAction.RESET, "", -1, -1, -1);
 
-        if (context.getArgs().length > 1) {
-            if (context.getParam(0).equalsIgnoreCase("action")) {
-//                ReflectionUtils.sendPacket(new PacketPlayOutTitle(message, -1, -1, -1).getActionBar());
-            } else if (context.getParam(0).equalsIgnoreCase("title")) {
-//                ReflectionUtils.sendPacket(new PacketPlayOutTitle(message, -1, -1, -1).getTitle());
-            } else if (context.getParam(0).equalsIgnoreCase("subtitle")) {
-//                ReflectionUtils.sendPacket(new PacketPlayOutTitle("", -1, -1, -1).getTitle());
-//                ReflectionUtils.sendPacket(new PacketPlayOutTitle(message, -1, -1, -1).getSubTitle());
-            } else if (context.getParam(0).equalsIgnoreCase("chat")) {
+
+        switch (context.getParam(0)) {
+            case "action":
+                List<Object> actionPackets = Arrays.asList(
+                        reset,
+                        PacketPlayOutTitle.getPacket(EnumTitleAction.ACTIONBAR, message, -1, -1, -1)
+                );
+
+                PacketSender.sendPacket(Bukkit.getOnlinePlayers(), actionPackets);
+                break;
+
+            case "title":
+                List<Object> titlePackets = Arrays.asList(
+                        reset,
+                        PacketPlayOutTitle.getPacket(EnumTitleAction.TITLE, message, -1, -1, -1)
+                );
+
+                PacketSender.sendPacket(Bukkit.getOnlinePlayers(), titlePackets);
+                break;
+
+            case "subtitle":
+                List<Object> subtitlePackets = Arrays.asList(
+                        reset,
+                        PacketPlayOutTitle.getPacket(EnumTitleAction.TITLE, "", -1, -1, -1),
+                        PacketPlayOutTitle.getPacket(EnumTitleAction.SUBTITLE, message, -1, -1, -1)
+                );
+
+                PacketSender.sendPacket(Bukkit.getOnlinePlayers(), subtitlePackets);
+                break;
+
+            case "chat":
                 Bukkit.broadcastMessage(MessageUtils.fixColor(StringUtils.replace(Messages.BROADCAST_FORMAT, "%message%", stringBuilder.toString())));
-            }
+                break;
         }
     }
 

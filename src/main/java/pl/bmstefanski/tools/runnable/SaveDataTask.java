@@ -1,28 +1,29 @@
 package pl.bmstefanski.tools.runnable;
 
-import org.bukkit.scheduler.BukkitRunnable;
-import pl.bmstefanski.tools.basic.User;
-import pl.bmstefanski.tools.manager.DatabaseManager;
+import pl.bmstefanski.tools.api.basic.User;
+import pl.bmstefanski.tools.api.storage.Storage;
+import pl.bmstefanski.tools.storage.AbstractStorage;
+import pl.bmstefanski.tools.type.PreparedStatements;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class SaveDataTask extends BukkitRunnable {
+public class SaveDataTask extends AbstractStorage implements Runnable {
 
     private final User user;
-    private final DatabaseManager databaseManager;
 
-    public SaveDataTask(User user) {
+    public SaveDataTask(Storage storage, User user) {
+        super(storage);
+
         this.user = user;
-        this.databaseManager = DatabaseManager.getInstance();
     }
 
     @Override
     public void run() {
         try {
-            String sql = "INSERT INTO `players` (`uuid`, `name`, `ip`) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE `uuid`=?, `name`=?, `ip`=?";
+            getStorage().connect();
 
-            PreparedStatement preparedStatement = databaseManager.getConnection().prepareStatement(sql);
+            PreparedStatement preparedStatement = getStorage().getPreparedStatement(PreparedStatements.SAVE_PLAYER.name());
 
             preparedStatement.setString(1, user.getUUID().toString());
             preparedStatement.setString(2, user.getName());

@@ -4,16 +4,16 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import pl.bmstefanski.tools.api.basic.User;
+import pl.bmstefanski.tools.basic.manager.UserManager;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
-import pl.bmstefanski.tools.configuration.Messages;
-import pl.bmstefanski.tools.basic.User;
+import pl.bmstefanski.tools.storage.configuration.Messages;
+import pl.bmstefanski.tools.basic.UserImpl;
 import pl.bmstefanski.tools.util.BooleanUtils;
 import pl.bmstefanski.tools.util.MessageUtils;
 import pl.bmstefanski.tools.util.TabCompleterUtils;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class GodCommand {
@@ -32,7 +32,11 @@ public class GodCommand {
         Player player = (Player) commandSender;
 
         if (context.getArgs().length == 0) {
-            User user = User.get(player.getUniqueId());
+            User user = UserManager.getUser(player.getUniqueId());
+
+            if (user == null) {
+                return;
+            }
 
             boolean godState = !user.isGod();
             user.setGod(godState);
@@ -45,7 +49,11 @@ public class GodCommand {
             }
 
             Player target = Bukkit.getPlayer(context.getParam(0));
-            User user = User.get(target.getUniqueId());
+            User user = UserManager.getUser(target.getUniqueId());
+
+            if (user == null) {
+                return;
+            }
 
             boolean godState = !user.isGod();
             user.setGod(godState);

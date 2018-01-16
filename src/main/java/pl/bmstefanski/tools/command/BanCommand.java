@@ -6,10 +6,9 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import pl.bmstefanski.tools.basic.Ban;
-import pl.bmstefanski.tools.basic.util.BanUtils;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
-import pl.bmstefanski.tools.configuration.Messages;
+import pl.bmstefanski.tools.storage.configuration.Messages;
 import pl.bmstefanski.tools.util.MessageUtils;
 import pl.bmstefanski.tools.util.TabCompleterUtils;
 import pl.bmstefanski.tools.util.TextUtils;
@@ -35,10 +34,10 @@ public class BanCommand {
             return;
         }
 
-        if (BanUtils.isBanned(offlinePlayer)) {
-            MessageUtils.sendMessage(commandSender, StringUtils.replace(Messages.ALREADY_BANNED, "%player%", offlinePlayer.getName()));
-            return;
-        }
+//        if (BanManager.isBanned(offlinePlayer)) {
+//            MessageUtils.sendMessage(commandSender, StringUtils.replace(Messages.ALREADY_BANNED, "%player%", offlinePlayer.getName()));
+//            return;
+//        }
 
         String reason = "";
 
@@ -49,7 +48,7 @@ public class BanCommand {
         Ban ban = new Ban(offlinePlayer, commandSender.getName());
         ban.setReason(reason);
         ban.setUntil(-1);
-        BanUtils.addBan(ban);
+//        BanManager.addBan(ban);
 
         if (offlinePlayer.isOnline()) {
             String banFormat = TextUtils.listToString(Messages.BAN_FORMAT);

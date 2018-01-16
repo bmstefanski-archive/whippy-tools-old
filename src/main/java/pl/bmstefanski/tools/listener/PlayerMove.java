@@ -3,9 +3,16 @@ package pl.bmstefanski.tools.listener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.manager.TeleportManager;
 
 public class PlayerMove implements Listener {
+
+    private final Tools plugin;
+
+    public PlayerMove(Tools plugin) {
+        this.plugin = plugin;
+    }
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
@@ -13,7 +20,7 @@ public class PlayerMove implements Listener {
                 || event.getFrom().getBlockY() != event.getTo().getBlockY()
                 || event.getFrom().getBlockZ() != event.getTo().getBlockZ()) {
 
-            new TeleportManager(event.getPlayer()).stop();
+            new TeleportManager(plugin, event.getPlayer()).stop();
         }
     }
 }

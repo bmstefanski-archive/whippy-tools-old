@@ -6,14 +6,14 @@ import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import pl.bmstefanski.tools.api.basic.User;
+import pl.bmstefanski.tools.basic.manager.UserManager;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
-import pl.bmstefanski.tools.configuration.Messages;
-import pl.bmstefanski.tools.basic.User;
+import pl.bmstefanski.tools.storage.configuration.Messages;
+import pl.bmstefanski.tools.basic.UserImpl;
 import pl.bmstefanski.tools.util.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class WhoisCommand {
@@ -49,7 +49,7 @@ public class WhoisCommand {
     }
 
     private void send(Player player, OfflinePlayer offlinePlayer) {
-        User user = User.get(offlinePlayer.getUniqueId());
+        User user = UserManager.getUser(offlinePlayer.getUniqueId());
 
         Location location = offlinePlayer.getPlayer().getLocation();
         String playerHealth = offlinePlayer.getPlayer().getHealth() + "/20";

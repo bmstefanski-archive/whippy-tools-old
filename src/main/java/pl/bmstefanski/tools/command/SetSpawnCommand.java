@@ -4,18 +4,21 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
-import pl.bmstefanski.tools.configuration.Messages;
+import pl.bmstefanski.tools.storage.configuration.Messages;
+import pl.bmstefanski.tools.storage.configuration.PluginConfig;
 import pl.bmstefanski.tools.util.MessageUtils;
 
 public class SetSpawnCommand {
 
-    private final FileConfiguration config = Tools.getInstance().getConfig();
-    private final Tools plugin = Tools.getInstance();
+    private final Tools plugin;
+
+    public SetSpawnCommand(Tools plugin) {
+        this.plugin = plugin;
+    }
 
     @CommandInfo (
             name = "setspawn",
@@ -25,6 +28,7 @@ public class SetSpawnCommand {
     )
 
     public void setSpawn(CommandSender commandSender, CommandContext context) {
+        PluginConfig config = plugin.getConfiguration();
 
         Player player = (Player) commandSender;
 
@@ -40,9 +44,6 @@ public class SetSpawnCommand {
         config.set("spawn.z", z);
         config.set("spawn.world", world.getName());
         config.set("spawn.set", true);
-
-        config.options().copyDefaults(true);
-        plugin.saveConfig();
 
         MessageUtils.sendMessage(player, StringUtils.replaceEach(Messages.SETSPAWN_SUCCESS,
                 new String[] {"%x%", "%y%", "%z%", "%world%"},

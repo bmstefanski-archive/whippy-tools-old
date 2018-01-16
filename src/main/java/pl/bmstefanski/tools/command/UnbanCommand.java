@@ -4,11 +4,9 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
-import pl.bmstefanski.tools.basic.Ban;
-import pl.bmstefanski.tools.basic.util.BanUtils;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
-import pl.bmstefanski.tools.configuration.Messages;
+import pl.bmstefanski.tools.storage.configuration.Messages;
 import pl.bmstefanski.tools.util.MessageUtils;
 import pl.bmstefanski.tools.util.TabCompleterUtils;
 
@@ -33,13 +31,13 @@ public class UnbanCommand {
             return;
         }
 
-        if (!BanUtils.isBanned(offlinePlayer)) {
-            MessageUtils.sendMessage(commandSender, StringUtils.replace(Messages.NOT_BANNED, "%player%", offlinePlayer.getName()));
-            return;
-        }
-
-        Ban ban = BanUtils.getBan(offlinePlayer);
-        BanUtils.removeBan(ban);
+//        if (!BanManager.isBanned(offlinePlayer)) {
+//            MessageUtils.sendMessage(commandSender, StringUtils.replace(Messages.NOT_BANNED, "%player%", offlinePlayer.getName()));
+//            return;
+//        }
+//
+//        Ban ban = BanManager.getBan(offlinePlayer);
+//        BanManager.removeBan(ban);
 
         MessageUtils.sendMessage(commandSender, StringUtils.replace(Messages.SUCCESSFULLY_UNBANNED, "%player%", offlinePlayer.getName()));
     }

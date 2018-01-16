@@ -3,13 +3,17 @@ package pl.bmstefanski.tools.command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import pl.bmstefanski.tools.Tools;
-import pl.bmstefanski.tools.command.basic.BukkitCommands;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
-import pl.bmstefanski.tools.command.basic.Commands;
 import pl.bmstefanski.tools.util.MessageUtils;
 
 public class ToolsCommand {
+
+    private final Tools plugin;
+
+    public ToolsCommand(Tools plugin) {
+        this.plugin = plugin;
+    }
 
     @CommandInfo (
             name = {"tools"},
@@ -22,12 +26,9 @@ public class ToolsCommand {
 
         Player player = (Player) commandSender;
 
-        Commands commands = new BukkitCommands(Tools.getInstance());
-        System.out.println(commands.getCommands());
-
-        MessageUtils.sendMessage(player, "&e" + Tools.getInstance().getDescription().getName() +
-                                        "&f(" + Tools.getInstance().getConfig().getString("language").toUpperCase() +
-                                        ") &7" + Tools.getInstance().getDescription().getVersion() +
-                                        " by §e" + Tools.getInstance().getDescription().getAuthors());
+        MessageUtils.sendMessage(player, "&e" + plugin.getDescription().getName() +
+                                        "&f(" + plugin.getConfig().getString("getLanguage").toUpperCase() +
+                                        ") &7" + plugin.getDescription().getVersion() +
+                                        " by §e" + plugin.getDescription().getAuthors());
     }
 }

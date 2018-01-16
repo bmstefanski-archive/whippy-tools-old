@@ -5,19 +5,27 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
-import pl.bmstefanski.tools.configuration.Messages;
+import pl.bmstefanski.tools.storage.configuration.Messages;
+import pl.bmstefanski.tools.storage.configuration.PluginConfig;
 import pl.bmstefanski.tools.manager.TeleportManager;
 import pl.bmstefanski.tools.util.TabCompleterUtils;
 import pl.bmstefanski.tools.util.TeleportUtils;
 import pl.bmstefanski.tools.util.MessageUtils;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class BackCommand {
+
+    private final PluginConfig config;
+    private final Tools plugin;
+
+    public BackCommand(Tools plugin) {
+        this.plugin = plugin;
+        this.config = plugin.getConfiguration();
+    }
 
     @CommandInfo (
             name = "back",
@@ -33,8 +41,8 @@ public class BackCommand {
         Player player = (Player) commandSender;
 
         if (context.getArgs().length == 0) {
-            Location location = new TeleportUtils().getLocation(player);
-            new TeleportManager(player).start(location);
+//            Location location = new TeleportUtils().getLocation(player);
+//            new TeleportManager(plugin, player).start();
 
             return;
         }
@@ -45,9 +53,9 @@ public class BackCommand {
         }
 
         Player target = Bukkit.getPlayer(context.getParam(0));
-        Location location = new TeleportUtils().getLocation(target);
+//        Location location = new TeleportUtils().getLocation(target);
 
-        target.teleport(location);
+//        target.teleport(location);
     }
 
     public List<String> backCompleter(CommandSender commandSender, CommandContext context) {

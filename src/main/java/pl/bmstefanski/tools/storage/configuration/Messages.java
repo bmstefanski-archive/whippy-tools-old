@@ -1,4 +1,4 @@
-package pl.bmstefanski.tools.configuration;
+package pl.bmstefanski.tools.storage.configuration;
 
 import java.util.Arrays;
 import java.util.List;

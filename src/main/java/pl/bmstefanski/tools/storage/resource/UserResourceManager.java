@@ -1,4 +1,4 @@
-package pl.bmstefanski.tools.runnable;
+package pl.bmstefanski.tools.storage.resource;
 
 import pl.bmstefanski.tools.api.basic.User;
 import pl.bmstefanski.tools.api.storage.Storage;
@@ -10,18 +10,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
-public class LoadDataTask extends AbstractStorage implements Runnable {
+public class UserResourceManager extends AbstractStorage {
 
-    private final User user;
-
-    public LoadDataTask(Storage storage, User user) {
+    public UserResourceManager(Storage storage) {
         super(storage);
-
-        this.user = user;
     }
 
-    @Override
-    public void run() {
+    public void load(User user) {
+
         getStorage().connect();
 
         try {
@@ -45,4 +41,25 @@ public class LoadDataTask extends AbstractStorage implements Runnable {
         }
     }
 
+    public void save(User user) {
+        try {
+            getStorage().connect();
+
+            PreparedStatement preparedStatement = getStorage().getPreparedStatement(PreparedStatements.SAVE_PLAYER.name());
+
+            preparedStatement.setString(1, user.getUUID().toString());
+            preparedStatement.setString(2, user.getName());
+            preparedStatement.setString(3, user.getIp());
+            preparedStatement.setString(4, user.getUUID().toString());
+            preparedStatement.setString(5, user.getName());
+            preparedStatement.setString(6, user.getIp());
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+            System.out.println("Saved to database " + user.getName() + " | " + user.getIp());
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+}
 }

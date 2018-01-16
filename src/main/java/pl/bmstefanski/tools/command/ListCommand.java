@@ -4,11 +4,11 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import pl.bmstefanski.tools.api.basic.User;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
-import pl.bmstefanski.tools.configuration.Messages;
-import pl.bmstefanski.tools.basic.User;
-import pl.bmstefanski.tools.basic.util.UserUtils;
+import pl.bmstefanski.tools.storage.configuration.Messages;
+import pl.bmstefanski.tools.basic.manager.UserManager;
 import pl.bmstefanski.tools.util.MessageUtils;
 
 import java.util.*;
@@ -36,7 +36,7 @@ public class ListCommand {
         if (context.getArgs().length == 1) {
             if (context.getParam(0).equalsIgnoreCase("full")) {
 
-                for (User user : UserUtils.getUsers()) {
+                for (User user : new UserManager().getOnlinePlayers()) {
                     if (!user.isOnline()) return;
                     if (onlinePlayers.contains(user.getName())) return;
 

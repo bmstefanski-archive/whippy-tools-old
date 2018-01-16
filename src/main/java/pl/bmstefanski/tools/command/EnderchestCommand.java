@@ -6,12 +6,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
-import pl.bmstefanski.tools.configuration.Messages;
+import pl.bmstefanski.tools.storage.configuration.Messages;
 import pl.bmstefanski.tools.util.MessageUtils;
 import pl.bmstefanski.tools.util.TabCompleterUtils;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class EnderchestCommand {

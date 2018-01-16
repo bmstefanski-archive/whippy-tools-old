@@ -7,7 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 import pl.bmstefanski.tools.Tools;
-import pl.bmstefanski.tools.configuration.Messages;
+import pl.bmstefanski.tools.storage.configuration.Messages;
 import pl.bmstefanski.tools.util.MessageUtils;
 import pl.bmstefanski.tools.util.reflect.PacketSender;
 import pl.bmstefanski.tools.util.reflect.transition.PacketPlayOutTitle;
@@ -17,17 +17,17 @@ import java.util.*;
 public class TeleportManager {
 
     private static final HashMap<Player, BukkitTask> COUNTDOWN;
-    private final Tools plugin = Tools.getInstance();
-    private Player player;
+    private final Player player;
+    private final Tools plugin;
     private int count;
 
     static {
         COUNTDOWN = new HashMap<>();
     }
 
-    public TeleportManager(Player player) {
+    public TeleportManager(Tools plugin, Player player) {
+        this.plugin = plugin;
         this.player = player;
-        this.count = plugin.getConfig().getInt("countdown");
     }
 
     public void start(Location location) {

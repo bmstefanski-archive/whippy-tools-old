@@ -13,12 +13,13 @@ public class SpawnManager {
         this.plugin = plugin;
     }
 
-    public Location getSpawn() {
-        int x = plugin.getConfiguration().getSpawnX();
-        int y = plugin.getConfiguration().getSpawnY();
-        int z = plugin.getConfiguration().getSpawnZ();
-        World world = Bukkit.getWorld(plugin.getConfiguration().getSpawnWorld());
-
-        return new Location(world, x, y, z);
-    }
+//    public Location getSpawn() {
+////        int x = plugin.getConfiguration().getSpawnX();
+////        int y = plugin.getConfiguration().getSpawnY();
+////        int z = plugin.getConfiguration().getSpawnZ();
+////        World world = Bukkit.getWorld(plugin.getConfiguration().getSpawnWorld());
+//
+////        return new Location(world, x, y, z);
+//    }
 }
+

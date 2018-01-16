@@ -10,9 +10,9 @@ public class MySQLDatabase extends AbstractDatabase {
     private final String database;
     private final String password;
     private final String hostname;
-    private final String port;
+    private final int port;
 
-    public MySQLDatabase(String username, String database, String password, String hostname, String port) {
+    public MySQLDatabase(String username, String database, String password, String hostname, int port) {
         this.username = username;
         this.database = database;
         this.password = password;

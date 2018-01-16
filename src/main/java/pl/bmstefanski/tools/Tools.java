@@ -36,13 +36,14 @@ public class Tools extends JavaPlugin implements ToolsAPI {
     @Override
     public void onEnable() {
 
+
+        this.pluginConfig = ConfigManager.createInstance(PluginConfig.class);
+        this.pluginConfig.bindFile(pluginConfigFile);
+
+        this.pluginConfig.load();
+        this.pluginConfig.save();
+
         setUpStorage();
-
-//        this.pluginConfig = ConfigManager.createInstance(PluginConfig.class);
-//        this.pluginConfig.bindFile(pluginConfigFile);
-
-//        this.pluginConfig.load();
-//        this.pluginConfig.save();
 
         this.userResourceManager = new UserResourceManager(storage);
         this.userManager = new UserManager();
@@ -76,14 +77,14 @@ public class Tools extends JavaPlugin implements ToolsAPI {
                 new BroadcastCommand(),
                 new BackCommand(this),
                 new BanCommand(),
-                new UnbanCommand()
+                new UnbanCommand(),
+                new DebugCommand(this)
         );
-
     }
 
     @Override
     public void onDisable() {
-//        this.pluginConfig.save();
+        this.pluginConfig.save();
     }
 
     private void registerCommands(Object... commands) {
@@ -102,7 +103,7 @@ public class Tools extends JavaPlugin implements ToolsAPI {
     }
 
     private void setUpStorage() {
-        this.storage = new StorageConnector(DatabaseType.MYSQL).getStorage();
+        this.storage = new StorageConnector(this, DatabaseType.MYSQL).getStorage();
     }
 
     @Override

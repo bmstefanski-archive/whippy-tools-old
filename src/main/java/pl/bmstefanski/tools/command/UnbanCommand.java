@@ -5,6 +5,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import pl.bmstefanski.tools.Tools;
+import pl.bmstefanski.tools.api.basic.Ban;
+import pl.bmstefanski.tools.api.basic.User;
+import pl.bmstefanski.tools.basic.manager.BanManager;
+import pl.bmstefanski.tools.basic.manager.UserManager;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
@@ -33,19 +37,20 @@ public class UnbanCommand {
     private void unban(CommandSender commandSender, CommandContext context) {
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(context.getParam(0));
         Messages messages = plugin.getMessages();
+        User user = UserManager.getUser(offlinePlayer.getUniqueId());
 
         if (!offlinePlayer.hasPlayedBefore()) {
             MessageUtils.sendMessage(commandSender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
             return;
         }
 
-//        if (!BanManager.isBanned(offlinePlayer)) {
-//            MessageUtils.sendMessage(commandSender, StringUtils.replace(Messages.NOT_BANNED, "%player%", offlinePlayer.getName()));
-//            return;
-//        }
-//
-//        Ban ban = BanManager.getBan(offlinePlayer);
-//        BanManager.removeBan(ban);
+        if (!user.isBanned()) {
+            MessageUtils.sendMessage(commandSender, StringUtils.replace(messages.getNotBanned(), "%player%", offlinePlayer.getName()));
+            return;
+        }
+
+        Ban ban = BanManager.getBan(user.getUUID());
+        plugin.getBanResource().remove(ban);
 
         MessageUtils.sendMessage(commandSender, StringUtils.replace(messages.getSuccessfullyUnbanned(), "%player%", offlinePlayer.getName()));
     }

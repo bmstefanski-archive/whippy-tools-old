@@ -14,6 +14,7 @@ import pl.bmstefanski.tools.storage.StorageConnector;
 import pl.bmstefanski.tools.storage.configuration.Messages;
 import pl.bmstefanski.tools.storage.configuration.PluginConfig;
 import pl.bmstefanski.tools.listener.*;
+import pl.bmstefanski.tools.storage.resource.BanResourceManager;
 import pl.bmstefanski.tools.type.DatabaseType;
 
 import java.io.File;
@@ -25,6 +26,7 @@ public class Tools extends JavaPlugin implements ToolsAPI {
 
     private static Tools instance;
 
+    private BanResourceManager banResource;
     private PluginConfig pluginConfig;
     private UserManager userManager;
     private Messages messages;
@@ -52,6 +54,9 @@ public class Tools extends JavaPlugin implements ToolsAPI {
         setUpStorage();
 
         this.userManager = new UserManager();
+        this.banResource = new BanResourceManager(storage);
+
+        this.banResource.load();
 
         registerListeners(
                 new PlayerCommandPreprocess(this),
@@ -90,6 +95,7 @@ public class Tools extends JavaPlugin implements ToolsAPI {
     public void onDisable() {
         this.pluginConfig.save();
         this.messages.save();
+        this.banResource.save();
     }
 
     private void registerCommands(Object... commands) {
@@ -129,6 +135,11 @@ public class Tools extends JavaPlugin implements ToolsAPI {
     @Override
     public Messages getMessages() {
         return messages;
+    }
+
+    @Override
+    public BanResourceManager getBanResource() {
+        return banResource;
     }
 
     public static Tools getInstance() {

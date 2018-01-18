@@ -6,7 +6,10 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import pl.bmstefanski.tools.Tools;
-import pl.bmstefanski.tools.basic.Ban;
+import pl.bmstefanski.tools.api.basic.Ban;
+import pl.bmstefanski.tools.api.basic.User;
+import pl.bmstefanski.tools.basic.BanImpl;
+import pl.bmstefanski.tools.basic.manager.UserManager;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
@@ -37,17 +40,21 @@ public class BanCommand {
 
         Messages messages = plugin.getMessages();
 
+        Player player = (Player) commandSender;
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(context.getParam(0));
+
+        User punisher = UserManager.getUser(player.getUniqueId());
+        User punished = UserManager.getUser(offlinePlayer.getUniqueId());
 
         if (!offlinePlayer.hasPlayedBefore()) {
             MessageUtils.sendMessage(commandSender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
             return;
         }
 
-//        if (BanManager.isBanned(offlinePlayer)) {
-//            MessageUtils.sendMessage(commandSender, StringUtils.replace(Messages.ALREADY_BANNED, "%player%", offlinePlayer.getName()));
-//            return;
-//        }
+        if (punished.isBanned()) {
+            MessageUtils.sendMessage(commandSender, StringUtils.replace(messages.getAlreadyBanned(), "%player%", offlinePlayer.getName()));
+            return;
+        }
 
         String reason = "";
 
@@ -55,20 +62,21 @@ public class BanCommand {
             reason = MessageUtils.fixColor(messages.getDefaultReason());
         } else if (context.getArgs().length > 1) reason = MessageUtils.fixColor(StringUtils.join(context.getArgs(), " ", 1, context.getArgs().length));
 
-        Ban ban = new Ban(offlinePlayer, commandSender.getName());
+        Ban ban = new BanImpl(punished.getUUID(), punisher.getUUID());
         ban.setReason(reason);
-        ban.setUntil(-1);
-//        BanManager.addBan(ban);
+        ban.setTime(-1);
+        plugin.getBanResource().add(ban);
+
 
         if (offlinePlayer.isOnline()) {
             String banFormat = TextUtils.listToString(messages.getBanFormat());
             String untilFormat = MessageUtils.fixColor(messages.getPermanentBan());
 
-            Player player = Bukkit.getPlayer(offlinePlayer.getUniqueId());
+            Player target = Bukkit.getPlayer(offlinePlayer.getUniqueId());
 
-            player.kickPlayer(StringUtils.replaceEach(banFormat,
+            target.kickPlayer(StringUtils.replaceEach(banFormat,
                     new String[]{"%punisher%", "%until%", "%reason%"},
-                    new String[]{ban.getPunisherName(), untilFormat, reason}));
+                    new String[]{ban.getPunisher().toString(), untilFormat, reason}));
         }
 
         MessageUtils.sendMessage(commandSender, StringUtils.replace(messages.getSuccessfullyBanned(), "%player%", offlinePlayer.getName()));

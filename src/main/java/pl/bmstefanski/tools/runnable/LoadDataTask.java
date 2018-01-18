@@ -3,7 +3,7 @@ package pl.bmstefanski.tools.runnable;
 import pl.bmstefanski.tools.api.basic.User;
 import pl.bmstefanski.tools.api.storage.Storage;
 import pl.bmstefanski.tools.storage.AbstractStorage;
-import pl.bmstefanski.tools.type.PreparedStatements;
+import pl.bmstefanski.tools.type.StatementType;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,7 +25,7 @@ public class LoadDataTask extends AbstractStorage implements Runnable {
         getStorage().connect();
 
         try {
-            PreparedStatement preparedStatement = getStorage().getPreparedStatement(PreparedStatements.LOAD_PLAYER.name());
+            PreparedStatement preparedStatement = getStorage().getPreparedStatement(StatementType.LOAD_PLAYER);
             preparedStatement.setString(1, user.getUUID().toString());
 
             ResultSet resultSet = preparedStatement.executeQuery();

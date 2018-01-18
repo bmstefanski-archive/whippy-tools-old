@@ -4,6 +4,7 @@ import pl.bmstefanski.tools.api.storage.Storage;
 import pl.bmstefanski.tools.basic.manager.UserManager;
 import pl.bmstefanski.tools.storage.configuration.Messages;
 import pl.bmstefanski.tools.storage.configuration.PluginConfig;
+import pl.bmstefanski.tools.storage.resource.BanResourceManager;
 
 public interface ToolsAPI {
 
@@ -14,4 +15,6 @@ public interface ToolsAPI {
     UserManager getUserManager();
 
     Messages getMessages();
+
+    BanResourceManager getBanResource();
 }

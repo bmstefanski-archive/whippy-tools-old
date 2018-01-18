@@ -2,7 +2,9 @@ package pl.bmstefanski.tools.basic;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import pl.bmstefanski.tools.api.basic.Ban;
 import pl.bmstefanski.tools.api.basic.User;
+import pl.bmstefanski.tools.basic.manager.BanManager;
 import pl.bmstefanski.tools.basic.manager.UserManager;
 
 import java.util.UUID;
@@ -78,6 +80,13 @@ public class UserImpl implements User {
     @Override
     public boolean isGod() {
         return god;
+    }
+
+    @Override
+    public boolean isBanned() {
+        Ban ban = BanManager.getBan(uuid);
+
+        return ban != null && ban.getTime() != 0L && ban.getTime() <= System.currentTimeMillis();
     }
 
     @Override

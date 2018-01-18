@@ -25,4 +25,6 @@ public interface User {
     boolean isGod();
 
     boolean isOnline();
+
+    boolean isBanned();
 }

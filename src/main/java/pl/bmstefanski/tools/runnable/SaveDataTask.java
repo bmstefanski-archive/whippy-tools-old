@@ -3,7 +3,7 @@ package pl.bmstefanski.tools.runnable;
 import pl.bmstefanski.tools.api.basic.User;
 import pl.bmstefanski.tools.api.storage.Storage;
 import pl.bmstefanski.tools.storage.AbstractStorage;
-import pl.bmstefanski.tools.type.PreparedStatements;
+import pl.bmstefanski.tools.type.StatementType;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -23,7 +23,7 @@ public class SaveDataTask extends AbstractStorage implements Runnable {
         try {
             getStorage().connect();
 
-            PreparedStatement preparedStatement = getStorage().getPreparedStatement(PreparedStatements.SAVE_PLAYER.name());
+            PreparedStatement preparedStatement = getStorage().getPreparedStatement(StatementType.SAVE_PLAYER);
 
             preparedStatement.setString(1, user.getUUID().toString());
             preparedStatement.setString(2, user.getName());

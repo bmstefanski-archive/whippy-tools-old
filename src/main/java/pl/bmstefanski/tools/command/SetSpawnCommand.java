@@ -2,7 +2,6 @@ package pl.bmstefanski.tools.command;
 
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import pl.bmstefanski.tools.Tools;
@@ -32,23 +31,22 @@ public class SetSpawnCommand {
         Messages messages = plugin.getMessages();
 
         Player player = (Player) commandSender;
-
-        World world = player.getWorld();
         Location location = player.getLocation();
 
-        int x =  location.getBlockX();
+        String worldName = location.getWorld().getName();
+        int x = location.getBlockX();
         int y = location.getBlockY();
         int z = location.getBlockZ();
 
-        config.set("spawn.x", x);
-        config.set("spawn.y", y);
-        config.set("spawn.z", z);
-        config.set("spawn.world", world.getName());
-        config.set("spawn.set", true);
+        config.getSpawnSection().setX(x);
+        config.getSpawnSection().setY(y);
+        config.getSpawnSection().setZ(z);
+        config.getSpawnSection().setWorld(worldName);
+        config.getSpawnSection().setExists(true);
 
         MessageUtils.sendMessage(player, StringUtils.replaceEach(messages.getSetspawnSuccess(),
                 new String[] {"%x%", "%y%", "%z%", "%world%"},
-                new String[] {x + "", y + "", z + "", world.getName()}));
+                new String[] {x + "", y + "", z + "", worldName}));
 
     }
 }

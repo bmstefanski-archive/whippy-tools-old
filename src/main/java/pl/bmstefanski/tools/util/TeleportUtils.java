@@ -1,12 +1,5 @@
 package pl.bmstefanski.tools.util;
 
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
-import pl.bmstefanski.tools.storage.configuration.PluginConfig;
-import pl.bmstefanski.tools.manager.SpawnManager;
-
-import java.util.HashMap;
-
 public class TeleportUtils {
 
 /*    public TeleportUtils(PluginConfig config) {

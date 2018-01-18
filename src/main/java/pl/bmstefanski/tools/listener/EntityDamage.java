@@ -7,8 +7,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.api.basic.User;
 import pl.bmstefanski.tools.basic.manager.UserManager;
-import pl.bmstefanski.tools.manager.TeleportManager;
-import pl.bmstefanski.tools.basic.UserImpl;
 
 public class EntityDamage implements Listener {
 
@@ -24,7 +22,7 @@ public class EntityDamage implements Listener {
             return;
         }
 
-        new TeleportManager(plugin, (Player) event.getEntity()).stop();
+//        new TeleportManager(plugin, (Player) event.getEntity()).stop();
 
         Player player = (Player) event.getEntity();
         User user = UserManager.getUser(player.getUniqueId());

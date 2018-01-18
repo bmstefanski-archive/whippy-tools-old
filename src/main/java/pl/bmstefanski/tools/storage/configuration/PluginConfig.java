@@ -49,6 +49,16 @@ public interface PluginConfig extends Config {
         default boolean getExists() {
             return true;
         }
+
+        void setX(int x);
+
+        void setY(int y);
+
+        void setZ(int z);
+
+        void setWorld(String world);
+
+        void setExists(boolean exists);
     }
 
     interface MySQL extends Config {

@@ -91,7 +91,7 @@ public interface Messages extends Config {
         return "&cTeleportacja zostala przerwana!";
     }
 
-    default String getTeleportCurrentlyTeleporting() {
+    default String getCurrentlyTeleporting() {
         return "&cJuz sie teleportujesz!";
     }
 

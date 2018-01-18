@@ -14,7 +14,6 @@ import pl.bmstefanski.tools.storage.StorageConnector;
 import pl.bmstefanski.tools.storage.configuration.Messages;
 import pl.bmstefanski.tools.storage.configuration.PluginConfig;
 import pl.bmstefanski.tools.listener.*;
-import pl.bmstefanski.tools.storage.resource.UserResourceManager;
 import pl.bmstefanski.tools.type.DatabaseType;
 
 import java.io.File;
@@ -26,7 +25,6 @@ public class Tools extends JavaPlugin implements ToolsAPI {
 
     private static Tools instance;
 
-    private UserResourceManager userResourceManager;
     private PluginConfig pluginConfig;
     private UserManager userManager;
     private Messages messages;
@@ -53,7 +51,6 @@ public class Tools extends JavaPlugin implements ToolsAPI {
 
         setUpStorage();
 
-        this.userResourceManager = new UserResourceManager(storage);
         this.userManager = new UserManager();
 
         registerListeners(
@@ -127,11 +124,6 @@ public class Tools extends JavaPlugin implements ToolsAPI {
     @Override
     public UserManager getUserManager() {
         return userManager;
-    }
-
-    @Override
-    public UserResourceManager getUserResource() {
-        return userResourceManager;
     }
 
     @Override

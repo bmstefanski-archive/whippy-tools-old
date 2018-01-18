@@ -35,7 +35,7 @@ public class TeleportManager {
         Messages messages = plugin.getMessages();
 
         if (COUNTDOWN.containsKey(player)) {
-            MessageUtils.sendMessage(player, messages.getTeleportCurrentlyTeleporting());
+            MessageUtils.sendMessage(player, messages.getCurrentlyTeleporting());
             return;
         }
 

@@ -1,5 +1,5 @@
 name: Tools
-version: ${project.version}
+version: BETA
 main: pl.bmstefanski.tools.Tools
 authors: [BMStefanski]
 description: Tools plugin

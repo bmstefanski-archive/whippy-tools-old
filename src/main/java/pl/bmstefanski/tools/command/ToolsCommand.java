@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
+import pl.bmstefanski.tools.storage.configuration.PluginConfig;
 import pl.bmstefanski.tools.util.MessageUtils;
 
 public class ToolsCommand {
@@ -25,9 +26,10 @@ public class ToolsCommand {
     public void tools(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;
+        PluginConfig config = plugin.getConfiguration();
 
         MessageUtils.sendMessage(player, "&e" + plugin.getDescription().getName() +
-                                        "&f(" + plugin.getConfig().getString("getLanguage").toUpperCase() +
+                                        "&f(" + config.getLanguage().toUpperCase() +
                                         ") &7" + plugin.getDescription().getVersion() +
                                         " by §e" + plugin.getDescription().getAuthors());
     }

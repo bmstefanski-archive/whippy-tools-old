@@ -4,12 +4,12 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.api.basic.User;
 import pl.bmstefanski.tools.basic.manager.UserManager;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.basic.UserImpl;
 import pl.bmstefanski.tools.util.BooleanUtils;
 import pl.bmstefanski.tools.util.MessageUtils;
 import pl.bmstefanski.tools.util.TabCompleterUtils;
@@ -17,6 +17,12 @@ import pl.bmstefanski.tools.util.TabCompleterUtils;
 import java.util.List;
 
 public class GodCommand {
+
+    private final Tools plugin;
+
+    public GodCommand(Tools plugin) {
+        this.plugin = plugin;
+    }
 
     @CommandInfo (
             name = "god",
@@ -30,6 +36,7 @@ public class GodCommand {
     public void god(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;
+        Messages messages = plugin.getMessages();
 
         if (context.getArgs().length == 0) {
             User user = UserManager.getUser(player.getUniqueId());
@@ -41,10 +48,10 @@ public class GodCommand {
             boolean godState = !user.isGod();
             user.setGod(godState);
 
-            MessageUtils.sendMessage(player, StringUtils.replace(Messages.GOD_SWITCHED, "%state%", BooleanUtils.parse(godState)));
+            MessageUtils.sendMessage(player, StringUtils.replace(messages.getGodSwitched(), "%state%", BooleanUtils.parse(godState)));
         } else {
             if (Bukkit.getPlayer(context.getParam(0)) == null) {
-                MessageUtils.sendMessage(player, StringUtils.replace(Messages.PLAYER_NOT_FOUND, "%player%", context.getParam(0)));
+                MessageUtils.sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
                 return;
             }
 
@@ -59,10 +66,10 @@ public class GodCommand {
             user.setGod(godState);
 
 
-            MessageUtils.sendMessage(player, StringUtils.replaceEach(Messages.GOD_SWITCHED_OTHER,
+            MessageUtils.sendMessage(player, StringUtils.replaceEach(messages.getGodSwitchedOther(),
                     new String[] {"%state%", "%player%"},
                     new String[] {BooleanUtils.parse(godState), target.getName()}));
-            MessageUtils.sendMessage(target, StringUtils.replace(Messages.GOD_SWITCHED, "%state%", BooleanUtils.parse(godState)));
+            MessageUtils.sendMessage(target, StringUtils.replace(messages.getGodSwitched(), "%state%", BooleanUtils.parse(godState)));
         }
     }
 

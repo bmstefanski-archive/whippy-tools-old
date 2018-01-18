@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
@@ -17,6 +18,12 @@ import java.util.Collections;
 import java.util.List;
 
 public class GamemodeCommand {
+
+    private final Tools plugin;
+
+    public GamemodeCommand(Tools plugin) {
+        this.plugin = plugin;
+    }
 
     @CommandInfo (
             name = {"gamemode", "gm"},
@@ -31,23 +38,24 @@ public class GamemodeCommand {
     public void gamemode(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;
+        Messages messages = plugin.getMessages();
 
         if (context.getArgs().length == 1) {
             GameMode gameMode = GamemodeUtils.parseGameMode(context.getParam(0));
 
             if (gameMode == null) {
-                MessageUtils.sendMessage(player, Messages.GAMEMODE_FAIL);
+                MessageUtils.sendMessage(player, messages.getGamemodeFail());
                 return;
             }
 
             player.setGameMode(gameMode);
-            MessageUtils.sendMessage(player, StringUtils.replace(Messages.GAMEMODE_SUCCESS, "%gamemode%", gameMode.toString()));
+            MessageUtils.sendMessage(player, StringUtils.replace(messages.getGamemodeSuccess(), "%gamemode%", gameMode.toString()));
 
             return;
         }
 
         if (Bukkit.getPlayer(context.getParam(1)) == null) {
-            MessageUtils.sendMessage(player, StringUtils.replace(Messages.PLAYER_NOT_FOUND, "%player%", context.getParam(1)));
+            MessageUtils.sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(1)));
             return;
         }
 
@@ -55,14 +63,14 @@ public class GamemodeCommand {
         GameMode gameMode = GamemodeUtils.parseGameMode(context.getParam(0));
 
         if (gameMode == null) {
-            MessageUtils.sendMessage(player, Messages.GAMEMODE_FAIL);
+            MessageUtils.sendMessage(player, messages.getGamemodeFail());
             return;
         }
 
         target.setGameMode(gameMode);
 
-        MessageUtils.sendMessage(target, StringUtils.replace(Messages.GAMEMODE_SUCCESS, "%gamemode%", gameMode.toString()));
-        MessageUtils.sendMessage(player, StringUtils.replaceEach(Messages.GAMEMODE_SUCCESS_OTHER,
+        MessageUtils.sendMessage(target, StringUtils.replace(messages.getGamemodeSuccess(), "%gamemode%", gameMode.toString()));
+        MessageUtils.sendMessage(player, StringUtils.replaceEach(messages.getGamemodeSuccessOther(),
                 new String[] {"%gamemode%", "%player%"},
                 new String[] {gameMode.toString(), target.getName()}));
     }

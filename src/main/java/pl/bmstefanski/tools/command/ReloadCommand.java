@@ -24,6 +24,9 @@ public class ReloadCommand {
     )
 
     public void reload(CommandSender commandSender, CommandContext context) {
+
+        Messages messages = plugin.getMessages();
+
         long startedTime = System.currentTimeMillis();
 
         // todo
@@ -31,6 +34,6 @@ public class ReloadCommand {
         long elapsedTime = (System.currentTimeMillis() - startedTime);
         float elapsedTimeSecond = elapsedTime / 1000F;
 
-        MessageUtils.sendMessage(commandSender, StringUtils.replace(Messages.SUCCESSFULLY_RELOADED, "%time%", elapsedTimeSecond + ""));
+        MessageUtils.sendMessage(commandSender, StringUtils.replace(messages.getSuccessfullyReloaded(), "%time%", elapsedTimeSecond + ""));
     }
 }

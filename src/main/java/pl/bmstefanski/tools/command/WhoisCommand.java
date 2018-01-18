@@ -6,17 +6,23 @@ import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.api.basic.User;
 import pl.bmstefanski.tools.basic.manager.UserManager;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.basic.UserImpl;
 import pl.bmstefanski.tools.util.*;
 
 import java.util.List;
 
 public class WhoisCommand {
+
+    private final Tools plugin;
+
+    public WhoisCommand(Tools plugin) {
+        this.plugin = plugin;
+    }
 
     @CommandInfo (
             name = "whois",
@@ -26,10 +32,10 @@ public class WhoisCommand {
             usage = "[player]",
             completer = "whoisCompleter"
     )
-
     public void whois(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;
+        Messages messages = plugin.getMessages();
 
         if (context.getArgs().length == 0) {
             OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(player.getUniqueId());
@@ -37,7 +43,7 @@ public class WhoisCommand {
             send(player, offlinePlayer);
         } else {
             if (Bukkit.getPlayer(context.getParam(0)) == null) {
-                MessageUtils.sendMessage(player, StringUtils.replace(Messages.PLAYER_NOT_FOUND, "%player%", context.getParam(0)));
+                MessageUtils.sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
                 return;
             }
 
@@ -50,6 +56,7 @@ public class WhoisCommand {
 
     private void send(Player player, OfflinePlayer offlinePlayer) {
         User user = UserManager.getUser(offlinePlayer.getUniqueId());
+        Messages messages = plugin.getMessages();
 
         Location location = offlinePlayer.getPlayer().getLocation();
         String playerHealth = offlinePlayer.getPlayer().getHealth() + "/20";
@@ -63,7 +70,7 @@ public class WhoisCommand {
         String playerJoin = TimeUtils.parse(offlinePlayer.getFirstPlayed());
         String playerLast = user.isOnline() ? "online" : TimeUtils.parse(offlinePlayer.getLastPlayed());
 
-        String whois = TextUtils.listToString(Messages.WHOIS);
+        String whois = TextUtils.listToString(messages.getWhois());
 
         MessageUtils.sendMessage(player, StringUtils.replaceEach(whois,
                 new String[] {"%nickname%", "%uuid%", "%ip%", "%registered%", "%last%", "%location%", "%hp%", "%hunger%", "%gamemode%", "%god%", "%fly%"},

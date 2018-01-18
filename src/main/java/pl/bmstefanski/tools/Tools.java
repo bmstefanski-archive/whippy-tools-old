@@ -11,6 +11,7 @@ import pl.bmstefanski.tools.command.*;
 import pl.bmstefanski.tools.command.basic.BukkitCommands;
 import pl.bmstefanski.tools.command.basic.Commands;
 import pl.bmstefanski.tools.storage.StorageConnector;
+import pl.bmstefanski.tools.storage.configuration.Messages;
 import pl.bmstefanski.tools.storage.configuration.PluginConfig;
 import pl.bmstefanski.tools.listener.*;
 import pl.bmstefanski.tools.storage.resource.UserResourceManager;
@@ -21,12 +22,14 @@ import java.io.File;
 public class Tools extends JavaPlugin implements ToolsAPI {
 
     private final File pluginConfigFile = new File(getDataFolder(), "config.yml");
+    private final File messagesFile = new File(getDataFolder(), "messages.yml");
 
     private static Tools instance;
 
     private UserResourceManager userResourceManager;
-    private UserManager userManager;
     private PluginConfig pluginConfig;
+    private UserManager userManager;
+    private Messages messages;
     private Storage storage;
 
     public Tools() {
@@ -36,12 +39,17 @@ public class Tools extends JavaPlugin implements ToolsAPI {
     @Override
     public void onEnable() {
 
-
         this.pluginConfig = ConfigManager.createInstance(PluginConfig.class);
+        this.messages = ConfigManager.createInstance(Messages.class);
+
         this.pluginConfig.bindFile(pluginConfigFile);
+        this.messages.bindFile(messagesFile);
 
         this.pluginConfig.load();
         this.pluginConfig.save();
+
+        this.messages.load();
+        this.messages.save();
 
         setUpStorage();
 
@@ -49,7 +57,7 @@ public class Tools extends JavaPlugin implements ToolsAPI {
         this.userManager = new UserManager();
 
         registerListeners(
-                new PlayerCommandPreprocess(),
+                new PlayerCommandPreprocess(this),
                 new PlayerJoin(this),
                 new PlayerPreLogin(this),
                 new PlayerQuit(this),
@@ -60,30 +68,31 @@ public class Tools extends JavaPlugin implements ToolsAPI {
 
         registerCommands(
                 new ToolsCommand(this),
-                new WhoisCommand(),
-                new WorkbenchCommand(),
+                new WhoisCommand(this),
+                new WorkbenchCommand(this),
                 new SpawnCommand(this),
                 new SetSpawnCommand(this),
                 new ReloadCommand(this),
-                new ListCommand(),
-                new HealCommand(),
-                new GodCommand(),
-                new GamemodeCommand(),
-                new FlyCommand(),
-                new FeedCommand(),
-                new EnderchestCommand(),
+                new ListCommand(this),
+                new HealCommand(this),
+                new GodCommand(this),
+                new GamemodeCommand(this),
+                new FlyCommand(this),
+                new FeedCommand(this),
+                new EnderchestCommand(this),
                 new DisableCommand(this),
-                new ClearCommand(),
-                new BroadcastCommand(),
+                new ClearCommand(this),
+                new BroadcastCommand(this),
                 new BackCommand(this),
-                new BanCommand(),
-                new UnbanCommand()
+                new BanCommand(this),
+                new UnbanCommand(this)
         );
     }
 
     @Override
     public void onDisable() {
         this.pluginConfig.save();
+        this.messages.save();
     }
 
     private void registerCommands(Object... commands) {
@@ -123,6 +132,11 @@ public class Tools extends JavaPlugin implements ToolsAPI {
     @Override
     public UserResourceManager getUserResource() {
         return userResourceManager;
+    }
+
+    @Override
+    public Messages getMessages() {
+        return messages;
     }
 
     public static Tools getInstance() {

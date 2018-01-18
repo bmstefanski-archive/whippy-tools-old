@@ -12,6 +12,7 @@ import org.bukkit.help.HelpTopic;
 import org.bukkit.help.HelpTopicComparator;
 import org.bukkit.help.IndexHelpTopic;
 import org.bukkit.plugin.Plugin;
+import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.storage.configuration.Messages;
 import pl.bmstefanski.tools.util.MessageUtils;
 
@@ -50,7 +51,7 @@ public class BukkitCommands extends Commands implements CommandExecutor, TabComp
                 context.getCommand().handleCommand(sender, context);
             }
         } catch (CommandConsoleException ex) {
-            sender.sendMessage(MessageUtils.fixColor(Messages.ONLY_PLAYER));
+            sender.sendMessage(MessageUtils.fixColor(Tools.getInstance().getMessages().getOnlyPlayer()));
         } catch (CommandPermissionException ex) {
             String permission = ".";
             if (ex.getPermission() != null) {
@@ -58,7 +59,7 @@ public class BukkitCommands extends Commands implements CommandExecutor, TabComp
             }
 
             String permissionString = StringUtils.replace(permission, " - ", "");
-            sender.sendMessage(StringUtils.replace(MessageUtils.fixColor(Messages.NO_PERMISSIONS), "%permission%", permissionString));
+            sender.sendMessage(StringUtils.replace(MessageUtils.fixColor(Tools.getInstance().getMessages().getNoPermissions()), "%permission%", permissionString));
         } catch (CommandUsageException ex) {
             if (ex.getMessage() != null) {
                 sender.sendMessage(ChatColor.RED + ex.getMessage());

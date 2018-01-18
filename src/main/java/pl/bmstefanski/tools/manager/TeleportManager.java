@@ -31,8 +31,11 @@ public class TeleportManager {
     }
 
     public void start(Location location) {
+
+        Messages messages = plugin.getMessages();
+
         if (COUNTDOWN.containsKey(player)) {
-            MessageUtils.sendMessage(player, Messages.TELEPORT_CURRENTLY_TELEPORTING);
+            MessageUtils.sendMessage(player, messages.getTeleportCurrentlyTeleporting());
             return;
         }
 
@@ -40,7 +43,7 @@ public class TeleportManager {
 
             String bar = "";
             for (int i = 0; i < count; i++) {
-                bar = MessageUtils.fixColor(StringUtils.replace(Messages.TELEPORT_COUNTING,"%count%", i + ""));
+                bar = MessageUtils.fixColor(StringUtils.replace(messages.getTeleportCounting(),"%count%", i + ""));
             }
 
             PacketSender.sendPacket(player, Collections.singletonList(PacketPlayOutTitle.getPacket(EnumTitleAction.ACTIONBAR, bar, -1, -1, -1)));
@@ -50,7 +53,7 @@ public class TeleportManager {
                 COUNTDOWN.get(player).cancel();
                 COUNTDOWN.remove(player);
 
-                MessageUtils.sendMessage(player, Messages.TELEPORT_SUCCESS);
+                MessageUtils.sendMessage(player, messages.getTeleportSuccess());
                 return;
             }
             count--;
@@ -60,6 +63,9 @@ public class TeleportManager {
     }
 
     public void stop() {
+
+        Messages messages = plugin.getMessages();
+
         if (!COUNTDOWN.containsKey(player)) {
             return;
         }
@@ -67,7 +73,7 @@ public class TeleportManager {
         COUNTDOWN.get(player).cancel();
         COUNTDOWN.remove(player);
 
-        MessageUtils.sendMessage(player, Messages.TELEPORT_CANCELLED);
+        MessageUtils.sendMessage(player, messages.getTeleportCancelled());
     }
 
 }

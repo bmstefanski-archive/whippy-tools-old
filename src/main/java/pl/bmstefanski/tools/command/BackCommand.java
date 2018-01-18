@@ -2,7 +2,6 @@ package pl.bmstefanski.tools.command;
 
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import pl.bmstefanski.tools.Tools;
@@ -10,9 +9,7 @@ import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
 import pl.bmstefanski.tools.storage.configuration.PluginConfig;
-import pl.bmstefanski.tools.manager.TeleportManager;
 import pl.bmstefanski.tools.util.TabCompleterUtils;
-import pl.bmstefanski.tools.util.TeleportUtils;
 import pl.bmstefanski.tools.util.MessageUtils;
 
 import java.util.List;
@@ -39,6 +36,7 @@ public class BackCommand {
     public void back(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;
+        Messages messages = plugin.getMessages();
 
         if (context.getArgs().length == 0) {
 //            Location location = new TeleportUtils().getLocation(player);
@@ -48,7 +46,7 @@ public class BackCommand {
         }
 
         if (Bukkit.getPlayer(context.getParam(0)) == null) {
-            MessageUtils.sendMessage(player, StringUtils.replace(Messages.PLAYER_NOT_FOUND, "%player%", context.getParam(0)));
+            MessageUtils.sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
             return;
         }
 

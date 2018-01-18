@@ -22,7 +22,10 @@ public class DisableCommand {
     )
 
     public void disable(CommandSender commandSender, CommandContext context) {
+
+        Messages messages = plugin.getMessages();
+
         plugin.getServer().getPluginManager().disablePlugin(plugin);
-        MessageUtils.sendMessage(commandSender, Messages.SUCCESSFULLY_DISABLED);
+        MessageUtils.sendMessage(commandSender, messages.getSuccessfullyDisabled());
     }
 }

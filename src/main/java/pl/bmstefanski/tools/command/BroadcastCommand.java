@@ -5,6 +5,7 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
@@ -18,6 +19,12 @@ import java.util.List;
 
 
 public class BroadcastCommand {
+
+    private final Tools plugin;
+
+    public BroadcastCommand(Tools plugin) {
+        this.plugin = plugin;
+    }
 
     @CommandInfo (
             name = {"broadcast", "bc"},
@@ -34,6 +41,8 @@ public class BroadcastCommand {
         StringBuilder stringBuilder = new StringBuilder();
         Player player = (Player) commandSender;
 
+        Messages messages = plugin.getMessages();
+
         for (int i = 1; i < context.getArgs().length; i++) {
             stringBuilder.append(" ");
             stringBuilder.append(context.getArgs()[i]);
@@ -42,6 +51,8 @@ public class BroadcastCommand {
         String message = stringBuilder.toString();
         Object reset = PacketPlayOutTitle.getPacket(EnumTitleAction.RESET, "", -1, -1, -1);
 
+
+        // todo builder do packetplayouttitle :D
 
         switch (context.getParam(0)) {
             case "action":
@@ -73,7 +84,7 @@ public class BroadcastCommand {
                 break;
 
             case "chat":
-                Bukkit.broadcastMessage(MessageUtils.fixColor(StringUtils.replace(Messages.BROADCAST_FORMAT, "%message%", stringBuilder.toString())));
+                Bukkit.broadcastMessage(MessageUtils.fixColor(StringUtils.replace(messages.getBroadcastFormat(), "%message%", stringBuilder.toString())));
                 break;
         }
     }

@@ -4,6 +4,7 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
@@ -13,6 +14,12 @@ import pl.bmstefanski.tools.util.TabCompleterUtils;
 import java.util.List;
 
 public class HealCommand {
+
+    private final Tools plugin;
+
+    public HealCommand(Tools plugin) {
+        this.plugin = plugin;
+    }
 
     @CommandInfo (
             name = "heal",
@@ -26,14 +33,15 @@ public class HealCommand {
     public void heal(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;
+        Messages messages = plugin.getMessages();
 
         if (context.getArgs().length == 0) {
             player.setHealth(20D);
 
-            MessageUtils.sendMessage(player, Messages.HEALED);
+            MessageUtils.sendMessage(player, messages.getHealed());
         } else {
             if (Bukkit.getPlayer(context.getParam(0)) == null) {
-                MessageUtils.sendMessage(player, StringUtils.replace(Messages.PLAYER_NOT_FOUND, "%player%", context.getParam(0)));
+                MessageUtils.sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
                 return;
             }
 
@@ -41,8 +49,8 @@ public class HealCommand {
 
             target.setHealth(20D);
 
-            MessageUtils.sendMessage(target, Messages.HEALED);
-            MessageUtils.sendMessage(player, StringUtils.replace(Messages.HEALED_OTHER, "%player%", target.getName()));
+            MessageUtils.sendMessage(target, messages.getHealed());
+            MessageUtils.sendMessage(player, StringUtils.replace(messages.getHealedOther(), "%player%", target.getName()));
         }
 
     }

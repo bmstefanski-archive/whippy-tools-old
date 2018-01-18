@@ -29,6 +29,7 @@ public class SetSpawnCommand {
 
     public void setSpawn(CommandSender commandSender, CommandContext context) {
         PluginConfig config = plugin.getConfiguration();
+        Messages messages = plugin.getMessages();
 
         Player player = (Player) commandSender;
 
@@ -45,7 +46,7 @@ public class SetSpawnCommand {
         config.set("spawn.world", world.getName());
         config.set("spawn.set", true);
 
-        MessageUtils.sendMessage(player, StringUtils.replaceEach(Messages.SETSPAWN_SUCCESS,
+        MessageUtils.sendMessage(player, StringUtils.replaceEach(messages.getSetspawnSuccess(),
                 new String[] {"%x%", "%y%", "%z%", "%world%"},
                 new String[] {x + "", y + "", z + "", world.getName()}));
 

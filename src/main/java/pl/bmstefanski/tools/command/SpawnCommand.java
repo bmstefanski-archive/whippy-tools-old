@@ -1,17 +1,10 @@
 package pl.bmstefanski.tools.command;
 
-import org.apache.commons.lang.StringUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.PluginConfig;
-import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.manager.SpawnManager;
-import pl.bmstefanski.tools.manager.TeleportManager;
-import pl.bmstefanski.tools.util.MessageUtils;
 import pl.bmstefanski.tools.util.TabCompleterUtils;
 
 import java.util.List;

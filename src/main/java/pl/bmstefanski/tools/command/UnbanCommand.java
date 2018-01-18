@@ -4,6 +4,7 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
+import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
@@ -13,6 +14,12 @@ import pl.bmstefanski.tools.util.TabCompleterUtils;
 import java.util.List;
 
 public class UnbanCommand {
+
+    private final Tools plugin;
+
+    public UnbanCommand(Tools plugin) {
+        this.plugin = plugin;
+    }
 
     @CommandInfo (
             name = "unban",
@@ -25,9 +32,10 @@ public class UnbanCommand {
 
     private void unban(CommandSender commandSender, CommandContext context) {
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(context.getParam(0));
+        Messages messages = plugin.getMessages();
 
         if (!offlinePlayer.hasPlayedBefore()) {
-            MessageUtils.sendMessage(commandSender, StringUtils.replace(Messages.PLAYER_NOT_FOUND, "%player%", context.getParam(0)));
+            MessageUtils.sendMessage(commandSender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
             return;
         }
 
@@ -39,7 +47,7 @@ public class UnbanCommand {
 //        Ban ban = BanManager.getBan(offlinePlayer);
 //        BanManager.removeBan(ban);
 
-        MessageUtils.sendMessage(commandSender, StringUtils.replace(Messages.SUCCESSFULLY_UNBANNED, "%player%", offlinePlayer.getName()));
+        MessageUtils.sendMessage(commandSender, StringUtils.replace(messages.getSuccessfullyUnbanned(), "%player%", offlinePlayer.getName()));
     }
 
     public List<String> unbanCompleter(CommandSender commandSender, CommandContext context) {

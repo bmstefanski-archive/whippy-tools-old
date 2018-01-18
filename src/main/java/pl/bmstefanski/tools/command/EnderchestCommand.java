@@ -4,6 +4,7 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
@@ -13,6 +14,12 @@ import pl.bmstefanski.tools.util.TabCompleterUtils;
 import java.util.List;
 
 public class EnderchestCommand {
+
+    private final Tools plugin;
+
+    public EnderchestCommand(Tools plugin) {
+        this.plugin = plugin;
+    }
 
     @CommandInfo (
             name = {"enderchest", "ender", "ec"},
@@ -26,6 +33,7 @@ public class EnderchestCommand {
     public void enderchest(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;
+        Messages messages = plugin.getMessages();
 
         if (context.getArgs().length == 0) {
             player.openInventory(player.getEnderChest());
@@ -33,7 +41,7 @@ public class EnderchestCommand {
         }
 
         if (Bukkit.getPlayer(context.getParam(0)) == null) {
-            MessageUtils.sendMessage(player, StringUtils.replace(Messages.PLAYER_NOT_FOUND, "%player%", context.getParam(0)));
+            MessageUtils.sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
             return;
         }
 

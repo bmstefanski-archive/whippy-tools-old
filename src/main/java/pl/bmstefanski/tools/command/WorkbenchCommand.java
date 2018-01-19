@@ -16,12 +16,14 @@ import java.util.List;
 public class WorkbenchCommand {
 
     private final Tools plugin;
+    private final Messages messages;
 
     public WorkbenchCommand(Tools plugin) {
         this.plugin = plugin;
+        this.messages = plugin.getMessages();
     }
 
-    @CommandInfo (
+    @CommandInfo(
             name = {"workbench", "wb", "crafting"},
             description = "workbench command",
             permission = "workbench",
@@ -29,11 +31,9 @@ public class WorkbenchCommand {
             usage = "[player]",
             completer = "workbenchCompleter"
     )
-
     public void workbench(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;
-        Messages messages = plugin.getMessages();
 
         if (context.getArgs().length == 0) {
             player.openInventory(player.getInventory());

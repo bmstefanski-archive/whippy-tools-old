@@ -10,21 +10,19 @@ import pl.bmstefanski.tools.util.MessageUtils;
 public class DisableCommand {
 
     private final Tools plugin;
+    private final Messages messages;
 
     public DisableCommand(Tools plugin) {
         this.plugin = plugin;
+        this.messages = plugin.getMessages();
     }
 
-    @CommandInfo (
+    @CommandInfo(
             name = "tools-disable",
             description = "disable command",
             permission = "disable"
     )
-
     public void disable(CommandSender commandSender, CommandContext context) {
-
-        Messages messages = plugin.getMessages();
-
         plugin.getServer().getPluginManager().disablePlugin(plugin);
         MessageUtils.sendMessage(commandSender, messages.getSuccessfullyDisabled());
     }

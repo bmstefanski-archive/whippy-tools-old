@@ -23,9 +23,11 @@ import pl.bmstefanski.tools.util.TextUtils;
 public class PlayerPreLogin implements Listener {
 
     private final Tools plugin;
+    private final Messages messages;
 
     public PlayerPreLogin(Tools plugin) {
         this.plugin = plugin;
+        this.messages = plugin.getMessages();
     }
 
     @EventHandler
@@ -33,21 +35,24 @@ public class PlayerPreLogin implements Listener {
 
         Player player = Bukkit.getPlayer(event.getUniqueId());
         User user = UserManager.getUser(event.getUniqueId());
-        Messages messages = plugin.getMessages();
 
         Ban ban = BanManager.getBan(user.getUUID());
 
-        if (ban == null) return;
-        if (user.isBanned()) {
-            String banFormat = TextUtils.listToString(messages.getBanFormat());
-            String untilFormat = MessageUtils.fixColor(messages.getPermanentBan());
-
-            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, StringUtils.replaceEach(banFormat,
-                    new String[]{"%punisher%", "%until%", "%reason%"},
-                    new String[]{ban.getPunisher().toString(), ban.getTime() <= 0 ? untilFormat : ban.getTime() + "", ban.getReason()}));
-
+        if (ban == null) {
             return;
-        } else plugin.getBanResource().remove(ban);
+        }
+
+        if (!user.isBanned()) {
+            plugin.getBanResource().remove(ban);
+            return;
+        }
+
+        String banFormat = TextUtils.listToString(messages.getBanFormat());
+        String untilFormat = MessageUtils.fixColor(messages.getPermanentBan());
+
+        event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, StringUtils.replaceEach(banFormat,
+                new String[]{"%punisher%", "%until%", "%reason%"},
+                new String[]{ban.getPunisher().toString(), ban.getTime() <= 0 ? untilFormat : ban.getTime() + "", ban.getReason()}));
 
         LoadDataTask loadDataTask = new LoadDataTask(plugin.getStorage(), user);
         new Thread(loadDataTask).run();

@@ -20,12 +20,14 @@ import java.util.List;
 public class UnbanCommand {
 
     private final Tools plugin;
+    private final Messages messages;
 
     public UnbanCommand(Tools plugin) {
         this.plugin = plugin;
+        this.messages = plugin.getMessages();
     }
 
-    @CommandInfo (
+    @CommandInfo(
             name = "unban",
             description = "unban command",
             usage = "[player]",
@@ -33,10 +35,8 @@ public class UnbanCommand {
             min = 1,
             completer = "unbanCompleter"
     )
-
     private void unban(CommandSender commandSender, CommandContext context) {
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(context.getParam(0));
-        Messages messages = plugin.getMessages();
         User user = UserManager.getUser(offlinePlayer.getUniqueId());
 
         if (!offlinePlayer.hasPlayedBefore()) {

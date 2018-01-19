@@ -17,12 +17,14 @@ import java.util.List;
 public class FlyCommand {
 
     private final Tools plugin;
+    private final Messages messages;
 
     public FlyCommand(Tools plugin) {
         this.plugin = plugin;
+        this.messages = plugin.getMessages();
     }
 
-    @CommandInfo (
+    @CommandInfo(
             name = "fly",
             description = "fly command",
             usage = "[player]",
@@ -30,34 +32,34 @@ public class FlyCommand {
             permission = "fly",
             completer = "flyCompleter"
     )
-
     public void fly(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;
-        Messages messages = plugin.getMessages();
 
         if (context.getArgs().length == 0) {
             boolean flyState = !player.isFlying();
             player.setAllowFlight(flyState);
 
             MessageUtils.sendMessage(player, StringUtils.replace(messages.getFlySwitched(), "%state%", BooleanUtils.parse(flyState)));
-        } else {
-            if (Bukkit.getPlayer(context.getParam(0)) == null) {
-                MessageUtils.sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
-                return;
-            }
 
-            Player target = Bukkit.getPlayer(context.getParam(0));
-            boolean flyState = !target.isFlying();
-
-            target.setAllowFlight(flyState);
-
-            MessageUtils.sendMessage(player, StringUtils.replaceEach(messages.getFlySwitchedOther(),
-                    new String[] {"%state%", "%player%"},
-                    new String[] {BooleanUtils.parse(flyState), target.getName()}));
-
-            MessageUtils.sendMessage(target, StringUtils.replace(messages.getFlySwitched(), "%state%", BooleanUtils.parse(flyState)));
+            return;
         }
+
+        if (Bukkit.getPlayer(context.getParam(0)) == null) {
+            MessageUtils.sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
+            return;
+        }
+
+        Player target = Bukkit.getPlayer(context.getParam(0));
+        boolean flyState = !target.isFlying();
+
+        target.setAllowFlight(flyState);
+
+        MessageUtils.sendMessage(player, StringUtils.replaceEach(messages.getFlySwitchedOther(),
+                new String[] {"%state%", "%player%"},
+                new String[] {BooleanUtils.parse(flyState), target.getName()}));
+
+        MessageUtils.sendMessage(target, StringUtils.replace(messages.getFlySwitched(), "%state%", BooleanUtils.parse(flyState)));
     }
 
     public List<String> flyCompleter(CommandSender commandSender, CommandContext context) {

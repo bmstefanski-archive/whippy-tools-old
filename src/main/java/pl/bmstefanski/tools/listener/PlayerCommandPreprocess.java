@@ -12,16 +12,17 @@ import pl.bmstefanski.tools.util.MessageUtils;
 public class PlayerCommandPreprocess implements Listener {
 
     private final Tools plugin;
+    private final Messages messages;
 
     public PlayerCommandPreprocess(Tools plugin) {
         this.plugin = plugin;
+        this.messages = plugin.getMessages();
     }
 
     @EventHandler
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         String command = event.getMessage().split(" ")[0];
         HelpTopic helpTopic = Bukkit.getHelpMap().getHelpTopic(command);
-        Messages messages = plugin.getMessages();
 
         if (helpTopic == null) {
             event.setCancelled(true);

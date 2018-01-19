@@ -11,25 +11,24 @@ import pl.bmstefanski.tools.util.MessageUtils;
 public class ReloadCommand {
 
     private final Tools plugin;
+    private final Messages messages;
 
     public ReloadCommand(Tools plugin) {
         this.plugin = plugin;
+        this.messages = plugin.getMessages();
     }
 
-    @CommandInfo (
+    @CommandInfo(
             name = "tools-reload",
             description = "reload command",
             permission = "reload",
             userOnly = true
     )
-
     public void reload(CommandSender commandSender, CommandContext context) {
-
-        Messages messages = plugin.getMessages();
 
         long startedTime = System.currentTimeMillis();
 
-        // todo
+        // todo CHUUUUJ
 
         long elapsedTime = (System.currentTimeMillis() - startedTime);
         float elapsedTimeSecond = elapsedTime / 1000F;

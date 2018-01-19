@@ -19,12 +19,14 @@ import java.util.List;
 public class WhoisCommand {
 
     private final Tools plugin;
+    private final Messages messages;
 
     public WhoisCommand(Tools plugin) {
         this.plugin = plugin;
+        this.messages = plugin.getMessages();
     }
 
-    @CommandInfo (
+    @CommandInfo(
             name = "whois",
             description = "whois command",
             permission = "whois",
@@ -35,28 +37,28 @@ public class WhoisCommand {
     public void whois(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;
-        Messages messages = plugin.getMessages();
 
         if (context.getArgs().length == 0) {
             OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(player.getUniqueId());
 
             send(player, offlinePlayer);
-        } else {
-            if (Bukkit.getPlayer(context.getParam(0)) == null) {
-                MessageUtils.sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
-                return;
-            }
 
-            Player target = Bukkit.getPlayer(context.getParam(0));
-            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(target.getUniqueId());
-
-            send(target, offlinePlayer);
+            return;
         }
+
+        if (Bukkit.getPlayer(context.getParam(0)) == null) {
+            MessageUtils.sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
+            return;
+        }
+
+        Player target = Bukkit.getPlayer(context.getParam(0));
+        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(target.getUniqueId());
+
+        send(target, offlinePlayer);
     }
 
     private void send(Player player, OfflinePlayer offlinePlayer) {
         User user = UserManager.getUser(offlinePlayer.getUniqueId());
-        Messages messages = plugin.getMessages();
 
         Location location = offlinePlayer.getPlayer().getLocation();
         String playerHealth = offlinePlayer.getPlayer().getHealth() + "/20";

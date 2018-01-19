@@ -20,12 +20,14 @@ import java.util.List;
 public class GamemodeCommand {
 
     private final Tools plugin;
+    private final Messages messages;
 
     public GamemodeCommand(Tools plugin) {
         this.plugin = plugin;
+        this.messages = plugin.getMessages();
     }
 
-    @CommandInfo (
+    @CommandInfo(
             name = {"gamemode", "gm"},
             description = "gamemode command",
             usage = "0/1/2/3 [player]",
@@ -34,11 +36,9 @@ public class GamemodeCommand {
             completer = "gamemodeCompleter",
             min = 1
     )
-
     public void gamemode(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;
-        Messages messages = plugin.getMessages();
 
         if (context.getArgs().length == 1) {
             GameMode gameMode = GamemodeUtils.parseGameMode(context.getParam(0));

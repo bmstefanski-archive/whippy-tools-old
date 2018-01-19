@@ -16,12 +16,14 @@ import java.util.List;
 public class FeedCommand {
 
     private final Tools plugin;
+    private final Messages messages;
 
     public FeedCommand(Tools plugin) {
         this.plugin = plugin;
+        this.messages = plugin.getMessages();
     }
 
-    @CommandInfo (
+    @CommandInfo(
             name = "feed",
             description = "feed command",
             usage = "[player]",
@@ -29,30 +31,29 @@ public class FeedCommand {
             permission = "feed",
             completer = "feedCompleter"
     )
-
     public void feed(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;
-        Messages messages = plugin.getMessages();
 
         if (context.getArgs().length == 0) {
             player.setFoodLevel(20);
 
             MessageUtils.sendMessage(player, messages.getFed());
-        } else {
-            if (Bukkit.getPlayer(context.getParam(0)) == null) {
-                MessageUtils.sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
-                return;
-            }
 
-            Player target = Bukkit.getPlayer(context.getParam(0));
-
-            target.setFoodLevel(20);
-
-            MessageUtils.sendMessage(target, messages.getFed());
-            MessageUtils.sendMessage(player, StringUtils.replace(messages.getFedOther(), "%player%", target.getName()));
+            return;
         }
 
+        if (Bukkit.getPlayer(context.getParam(0)) == null) {
+            MessageUtils.sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
+            return;
+        }
+
+        Player target = Bukkit.getPlayer(context.getParam(0));
+
+        target.setFoodLevel(20);
+
+        MessageUtils.sendMessage(target, messages.getFed());
+        MessageUtils.sendMessage(player, StringUtils.replace(messages.getFedOther(), "%player%", target.getName()));
     }
 
     public List<String> feedCompleter(CommandSender commandSender, CommandContext context) {

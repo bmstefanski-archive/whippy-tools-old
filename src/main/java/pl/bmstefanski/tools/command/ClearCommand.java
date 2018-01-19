@@ -16,12 +16,14 @@ import java.util.List;
 public class ClearCommand {
 
     private final Tools plugin;
+    private final Messages messages;
 
     public ClearCommand(Tools plugin) {
         this.plugin = plugin;
+        this.messages = plugin.getMessages();
     }
 
-    @CommandInfo (
+    @CommandInfo(
             name = {"clear", "ci"},
             description = "clear command",
             usage = "[player]",
@@ -29,11 +31,9 @@ public class ClearCommand {
             permission = "clear",
             completer = "clearCompleter"
     )
-
     public void clear(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;
-        Messages messages = plugin.getMessages();
 
         if (context.getArgs().length == 0) {
             player.getInventory().clear();

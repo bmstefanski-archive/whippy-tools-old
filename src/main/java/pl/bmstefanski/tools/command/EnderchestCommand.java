@@ -16,12 +16,14 @@ import java.util.List;
 public class EnderchestCommand {
 
     private final Tools plugin;
+    private final Messages messages;
 
     public EnderchestCommand(Tools plugin) {
         this.plugin = plugin;
+        this.messages = plugin.getMessages();
     }
 
-    @CommandInfo (
+    @CommandInfo(
             name = {"enderchest", "ender", "ec"},
             description = "enderchest command",
             usage = "[player]",
@@ -29,11 +31,9 @@ public class EnderchestCommand {
             permission = "enderchest",
             completer = "enderchestCompleter"
     )
-
     public void enderchest(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;
-        Messages messages = plugin.getMessages();
 
         if (context.getArgs().length == 0) {
             player.openInventory(player.getEnderChest());

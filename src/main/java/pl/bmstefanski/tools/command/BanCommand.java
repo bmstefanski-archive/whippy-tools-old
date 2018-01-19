@@ -22,12 +22,14 @@ import java.util.List;
 public class BanCommand {
 
     private final Tools plugin;
+    private final Messages messages;
 
     public BanCommand(Tools plugin) {
         this.plugin = plugin;
+        this.messages = plugin.getMessages();
     }
 
-    @CommandInfo (
+    @CommandInfo(
             name = "ban",
             description = "ban command",
             usage = "[player] [reason]",
@@ -35,10 +37,7 @@ public class BanCommand {
             min = 1,
             completer = "banCompleter"
     )
-
     private void ban(CommandSender commandSender, CommandContext context) {
-
-        Messages messages = plugin.getMessages();
 
         Player player = (Player) commandSender;
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(context.getParam(0));
@@ -65,9 +64,10 @@ public class BanCommand {
         Ban ban = new BanImpl(punished.getUUID(), punisher.getUUID());
         ban.setReason(reason);
         ban.setTime(-1);
+
         plugin.getBanResource().add(ban);
 
-
+        // TODO player name instead of uuid :D
         if (offlinePlayer.isOnline()) {
             String banFormat = TextUtils.listToString(messages.getBanFormat());
             String untilFormat = MessageUtils.fixColor(messages.getPermanentBan());

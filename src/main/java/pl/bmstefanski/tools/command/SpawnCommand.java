@@ -18,12 +18,16 @@ import java.util.List;
 public class SpawnCommand {
 
     private final Tools plugin;
+    private final Messages messages;
+    private final SpawnConfig config;
 
     public SpawnCommand(Tools plugin) {
         this.plugin = plugin;
+        this.messages = plugin.getMessages();
+        this.config = plugin.getSpawnConfiguration();
     }
 
-    @CommandInfo (
+    @CommandInfo(
             name = "spawn",
             description = "spawn command",
             permission = "spawn",
@@ -31,12 +35,9 @@ public class SpawnCommand {
             usage = "[player]",
             completer = "spawnCompleter"
     )
-
     public void spawn(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;
-        Messages messages = plugin.getMessages();
-        SpawnConfig config = plugin.getSpawnConfiguration();
 
         if (config.getExists()) {
 
@@ -60,7 +61,10 @@ public class SpawnCommand {
             Location location = new Location(Bukkit.getWorld(worldName), x, y, z);
             target.teleport(location);
 
-        } else MessageUtils.sendMessage(player, messages.getSpawnFailed());
+            return;
+        }
+
+        MessageUtils.sendMessage(player, messages.getSpawnFailed());
     }
 
     public List<String> spawnCompleter(CommandSender commandSender, CommandContext context) {

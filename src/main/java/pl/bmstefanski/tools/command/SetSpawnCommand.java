@@ -14,22 +14,22 @@ import pl.bmstefanski.tools.util.MessageUtils;
 public class SetSpawnCommand {
 
     private final Tools plugin;
+    private final Messages messages;
+    private final SpawnConfig config;
 
     public SetSpawnCommand(Tools plugin) {
         this.plugin = plugin;
+        this.messages = plugin.getMessages();
+        this.config = plugin.getSpawnConfiguration();
     }
 
-    @CommandInfo (
+    @CommandInfo(
             name = "setspawn",
             description = "setspawn command",
             permission = "setspawn",
             userOnly = true
     )
-
     public void setSpawn(CommandSender commandSender, CommandContext context) {
-        SpawnConfig config = plugin.getSpawnConfiguration();
-        Messages messages = plugin.getMessages();
-
         Player player = (Player) commandSender;
         Location location = player.getLocation();
 

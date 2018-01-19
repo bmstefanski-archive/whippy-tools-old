@@ -16,12 +16,14 @@ import java.util.List;
 public class HealCommand {
 
     private final Tools plugin;
+    private final Messages messages;
 
     public HealCommand(Tools plugin) {
         this.plugin = plugin;
+        this.messages = plugin.getMessages();
     }
 
-    @CommandInfo (
+    @CommandInfo(
             name = "heal",
             description = "heal command",
             usage = "[player]",
@@ -29,30 +31,29 @@ public class HealCommand {
             permission = "heal",
             completer = "healCompleter"
     )
-
     public void heal(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;
-        Messages messages = plugin.getMessages();
 
         if (context.getArgs().length == 0) {
             player.setHealth(20D);
 
             MessageUtils.sendMessage(player, messages.getHealed());
-        } else {
-            if (Bukkit.getPlayer(context.getParam(0)) == null) {
-                MessageUtils.sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
-                return;
-            }
 
-            Player target = Bukkit.getPlayer(context.getParam(0));
-
-            target.setHealth(20D);
-
-            MessageUtils.sendMessage(target, messages.getHealed());
-            MessageUtils.sendMessage(player, StringUtils.replace(messages.getHealedOther(), "%player%", target.getName()));
+            return;
         }
 
+        if (Bukkit.getPlayer(context.getParam(0)) == null) {
+            MessageUtils.sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
+            return;
+        }
+
+        Player target = Bukkit.getPlayer(context.getParam(0));
+
+        target.setHealth(20D);
+
+        MessageUtils.sendMessage(target, messages.getHealed());
+        MessageUtils.sendMessage(player, StringUtils.replace(messages.getHealedOther(), "%player%", target.getName()));
     }
 
     public List<String> healCompleter(CommandSender commandSender, CommandContext context) {

@@ -19,12 +19,14 @@ import java.util.List;
 public class GodCommand {
 
     private final Tools plugin;
+    private final Messages messages;
 
     public GodCommand(Tools plugin) {
         this.plugin = plugin;
+        this.messages = plugin.getMessages();
     }
 
-    @CommandInfo (
+    @CommandInfo(
             name = "god",
             description = "god command",
             usage = "[player]",
@@ -32,11 +34,9 @@ public class GodCommand {
             permission = "god",
             completer = "godCompleter"
     )
-
     public void god(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;
-        Messages messages = plugin.getMessages();
 
         if (context.getArgs().length == 0) {
             User user = UserManager.getUser(player.getUniqueId());
@@ -49,28 +49,30 @@ public class GodCommand {
             user.setGod(godState);
 
             MessageUtils.sendMessage(player, StringUtils.replace(messages.getGodSwitched(), "%state%", BooleanUtils.parse(godState)));
-        } else {
-            if (Bukkit.getPlayer(context.getParam(0)) == null) {
-                MessageUtils.sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
-                return;
-            }
 
-            Player target = Bukkit.getPlayer(context.getParam(0));
-            User user = UserManager.getUser(target.getUniqueId());
-
-            if (user == null) {
-                return;
-            }
-
-            boolean godState = !user.isGod();
-            user.setGod(godState);
-
-
-            MessageUtils.sendMessage(player, StringUtils.replaceEach(messages.getGodSwitchedOther(),
-                    new String[] {"%state%", "%player%"},
-                    new String[] {BooleanUtils.parse(godState), target.getName()}));
-            MessageUtils.sendMessage(target, StringUtils.replace(messages.getGodSwitched(), "%state%", BooleanUtils.parse(godState)));
+            return;
         }
+
+        if (Bukkit.getPlayer(context.getParam(0)) == null) {
+            MessageUtils.sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
+            return;
+        }
+
+        Player target = Bukkit.getPlayer(context.getParam(0));
+        User user = UserManager.getUser(target.getUniqueId());
+
+        if (user == null) {
+            return;
+        }
+
+        boolean godState = !user.isGod();
+        user.setGod(godState);
+
+
+        MessageUtils.sendMessage(player, StringUtils.replaceEach(messages.getGodSwitchedOther(),
+                new String[] {"%state%", "%player%"},
+                new String[] {BooleanUtils.parse(godState), target.getName()}));
+        MessageUtils.sendMessage(target, StringUtils.replace(messages.getGodSwitched(), "%state%", BooleanUtils.parse(godState)));
     }
 
     public List<String> godCompleter(CommandSender commandSender, CommandContext context) {

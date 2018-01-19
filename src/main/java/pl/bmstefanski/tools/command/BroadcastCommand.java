@@ -21,12 +21,14 @@ import java.util.List;
 public class BroadcastCommand {
 
     private final Tools plugin;
+    private final Messages messages;
 
     public BroadcastCommand(Tools plugin) {
         this.plugin = plugin;
+        this.messages = plugin.getMessages();
     }
 
-    @CommandInfo (
+    @CommandInfo(
             name = {"broadcast", "bc"},
             description = "broadcast command",
             usage = "<action/title/subtitle/chat>",
@@ -35,13 +37,10 @@ public class BroadcastCommand {
             min = 2,
             completer = "broadcastCompleter"
     )
-
     public void broadcast(CommandSender commandSender, CommandContext context) {
 
         StringBuilder stringBuilder = new StringBuilder();
         Player player = (Player) commandSender;
-
-        Messages messages = plugin.getMessages();
 
         for (int i = 1; i < context.getArgs().length; i++) {
             stringBuilder.append(" ");
@@ -49,15 +48,12 @@ public class BroadcastCommand {
         }
 
         String message = stringBuilder.toString();
-        Object reset = PacketPlayOutTitle.getPacket(EnumTitleAction.RESET, "", -1, -1, -1);
-
 
         // todo builder do packetplayouttitle :D
 
         switch (context.getParam(0)) {
             case "action":
-                List<Object> actionPackets = Arrays.asList(
-                        reset,
+                List<Object> actionPackets = Collections.singletonList(
                         PacketPlayOutTitle.getPacket(EnumTitleAction.ACTIONBAR, message, -1, -1, -1)
                 );
 
@@ -65,8 +61,7 @@ public class BroadcastCommand {
                 break;
 
             case "title":
-                List<Object> titlePackets = Arrays.asList(
-                        reset,
+                List<Object> titlePackets = Collections.singletonList(
                         PacketPlayOutTitle.getPacket(EnumTitleAction.TITLE, message, -1, -1, -1)
                 );
 
@@ -75,7 +70,6 @@ public class BroadcastCommand {
 
             case "subtitle":
                 List<Object> subtitlePackets = Arrays.asList(
-                        reset,
                         PacketPlayOutTitle.getPacket(EnumTitleAction.TITLE, "", -1, -1, -1),
                         PacketPlayOutTitle.getPacket(EnumTitleAction.SUBTITLE, message, -1, -1, -1)
                 );

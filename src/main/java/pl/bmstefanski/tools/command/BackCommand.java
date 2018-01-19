@@ -8,7 +8,6 @@ import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.storage.configuration.PluginConfig;
 import pl.bmstefanski.tools.util.TabCompleterUtils;
 import pl.bmstefanski.tools.util.MessageUtils;
 
@@ -16,15 +15,15 @@ import java.util.List;
 
 public class BackCommand {
 
-    private final PluginConfig config;
     private final Tools plugin;
+    private final Messages messages;
 
     public BackCommand(Tools plugin) {
         this.plugin = plugin;
-        this.config = plugin.getConfiguration();
+        this.messages = plugin.getMessages();
     }
 
-    @CommandInfo (
+    @CommandInfo(
             name = "back",
             description = "back command",
             usage = "[player]",
@@ -32,16 +31,13 @@ public class BackCommand {
             permission = "back",
             completer = "backCompleter"
     )
-
     public void back(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;
-        Messages messages = plugin.getMessages();
 
         if (context.getArgs().length == 0) {
 //            Location location = new TeleportUtils().getLocation(player);
 //            new TeleportManager(plugin, player).start();
-
             return;
         }
 

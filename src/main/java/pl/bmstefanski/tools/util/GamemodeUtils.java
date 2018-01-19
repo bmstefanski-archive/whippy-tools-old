@@ -14,7 +14,6 @@ public class GamemodeUtils {
         return null;
     }
 
-    @Deprecated
     public static GameMode parseGameMode(String string) {
         if (StringUtils.isNumeric(string)) {
             return GameMode.getByValue(Integer.valueOf(string));

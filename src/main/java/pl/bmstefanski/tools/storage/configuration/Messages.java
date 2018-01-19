@@ -177,4 +177,8 @@ public interface Messages extends Config {
     default String getSuccessfullyBanned() {
         return "&cPomyslnie zbanowano gracza &7%player%";
     }
+
+    default String getCannotBanYourself() {
+        return "&cNie mozesz sie zbanowac!";
+    }
 }

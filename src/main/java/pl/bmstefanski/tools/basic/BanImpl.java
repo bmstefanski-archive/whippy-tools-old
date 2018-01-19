@@ -1,5 +1,7 @@
 package pl.bmstefanski.tools.basic;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import pl.bmstefanski.tools.api.basic.Ban;
 
 import java.util.UUID;
@@ -22,8 +24,18 @@ public class BanImpl implements Ban {
     }
 
     @Override
+    public Player getPunishedPlayer() {
+        return Bukkit.getPlayer(punished);
+    }
+
+    @Override
     public UUID getPunisher() {
         return punisher;
+    }
+
+    @Override
+    public Player getPunisherPlayer() {
+        return Bukkit.getPlayer(punisher);
     }
 
     @Override

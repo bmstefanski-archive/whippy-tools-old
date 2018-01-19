@@ -50,6 +50,11 @@ public class BanCommand {
             return;
         }
 
+        if (punished.getUUID().equals(punisher.getUUID())) {
+            MessageUtils.sendMessage(commandSender, messages.getCannotBanYourself());
+            return;
+        }
+
         if (punished.isBanned()) {
             MessageUtils.sendMessage(commandSender, StringUtils.replace(messages.getAlreadyBanned(), "%player%", offlinePlayer.getName()));
             return;
@@ -67,7 +72,6 @@ public class BanCommand {
 
         plugin.getBanResource().add(ban);
 
-        // TODO player name instead of uuid :D
         if (offlinePlayer.isOnline()) {
             String banFormat = TextUtils.listToString(messages.getBanFormat());
             String untilFormat = MessageUtils.fixColor(messages.getPermanentBan());
@@ -76,7 +80,7 @@ public class BanCommand {
 
             target.kickPlayer(StringUtils.replaceEach(banFormat,
                     new String[]{"%punisher%", "%until%", "%reason%"},
-                    new String[]{ban.getPunisher().toString(), untilFormat, reason}));
+                    new String[]{ban.getPunisherPlayer().getName(), untilFormat, reason}));
         }
 
         MessageUtils.sendMessage(commandSender, StringUtils.replace(messages.getSuccessfullyBanned(), "%player%", offlinePlayer.getName()));

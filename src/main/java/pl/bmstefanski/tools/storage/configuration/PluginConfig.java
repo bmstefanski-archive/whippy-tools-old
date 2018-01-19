@@ -18,47 +18,9 @@ public interface PluginConfig extends Config {
         return "&e%player% &cwyszedl z gierki!";
     }
 
-    @CustomKey("spawn")
-    default Spawn getSpawnSection() {
-        return ConfigManager.createInstance(Spawn.class);
-    }
-
     @CustomKey("mysql")
     default MySQL getMySQLSection() {
         return ConfigManager.createInstance(MySQL.class);
-    }
-
-    interface Spawn extends Config {
-
-        default int getX() {
-            return 0;
-        }
-
-        default int getY() {
-            return 64;
-        }
-
-        default int getZ() {
-            return 0;
-        }
-
-        default String getWorld() {
-            return "world";
-        }
-
-        default boolean getExists() {
-            return true;
-        }
-
-        void setX(int x);
-
-        void setY(int y);
-
-        void setZ(int z);
-
-        void setWorld(String world);
-
-        void setExists(boolean exists);
     }
 
     interface MySQL extends Config {

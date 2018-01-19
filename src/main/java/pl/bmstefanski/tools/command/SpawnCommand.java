@@ -9,7 +9,7 @@ import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.storage.configuration.PluginConfig;
+import pl.bmstefanski.tools.storage.configuration.SpawnConfig;
 import pl.bmstefanski.tools.util.MessageUtils;
 import pl.bmstefanski.tools.util.TabCompleterUtils;
 
@@ -36,9 +36,9 @@ public class SpawnCommand {
 
         Player player = (Player) commandSender;
         Messages messages = plugin.getMessages();
-        PluginConfig config = plugin.getConfiguration();
+        SpawnConfig config = plugin.getSpawnConfiguration();
 
-        if (config.getSpawnSection().getExists()) {
+        if (config.getExists()) {
 
             if (context.getArgs().length == 0) {
 //                new TeleportManager(plugin, player).start(spawnManager.getSpawn());
@@ -52,10 +52,10 @@ public class SpawnCommand {
 
             Player target = Bukkit.getPlayer(context.getParam(0));
 
-            int x = config.getSpawnSection().getX();
-            int y = config.getSpawnSection().getY();
-            int z = config.getSpawnSection().getZ();
-            String worldName = config.getSpawnSection().getWorld();
+            int x = config.getX();
+            int y = config.getY();
+            int z = config.getZ();
+            String worldName = config.getWorld();
 
             Location location = new Location(Bukkit.getWorld(worldName), x, y, z);
             target.teleport(location);

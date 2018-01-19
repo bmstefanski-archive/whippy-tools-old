@@ -14,6 +14,7 @@ import pl.bmstefanski.tools.storage.StorageConnector;
 import pl.bmstefanski.tools.storage.configuration.Messages;
 import pl.bmstefanski.tools.storage.configuration.PluginConfig;
 import pl.bmstefanski.tools.listener.*;
+import pl.bmstefanski.tools.storage.configuration.SpawnConfig;
 import pl.bmstefanski.tools.storage.resource.BanResourceManager;
 import pl.bmstefanski.tools.type.DatabaseType;
 
@@ -23,11 +24,13 @@ public class Tools extends JavaPlugin implements ToolsAPI {
 
     private final File pluginConfigFile = new File(getDataFolder(), "config.yml");
     private final File messagesFile = new File(getDataFolder(), "messages.yml");
+    private final File spawnFile = new File(getDataFolder(), "spawn.yml");
 
     private static Tools instance;
 
     private BanResourceManager banResource;
     private PluginConfig pluginConfig;
+    private SpawnConfig spawnConfig;
     private UserManager userManager;
     private Messages messages;
     private Storage storage;
@@ -41,15 +44,20 @@ public class Tools extends JavaPlugin implements ToolsAPI {
 
         this.pluginConfig = ConfigManager.createInstance(PluginConfig.class);
         this.messages = ConfigManager.createInstance(Messages.class);
+        this.spawnConfig = ConfigManager.createInstance(SpawnConfig.class);
 
         this.pluginConfig.bindFile(pluginConfigFile);
         this.messages.bindFile(messagesFile);
+        this.spawnConfig.bindFile(spawnFile);
 
         this.pluginConfig.load();
         this.pluginConfig.save();
 
         this.messages.load();
         this.messages.save();
+
+        this.spawnConfig.load();
+        this.spawnConfig.save();
 
         setUpStorage();
 
@@ -96,6 +104,7 @@ public class Tools extends JavaPlugin implements ToolsAPI {
         this.pluginConfig.save();
         this.messages.save();
         this.banResource.save();
+        this.spawnConfig.save();
     }
 
     private void registerCommands(Object... commands) {
@@ -140,6 +149,11 @@ public class Tools extends JavaPlugin implements ToolsAPI {
     @Override
     public BanResourceManager getBanResource() {
         return banResource;
+    }
+
+    @Override
+    public SpawnConfig getSpawnConfiguration() {
+        return spawnConfig;
     }
 
     public static Tools getInstance() {

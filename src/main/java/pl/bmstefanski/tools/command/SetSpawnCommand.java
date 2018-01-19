@@ -8,7 +8,7 @@ import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.storage.configuration.PluginConfig;
+import pl.bmstefanski.tools.storage.configuration.SpawnConfig;
 import pl.bmstefanski.tools.util.MessageUtils;
 
 public class SetSpawnCommand {
@@ -27,7 +27,7 @@ public class SetSpawnCommand {
     )
 
     public void setSpawn(CommandSender commandSender, CommandContext context) {
-        PluginConfig config = plugin.getConfiguration();
+        SpawnConfig config = plugin.getSpawnConfiguration();
         Messages messages = plugin.getMessages();
 
         Player player = (Player) commandSender;
@@ -38,15 +38,14 @@ public class SetSpawnCommand {
         int y = location.getBlockY();
         int z = location.getBlockZ();
 
-        config.getSpawnSection().setX(x);
-        config.getSpawnSection().setY(y);
-        config.getSpawnSection().setZ(z);
-        config.getSpawnSection().setWorld(worldName);
-        config.getSpawnSection().setExists(true);
+        config.setX(x);
+        config.setY(y);
+        config.setZ(z);
+        config.setWorld(worldName);
+        config.setExists(true);
 
         MessageUtils.sendMessage(player, StringUtils.replaceEach(messages.getSetspawnSuccess(),
                 new String[] {"%x%", "%y%", "%z%", "%world%"},
                 new String[] {x + "", y + "", z + "", worldName}));
-
     }
 }

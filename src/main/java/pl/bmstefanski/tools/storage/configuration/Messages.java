@@ -95,10 +95,6 @@ public interface Messages extends Config {
         return "&cJuz sie teleportujesz!";
     }
 
-    default String getTeleportCounting() {
-        return "&cZostaniesz teleportowany za &7%count% sekund&c!";
-    }
-
     default String getGodSwitched() {
         return "&7God zostal %state%&7!";
     }
@@ -180,5 +176,9 @@ public interface Messages extends Config {
 
     default String getCannotBanYourself() {
         return "&cNie mozesz sie zbanowac!";
+    }
+
+    default String getTeleport() {
+        return "&7Teleportuje...";
     }
 }

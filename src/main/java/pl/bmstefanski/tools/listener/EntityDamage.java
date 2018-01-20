@@ -22,8 +22,6 @@ public class EntityDamage implements Listener {
             return;
         }
 
-//        new TeleportManager(plugin, (Player) event.getEntity()).stop();
-
         Player player = (Player) event.getEntity();
         User user = UserManager.getUser(player.getUniqueId());
 

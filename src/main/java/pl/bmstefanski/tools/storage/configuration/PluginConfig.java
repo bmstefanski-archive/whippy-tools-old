@@ -18,6 +18,10 @@ public interface PluginConfig extends Config {
         return "&e%player% &cwyszedl z gierki!";
     }
 
+    default int getSpawnDelay() {
+        return 5;
+    }
+
     @CustomKey("mysql")
     default MySQL getMySQLSection() {
         return ConfigManager.createInstance(MySQL.class);

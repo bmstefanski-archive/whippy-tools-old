@@ -19,7 +19,6 @@ public class PlayerMove implements Listener {
                 || event.getFrom().getBlockY() != event.getTo().getBlockY()
                 || event.getFrom().getBlockZ() != event.getTo().getBlockZ()) {
 
-//            new TeleportManager(plugin, event.getPlayer()).stop();
         }
     }
 }

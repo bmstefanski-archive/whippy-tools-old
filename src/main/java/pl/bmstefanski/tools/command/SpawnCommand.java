@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
+import pl.bmstefanski.tools.manager.TeleportManager;
 import pl.bmstefanski.tools.storage.configuration.Messages;
 import pl.bmstefanski.tools.storage.configuration.SpawnConfig;
 import pl.bmstefanski.tools.util.MessageUtils;
@@ -38,11 +39,19 @@ public class SpawnCommand {
     public void spawn(CommandSender commandSender, CommandContext context) {
 
         Player player = (Player) commandSender;
+        TeleportManager taskManager = new TeleportManager(plugin);
 
         if (config.getExists()) {
 
+            int x = config.getX();
+            int y = config.getY();
+            int z = config.getZ();
+            String worldName = config.getWorld();
+
+            Location location = new Location(Bukkit.getWorld(worldName), x, y, z);
+
             if (context.getArgs().length == 0) {
-//                new TeleportManager(plugin, player).start(spawnManager.getSpawn());
+                taskManager.teleport(player, location, plugin.getConfiguration().getSpawnDelay());
                 return;
             }
 
@@ -52,13 +61,6 @@ public class SpawnCommand {
             }
 
             Player target = Bukkit.getPlayer(context.getParam(0));
-
-            int x = config.getX();
-            int y = config.getY();
-            int z = config.getZ();
-            String worldName = config.getWorld();
-
-            Location location = new Location(Bukkit.getWorld(worldName), x, y, z);
             target.teleport(location);
 
             return;

@@ -8,5 +8,69 @@ To build with maven, use that command:
 # Goals
 If you want help, pick one of goals to do, and just create pull request with it.
 
-#### TODO
+#### Kits
+- [ ] Delay per kit
+- [ ] Time limited kits
+- [ ] Kit permission (e.g. only player with the permission can see this kit)
+
+#### Warps
+- [ ] Top 10 visited warps
+- [ ] Delay per warp
+- [ ] Time limited warps
+- [ ] Warp permission (e.g. only player with the permission can see this warp)
+- [ ] Payable warps
+
+#### Commands
+- [x] Back
+- [x] Ban 
+- [ ] Tempban
+- [ ] Kick
+- [x] Broadcast
+- [x] Clear (inventory)
+- [x] Enderchest
+- [x] Feed
+- [x] Fly
+- [x] Gamemode
+- [x] God
+- [x] Heal
+- [x] List
+- [x] Setspawn
+- [x] Spawn
+- [x] Unban
+- [x] Whois
+- [x] Workbench
+- [ ] Tpa (tpaaccept, tpadeny)
+- [ ] Day
+- [ ] Night
+- [ ] Weather
+- [ ] Give
+- [ ] Repair
+- [ ] Chat (toggle, clear and the like)
+- [ ] Head
+- [ ] Hat
+- [ ] Power Tool
+- [ ] World
+- [ ] Afk
+- [ ] Burn
+- [ ] Vanish
+- [ ] Tppos
+- [ ] Tpall
+- [ ] Tphere
+- [ ] Spawnmob
+- [ ] Speed
+- [ ] SocialSpy
+- [ ] Nickname
+- [ ] Realname
+- [ ] Mute
+- [ ] Lightning
+- [ ] Kickall
+- [ ] Ignore
+- [ ] Invsee
+- [ ] Helpop
+- [ ] Fireworks
+
+#### Others
+- [ ] Homes' system
+- [ ] Jails' system
+- [ ] New commands' system
 

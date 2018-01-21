@@ -1,4 +1,4 @@
-## <img src="https://avatars1.githubusercontent.com/u/35628511?s=200&v=4" width="48"> Whippy Tools
+## <img src="https://avatars1.githubusercontent.com/u/35628511?s=200&v=4" width="48"> [![Build Status](https://travis-ci.org/whippytools/whippy-tools.svg?branch=master)](https://travis-ci.org/whippytools/whippy-tools) Whippy Tools
 
 # Maven
 To build with maven, use that command: 

@@ -1,4 +1,4 @@
-## <img src="https://avatars1.githubusercontent.com/u/35628511?s=200&v=4" width="48"> [![Build Status](https://travis-ci.org/whippytools/whippy-tools.svg?branch=master)](https://travis-ci.org/whippytools/whippy-tools) Whippy Tools
+## <img src="https://avatars1.githubusercontent.com/u/35628511?s=200&v=4" width="48"> [![Codacy Badge](https://api.codacy.com/project/badge/Grade/6f800b26da2148a1b5f2b69da656cacf)](https://www.codacy.com/app/bmstefanski/whippy-tools?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=whippytools/whippy-tools&amp;utm_campaign=Badge_Grade) [![Build Status](https://travis-ci.org/whippytools/whippy-tools.svg?branch=master)](https://travis-ci.org/whippytools/whippy-tools) Whippy Tools 
 
 # Maven
 To build with maven, use that command: 

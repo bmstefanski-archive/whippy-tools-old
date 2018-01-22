@@ -205,4 +205,12 @@ public interface Messages extends Config {
     default String getTeleport() {
         return "&7Teleportuje...";
     }
+
+    default String getNoLongerAfk() { return "&5Nie jestes juz dluzej AFK"; }
+
+    default String getNoLongerAfkGlobal() { return "&5Gracz &7%player% &5nie jest juz dluzej AFK"; }
+
+    default String getAfk() { return "&5Jestes AFK"; }
+
+    default String getAfkGlobal(){ return "&5Gracz &7%player% &5jest teraz AFK"; }
 }

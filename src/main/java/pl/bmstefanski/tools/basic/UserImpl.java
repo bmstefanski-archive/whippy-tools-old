@@ -39,6 +39,7 @@ public class UserImpl implements User {
     private String name;
     private String ip;
     private boolean god;
+    private boolean afk;
 
     public UserImpl(UUID uuid) {
         this.uuid = uuid;
@@ -92,6 +93,11 @@ public class UserImpl implements User {
     }
 
     @Override
+    public void setAfk(boolean afk) {
+        this.afk = afk;
+    }
+
+    @Override
     public boolean isOnline() {
         if (this.uuid == null) {
             return false;
@@ -111,6 +117,11 @@ public class UserImpl implements User {
         Ban ban = BanManager.getBan(uuid);
 
         return ban != null && ban.getTime() != 0L && ban.getTime() <= System.currentTimeMillis();
+    }
+
+    @Override
+    public boolean isAfk() {
+        return afk;
     }
 
     @Override

@@ -120,7 +120,8 @@ public class Tools extends JavaPlugin implements ToolsAPI {
                 new BackCommand(this),
                 new BanCommand(this),
                 new UnbanCommand(this),
-                new AfkCommand(this)
+                new AfkCommand(this),
+                new HatCommand(this)
         );
     }
 

@@ -212,9 +212,9 @@ public interface Messages extends Config {
 
     default String getAfk() { return "&5Jestes AFK"; }
 
-    default String getAfkGlobal(){ return "&5Gracz &7%player% &5jest teraz AFK"; }
+    default String getAfkGlobal() { return "&5Gracz &7%player% &5jest teraz AFK"; }
+ 
+    default String getHatCantBeAir() { return "&cNie masz nic w rece!"; }
 
-    default String getHatCantBeAir(){ return "&cNie masz nic w rece!"; }
-
-    default String getHat(){ return "&6Ciesz sie nowa czapka!"; }
+    default String getHat() { return "&6Ciesz sie nowa czapka!"; }
 }

@@ -12,12 +12,12 @@ import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
 import pl.bmstefanski.tools.util.MessageUtils;
 
-public class HatCommand implements MessageUtils{
+public class HatCommand implements MessageUtils {
 
     private final Tools plugin;
     private final Messages messages;
 
-    public HatCommand(Tools plugin){
+    public HatCommand(Tools plugin) {
         this.plugin = plugin;
         this.messages = plugin.getMessages();
     }
@@ -28,30 +28,30 @@ public class HatCommand implements MessageUtils{
             userOnly = true,
             permission = "hat"
     )
-    public void hat(CommandSender sender, CommandContext context){
+    public void hat(CommandSender sender, CommandContext context) {
 
-        Player player = (Player)sender;
+        Player player = (Player) sender;
         ItemStack item = player.getItemInHand().clone();
         item.setAmount(1);
-        PlayerInventory inv = player.getInventory();
+        PlayerInventory playerInventory = player.getInventory();
 
-        if(player.getItemInHand().getType().equals(Material.AIR)){
+        if (player.getItemInHand().getType().equals(Material.AIR)) {
             sendMessage(player, messages.getHatCantBeAir());
             return;
         }
 
 
-        if(inv.getHelmet() == null){
-            inv.setHelmet(item);
-            inv.removeItem(item);
+        if (playerInventory.getHelmet() == null) {
+            playerInventory.setHelmet(item);
+            playerInventory.removeItem(item);
             player.updateInventory();
             sendMessage(player, messages.getHat());
             return;
         }
 
-        inv.addItem(inv.getHelmet());
-        inv.setHelmet(item);
-        inv.removeItem(item);
+        playerInventory.addItem(playerInventory.getHelmet());
+        playerInventory.setHelmet(item);
+        playerInventory.removeItem(item);
         player.updateInventory();
         sendMessage(player, messages.getHat());
 

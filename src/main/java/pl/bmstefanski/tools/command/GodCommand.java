@@ -34,13 +34,13 @@ import pl.bmstefanski.tools.basic.manager.UserManager;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.util.BooleanUtils;
 import pl.bmstefanski.tools.util.MessageUtils;
+import pl.bmstefanski.tools.util.Parser;
 import pl.bmstefanski.tools.util.TabCompleterUtils;
 
 import java.util.List;
 
-public class GodCommand implements MessageUtils {
+public class GodCommand implements MessageUtils, Parser {
 
     private final Tools plugin;
     private final Messages messages;
@@ -72,7 +72,7 @@ public class GodCommand implements MessageUtils {
             boolean godState = !user.isGod();
             user.setGod(godState);
 
-            sendMessage(player, StringUtils.replace(messages.getGodSwitched(), "%state%", BooleanUtils.parse(godState)));
+            sendMessage(player, StringUtils.replace(messages.getGodSwitched(), "%state%", parseBoolean(godState)));
 
             return;
         }
@@ -95,8 +95,8 @@ public class GodCommand implements MessageUtils {
 
         sendMessage(player, StringUtils.replaceEach(messages.getGodSwitchedOther(),
                 new String[] {"%state%", "%player%"},
-                new String[] {BooleanUtils.parse(godState), target.getName()}));
-        sendMessage(target, StringUtils.replace(messages.getGodSwitched(), "%state%", BooleanUtils.parse(godState)));
+                new String[] {parseBoolean(godState), target.getName()}));
+        sendMessage(target, StringUtils.replace(messages.getGodSwitched(), "%state%", parseBoolean(godState)));
     }
 
     public List<String> godCompleter(CommandSender commandSender, CommandContext context) {

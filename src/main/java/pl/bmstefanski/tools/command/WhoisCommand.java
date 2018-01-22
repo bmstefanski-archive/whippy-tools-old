@@ -40,7 +40,7 @@ import pl.bmstefanski.tools.util.*;
 
 import java.util.List;
 
-public class WhoisCommand implements MessageUtils {
+public class WhoisCommand implements MessageUtils, Parser {
 
     private final Tools plugin;
     private final Messages messages;
@@ -93,16 +93,16 @@ public class WhoisCommand implements MessageUtils {
                 + location.getBlockX() + ", "
                 + location.getBlockY() + ", "
                 + location.getBlockZ() + ")";
-        String playerJoin = TimeUtils.parse(offlinePlayer.getFirstPlayed());
-        String playerLast = user.isOnline() ? "online" : TimeUtils.parse(offlinePlayer.getLastPlayed());
+        String playerJoin = parseLong(offlinePlayer.getFirstPlayed());
+        String playerLast = user.isOnline() ? "online" : parseLong(offlinePlayer.getLastPlayed());
 
         String whois = listToString(messages.getWhois());
 
         sendMessage(player, StringUtils.replaceEach(whois,
                 new String[] {"%nickname%", "%uuid%", "%ip%", "%registered%", "%last%", "%location%", "%hp%", "%hunger%", "%gamemode%", "%god%", "%fly%"},
                 new String[] {offlinePlayer.getName(), offlinePlayer.getUniqueId().toString(), offlinePlayer.getPlayer().getAddress().getHostName(),
-                        playerJoin, playerLast, playerLocation, playerHealth, playerFoodLevel, playerGamemode, BooleanUtils.parse(user.isGod()),
-                        BooleanUtils.parse(offlinePlayer.getPlayer().isFlying())
+                        playerJoin, playerLast, playerLocation, playerHealth, playerFoodLevel, playerGamemode, parseBoolean(user.isGod()),
+                        parseBoolean(offlinePlayer.getPlayer().isFlying())
                 }));
     }
 

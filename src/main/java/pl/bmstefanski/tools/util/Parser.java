@@ -24,16 +24,27 @@
 
 package pl.bmstefanski.tools.util;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import pl.bmstefanski.tools.Tools;
+import pl.bmstefanski.tools.storage.configuration.Messages;
 
-public class TimeUtils {
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
-    public static String parse(long time) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.GERMAN);
-        Date date = new Date(time);
+public interface Parser {
 
-        return simpleDateFormat.format(date);
+    Messages message = Tools.getInstance().getMessages();
+
+    default String parseBoolean(boolean bool) {
+        return bool ? message.getBooleanOn() : message.getBooleanOff();
     }
+
+    default String parseLong(long time) {
+        LocalDateTime date = LocalDateTime.ofInstant(Instant.ofEpochMilli(time), ZoneId.of("Europe/Warsaw"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        return date.format(formatter);
+    }
+
 }

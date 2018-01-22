@@ -37,7 +37,7 @@ import pl.bmstefanski.tools.util.MessageUtils;
 
 import java.util.List;
 
-public class BackCommand {
+public class BackCommand implements MessageUtils {
 
     private final Tools plugin;
     private final Messages messages;
@@ -66,7 +66,7 @@ public class BackCommand {
         }
 
         if (Bukkit.getPlayer(context.getParam(0)) == null) {
-            MessageUtils.sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
+            sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
             return;
         }
 

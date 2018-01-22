@@ -40,7 +40,7 @@ import pl.bmstefanski.tools.util.TabCompleterUtils;
 
 import java.util.List;
 
-public class GodCommand {
+public class GodCommand implements MessageUtils {
 
     private final Tools plugin;
     private final Messages messages;
@@ -72,13 +72,13 @@ public class GodCommand {
             boolean godState = !user.isGod();
             user.setGod(godState);
 
-            MessageUtils.sendMessage(player, StringUtils.replace(messages.getGodSwitched(), "%state%", BooleanUtils.parse(godState)));
+            sendMessage(player, StringUtils.replace(messages.getGodSwitched(), "%state%", BooleanUtils.parse(godState)));
 
             return;
         }
 
         if (Bukkit.getPlayer(context.getParam(0)) == null) {
-            MessageUtils.sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
+            sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
             return;
         }
 
@@ -93,10 +93,10 @@ public class GodCommand {
         user.setGod(godState);
 
 
-        MessageUtils.sendMessage(player, StringUtils.replaceEach(messages.getGodSwitchedOther(),
+        sendMessage(player, StringUtils.replaceEach(messages.getGodSwitchedOther(),
                 new String[] {"%state%", "%player%"},
                 new String[] {BooleanUtils.parse(godState), target.getName()}));
-        MessageUtils.sendMessage(target, StringUtils.replace(messages.getGodSwitched(), "%state%", BooleanUtils.parse(godState)));
+        sendMessage(target, StringUtils.replace(messages.getGodSwitched(), "%state%", BooleanUtils.parse(godState)));
     }
 
     public List<String> godCompleter(CommandSender commandSender, CommandContext context) {

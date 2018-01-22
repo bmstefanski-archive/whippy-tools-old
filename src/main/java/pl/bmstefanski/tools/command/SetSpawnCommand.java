@@ -35,7 +35,7 @@ import pl.bmstefanski.tools.storage.configuration.Messages;
 import pl.bmstefanski.tools.storage.configuration.SpawnConfig;
 import pl.bmstefanski.tools.util.MessageUtils;
 
-public class SetSpawnCommand {
+public class SetSpawnCommand implements MessageUtils {
 
     private final Tools plugin;
     private final Messages messages;
@@ -68,7 +68,7 @@ public class SetSpawnCommand {
         config.setWorld(worldName);
         config.setExists(true);
 
-        MessageUtils.sendMessage(player, StringUtils.replaceEach(messages.getSetspawnSuccess(),
+        sendMessage(player, StringUtils.replaceEach(messages.getSetspawnSuccess(),
                 new String[] {"%x%", "%y%", "%z%", "%world%"},
                 new String[] {x + "", y + "", z + "", worldName}));
     }

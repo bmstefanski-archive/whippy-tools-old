@@ -37,7 +37,7 @@ import pl.bmstefanski.tools.util.TabCompleterUtils;
 
 import java.util.List;
 
-public class ClearCommand {
+public class ClearCommand implements MessageUtils {
 
     private final Tools plugin;
     private final Messages messages;
@@ -61,13 +61,13 @@ public class ClearCommand {
 
         if (context.getArgs().length == 0) {
             player.getInventory().clear();
-            MessageUtils.sendMessage(player, messages.getClear());
+            sendMessage(player, messages.getClear());
 
             return;
         }
 
         if (Bukkit.getPlayer(context.getParam(0)) == null) {
-            MessageUtils.sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
+            sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
             return;
         }
 
@@ -75,8 +75,8 @@ public class ClearCommand {
 
         target.getInventory().clear();
 
-        MessageUtils.sendMessage(target, messages.getClear());
-        MessageUtils.sendMessage(player, StringUtils.replace(messages.getClearOther(), "%player%", target.getName()));
+        sendMessage(target, messages.getClear());
+        sendMessage(player, StringUtils.replace(messages.getClearOther(), "%player%", target.getName()));
     }
 
     public List<String> clearCompleter(CommandSender commandSender, CommandContext context) {

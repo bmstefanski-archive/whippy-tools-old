@@ -32,7 +32,7 @@ import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.PluginConfig;
 import pl.bmstefanski.tools.util.MessageUtils;
 
-public class ToolsCommand {
+public class ToolsCommand implements MessageUtils {
 
     private final Tools plugin;
     private final PluginConfig config;
@@ -52,7 +52,7 @@ public class ToolsCommand {
 
         Player player = (Player) commandSender;
 
-        MessageUtils.sendMessage(player, "&e" + plugin.getDescription().getName() +
+        sendMessage(player, "&e" + plugin.getDescription().getName() +
                                         "&f(" + config.getLanguage().toUpperCase() +
                                         ") &7" + plugin.getDescription().getVersion() +
                                         " by §e" + plugin.getDescription().getAuthors());

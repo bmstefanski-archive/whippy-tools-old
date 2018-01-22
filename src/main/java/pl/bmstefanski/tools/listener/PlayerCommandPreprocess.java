@@ -33,7 +33,7 @@ import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.storage.configuration.Messages;
 import pl.bmstefanski.tools.util.MessageUtils;
 
-public class PlayerCommandPreprocess implements Listener {
+public class PlayerCommandPreprocess implements Listener, MessageUtils {
 
     private final Tools plugin;
     private final Messages messages;
@@ -50,7 +50,7 @@ public class PlayerCommandPreprocess implements Listener {
 
         if (helpTopic == null) {
             event.setCancelled(true);
-            MessageUtils.sendMessage(event.getPlayer(), messages.getUnknownCommand().replace("%command%", command));
+            sendMessage(event.getPlayer(), messages.getUnknownCommand().replace("%command%", command));
         }
     }
 }

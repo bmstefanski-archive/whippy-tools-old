@@ -19,7 +19,7 @@ import pl.bmstefanski.tools.util.MessageUtils;
 import java.lang.reflect.Field;
 import java.util.*;
 
-public class BukkitCommands extends Commands implements CommandExecutor, TabCompleter {
+public class BukkitCommands extends Commands implements CommandExecutor, TabCompleter, MessageUtils {
 
     private final Plugin plugin;
 
@@ -51,7 +51,7 @@ public class BukkitCommands extends Commands implements CommandExecutor, TabComp
                 context.getCommand().handleCommand(sender, context);
             }
         } catch (CommandConsoleException ex) {
-            sender.sendMessage(MessageUtils.fixColor(Tools.getInstance().getMessages().getOnlyPlayer()));
+            sender.sendMessage(fixColor(Tools.getInstance().getMessages().getOnlyPlayer()));
         } catch (CommandPermissionException ex) {
             String permission = ".";
             if (ex.getPermission() != null) {
@@ -59,7 +59,7 @@ public class BukkitCommands extends Commands implements CommandExecutor, TabComp
             }
 
             String permissionString = StringUtils.replace(permission, " - ", "");
-            sender.sendMessage(StringUtils.replace(MessageUtils.fixColor(Tools.getInstance().getMessages().getNoPermissions()), "%permission%", permissionString));
+            sender.sendMessage(StringUtils.replace(fixColor(Tools.getInstance().getMessages().getNoPermissions()), "%permission%", permissionString));
         } catch (CommandUsageException ex) {
             if (ex.getMessage() != null) {
                 sender.sendMessage(ChatColor.RED + ex.getMessage());

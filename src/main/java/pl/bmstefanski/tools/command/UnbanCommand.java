@@ -41,7 +41,7 @@ import pl.bmstefanski.tools.util.TabCompleterUtils;
 
 import java.util.List;
 
-public class UnbanCommand {
+public class UnbanCommand implements MessageUtils {
 
     private final Tools plugin;
     private final Messages messages;
@@ -64,19 +64,19 @@ public class UnbanCommand {
         User user = UserManager.getUser(offlinePlayer.getUniqueId());
 
         if (!offlinePlayer.hasPlayedBefore()) {
-            MessageUtils.sendMessage(commandSender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
+            sendMessage(commandSender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
             return;
         }
 
         if (!user.isBanned()) {
-            MessageUtils.sendMessage(commandSender, StringUtils.replace(messages.getNotBanned(), "%player%", offlinePlayer.getName()));
+            sendMessage(commandSender, StringUtils.replace(messages.getNotBanned(), "%player%", offlinePlayer.getName()));
             return;
         }
 
         Ban ban = BanManager.getBan(user.getUUID());
         plugin.getBanResource().remove(ban);
 
-        MessageUtils.sendMessage(commandSender, StringUtils.replace(messages.getSuccessfullyUnbanned(), "%player%", offlinePlayer.getName()));
+        sendMessage(commandSender, StringUtils.replace(messages.getSuccessfullyUnbanned(), "%player%", offlinePlayer.getName()));
     }
 
     public List<String> unbanCompleter(CommandSender commandSender, CommandContext context) {

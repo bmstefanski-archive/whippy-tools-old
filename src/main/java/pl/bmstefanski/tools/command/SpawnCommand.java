@@ -40,7 +40,7 @@ import pl.bmstefanski.tools.util.TabCompleterUtils;
 
 import java.util.List;
 
-public class SpawnCommand {
+public class SpawnCommand implements MessageUtils {
 
     private final Tools plugin;
     private final Messages messages;
@@ -80,7 +80,7 @@ public class SpawnCommand {
             }
 
             if (Bukkit.getPlayer(context.getParam(0)) == null) {
-                MessageUtils.sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
+                sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
                 return;
             }
 
@@ -90,7 +90,7 @@ public class SpawnCommand {
             return;
         }
 
-        MessageUtils.sendMessage(player, messages.getSpawnFailed());
+        sendMessage(player, messages.getSpawnFailed());
     }
 
     public List<String> spawnCompleter(CommandSender commandSender, CommandContext context) {

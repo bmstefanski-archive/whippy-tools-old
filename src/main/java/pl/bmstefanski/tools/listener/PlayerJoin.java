@@ -34,7 +34,7 @@ import pl.bmstefanski.tools.api.basic.User;
 import pl.bmstefanski.tools.basic.manager.UserManager;
 import pl.bmstefanski.tools.util.MessageUtils;
 
-public class PlayerJoin implements Listener {
+public class PlayerJoin implements Listener, MessageUtils {
 
     private final Tools plugin;
 
@@ -48,6 +48,6 @@ public class PlayerJoin implements Listener {
         Player player = event.getPlayer();
         User user = UserManager.getUser(player.getUniqueId());
 
-        event.setJoinMessage(MessageUtils.fixColor(StringUtils.replace(plugin.getConfiguration().getJoinFormat(), "%player%", player.getName())));
+        event.setJoinMessage(fixColor(StringUtils.replace(plugin.getConfiguration().getJoinFormat(), "%player%", player.getName())));
     }
 }

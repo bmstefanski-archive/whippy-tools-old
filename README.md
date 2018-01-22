@@ -50,7 +50,7 @@ If you want help, pick one of goals to do, and just create pull request with it.
 - [ ] Hat
 - [ ] Power Tool
 - [ ] World
-- [ ] Afk
+- [x] Afk
 - [ ] Burn
 - [ ] Vanish
 - [ ] Tppos

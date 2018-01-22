@@ -37,7 +37,7 @@ import pl.bmstefanski.tools.util.TabCompleterUtils;
 
 import java.util.List;
 
-public class HealCommand {
+public class HealCommand implements MessageUtils {
 
     private final Tools plugin;
     private final Messages messages;
@@ -62,13 +62,13 @@ public class HealCommand {
         if (context.getArgs().length == 0) {
             player.setHealth(20D);
 
-            MessageUtils.sendMessage(player, messages.getHealed());
+            sendMessage(player, messages.getHealed());
 
             return;
         }
 
         if (Bukkit.getPlayer(context.getParam(0)) == null) {
-            MessageUtils.sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
+            sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
             return;
         }
 
@@ -76,8 +76,8 @@ public class HealCommand {
 
         target.setHealth(20D);
 
-        MessageUtils.sendMessage(target, messages.getHealed());
-        MessageUtils.sendMessage(player, StringUtils.replace(messages.getHealedOther(), "%player%", target.getName()));
+        sendMessage(target, messages.getHealed());
+        sendMessage(player, StringUtils.replace(messages.getHealedOther(), "%player%", target.getName()));
     }
 
     public List<String> healCompleter(CommandSender commandSender, CommandContext context) {

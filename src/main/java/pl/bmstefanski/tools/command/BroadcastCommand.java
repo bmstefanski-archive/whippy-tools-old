@@ -42,7 +42,7 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class BroadcastCommand {
+public class BroadcastCommand implements MessageUtils {
 
     private final Tools plugin;
     private final Messages messages;
@@ -102,7 +102,7 @@ public class BroadcastCommand {
                 break;
 
             case "chat":
-                Bukkit.broadcastMessage(MessageUtils.fixColor(StringUtils.replace(messages.getBroadcastFormat(), "%message%", stringBuilder.toString())));
+                Bukkit.broadcastMessage(fixColor(StringUtils.replace(messages.getBroadcastFormat(), "%message%", stringBuilder.toString())));
                 break;
         }
     }

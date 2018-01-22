@@ -25,6 +25,7 @@
 package pl.bmstefanski.tools.util.reflect.transition;
 
 import net.minecraft.server.v1_12_R1.IChatBaseComponent;
+import org.bukkit.ChatColor;
 import pl.bmstefanski.tools.util.MessageUtils;
 import pl.bmstefanski.tools.util.reflect.Reflections;
 
@@ -48,7 +49,7 @@ public class PacketPlayOutTitle {
 
     public static Object getPacket(net.minecraft.server.v1_12_R1.PacketPlayOutTitle.EnumTitleAction enumTitleAction, String string, int fadeIn, int time, int fadeOut) {
 
-        IChatBaseComponent iChatBaseComponent = IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + MessageUtils.fixColor(string) + "\"}");
+        IChatBaseComponent iChatBaseComponent = IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + ChatColor.translateAlternateColorCodes('&', string) + "\"}");
 
         try {
             if (type == 0) {

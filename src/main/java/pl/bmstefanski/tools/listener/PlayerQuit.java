@@ -35,7 +35,7 @@ import pl.bmstefanski.tools.basic.manager.UserManager;
 import pl.bmstefanski.tools.runnable.SaveDataTask;
 import pl.bmstefanski.tools.util.MessageUtils;
 
-public class PlayerQuit implements Listener {
+public class PlayerQuit implements Listener, MessageUtils {
 
     private final Tools plugin;
 
@@ -52,7 +52,7 @@ public class PlayerQuit implements Listener {
             user.setIp(player.getAddress().getHostName());
         }
 
-        event.setQuitMessage(MessageUtils.fixColor(StringUtils.replace(plugin.getConfiguration().getQuitFormat(), "%player%", player.getName())));
+        event.setQuitMessage(fixColor(StringUtils.replace(plugin.getConfiguration().getQuitFormat(), "%player%", player.getName())));
 
         SaveDataTask saveDataTask = new SaveDataTask(plugin.getStorage(), user);
         new Thread(saveDataTask).run();

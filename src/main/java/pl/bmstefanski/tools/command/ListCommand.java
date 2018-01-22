@@ -36,7 +36,7 @@ import pl.bmstefanski.tools.util.MessageUtils;
 
 import java.util.*;
 
-public class ListCommand {
+public class ListCommand implements MessageUtils {
 
     private final Tools plugin;
     private final Messages messages;
@@ -62,9 +62,9 @@ public class ListCommand {
 
         if (context.getArgs().length == 1) {
             if (context.getParam(0).equalsIgnoreCase("full")) {
-                MessageUtils.sendMessage(player, StringUtils.replace(messages.getListFull(), "%online%", Arrays.toString(plugin.getUserManager().getOnlinePlayers().toArray())));
+                sendMessage(player, StringUtils.replace(messages.getListFull(), "%online%", Arrays.toString(plugin.getUserManager().getOnlinePlayers().toArray())));
             } else if (context.getParam(0).equalsIgnoreCase("basic")) {
-                MessageUtils.sendMessage(player, StringUtils.replaceEach(messages.getListBasic(),
+                sendMessage(player, StringUtils.replaceEach(messages.getListBasic(),
                         new String[] {"%online%", "%max%"},
                         new String[] {playersOnlineSize + "", maxPlayers + ""}));
             }

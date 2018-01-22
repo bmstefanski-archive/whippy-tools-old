@@ -36,7 +36,7 @@ import pl.bmstefanski.tools.basic.manager.UserManager;
 import pl.bmstefanski.tools.storage.configuration.Messages;
 import pl.bmstefanski.tools.util.MessageUtils;
 
-public class PlayerMove implements Listener {
+public class PlayerMove implements Listener, MessageUtils{
 
     private final Tools plugin;
     private final Messages messages;
@@ -58,9 +58,9 @@ public class PlayerMove implements Listener {
         //Warning: bad code :nokappa:
         if (user.isAfk()) {
             user.setAfk(false);
-            MessageUtils.sendMessage(player, messages.getNoLongerAfk());
+            sendMessage(player, messages.getNoLongerAfk());
             Bukkit.getOnlinePlayers().forEach(p ->
-                    MessageUtils.sendMessage(p, StringUtils.replace(messages.getNoLongerAfkGlobal(), "%player%", player.getName())));
+                    sendMessage(p, StringUtils.replace(messages.getNoLongerAfkGlobal(), "%player%", player.getName())));
         }
     }
 }

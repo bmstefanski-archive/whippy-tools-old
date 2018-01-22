@@ -32,7 +32,7 @@ import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
 import pl.bmstefanski.tools.util.MessageUtils;
 
-public class ReloadCommand {
+public class ReloadCommand implements MessageUtils {
 
     private final Tools plugin;
     private final Messages messages;
@@ -57,6 +57,6 @@ public class ReloadCommand {
         long elapsedTime = (System.currentTimeMillis() - startedTime);
         float elapsedTimeSecond = elapsedTime / 1000F;
 
-        MessageUtils.sendMessage(commandSender, StringUtils.replace(messages.getSuccessfullyReloaded(), "%time%", elapsedTimeSecond + ""));
+        sendMessage(commandSender, StringUtils.replace(messages.getSuccessfullyReloaded(), "%time%", elapsedTimeSecond + ""));
     }
 }

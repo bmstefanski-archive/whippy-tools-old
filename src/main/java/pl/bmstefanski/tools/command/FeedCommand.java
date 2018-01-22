@@ -37,7 +37,7 @@ import pl.bmstefanski.tools.util.TabCompleterUtils;
 
 import java.util.List;
 
-public class FeedCommand {
+public class FeedCommand implements MessageUtils {
 
     private final Tools plugin;
     private final Messages messages;
@@ -62,13 +62,13 @@ public class FeedCommand {
         if (context.getArgs().length == 0) {
             player.setFoodLevel(20);
 
-            MessageUtils.sendMessage(player, messages.getFed());
+            sendMessage(player, messages.getFed());
 
             return;
         }
 
         if (Bukkit.getPlayer(context.getParam(0)) == null) {
-            MessageUtils.sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
+            sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
             return;
         }
 
@@ -76,8 +76,8 @@ public class FeedCommand {
 
         target.setFoodLevel(20);
 
-        MessageUtils.sendMessage(target, messages.getFed());
-        MessageUtils.sendMessage(player, StringUtils.replace(messages.getFedOther(), "%player%", target.getName()));
+        sendMessage(target, messages.getFed());
+        sendMessage(player, StringUtils.replace(messages.getFedOther(), "%player%", target.getName()));
     }
 
     public List<String> feedCompleter(CommandSender commandSender, CommandContext context) {

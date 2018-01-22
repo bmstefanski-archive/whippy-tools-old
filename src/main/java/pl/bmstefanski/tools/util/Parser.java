@@ -24,20 +24,27 @@
 
 package pl.bmstefanski.tools.util;
 
-import java.util.List;
+import pl.bmstefanski.tools.Tools;
+import pl.bmstefanski.tools.storage.configuration.Messages;
 
-public class TextUtils {
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
-    private final static StringBuilder STRING_BUILDER = new StringBuilder();
+public interface Parser {
 
-    public static String listToString(List<String> list) {
-        STRING_BUILDER.setLength(0);
-        String result = null;
+    Messages message = Tools.getInstance().getMessages();
 
-        for (String string : list) {
-            STRING_BUILDER.append(string + "\n");
-        }
-
-        return MessageUtils.fixColor(STRING_BUILDER.toString());
+    default String parseBoolean(boolean bool) {
+        return bool ? message.getBooleanOn() : message.getBooleanOff();
     }
+
+    default String parseLong(long time) {
+        LocalDateTime date = LocalDateTime.ofInstant(Instant.ofEpochMilli(time), ZoneId.of("Europe/Warsaw"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        return date.format(formatter);
+    }
+
 }

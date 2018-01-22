@@ -38,9 +38,8 @@ import pl.bmstefanski.tools.basic.manager.UserManager;
 import pl.bmstefanski.tools.runnable.LoadDataTask;
 import pl.bmstefanski.tools.storage.configuration.Messages;
 import pl.bmstefanski.tools.util.MessageUtils;
-import pl.bmstefanski.tools.util.TextUtils;
 
-public class PlayerPreLogin implements Listener {
+public class PlayerPreLogin implements Listener, MessageUtils {
 
     private final Tools plugin;
     private final Messages messages;
@@ -67,8 +66,8 @@ public class PlayerPreLogin implements Listener {
             return;
         }
 
-        String banFormat = TextUtils.listToString(messages.getBanFormat());
-        String untilFormat = MessageUtils.fixColor(messages.getPermanentBan());
+        String banFormat = listToString(messages.getBanFormat());
+        String untilFormat = fixColor(messages.getPermanentBan());
 
         event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, StringUtils.replaceEach(banFormat,
                 new String[]{"%punisher%", "%until%", "%reason%"},

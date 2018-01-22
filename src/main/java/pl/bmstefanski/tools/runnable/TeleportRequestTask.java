@@ -34,7 +34,7 @@ import pl.bmstefanski.tools.util.MessageUtils;
 
 import java.util.Map;
 
-public class TeleportRequestTask implements Runnable {
+public class TeleportRequestTask implements Runnable, MessageUtils {
 
     private final Tools plugin;
     private final Player player;
@@ -60,7 +60,7 @@ public class TeleportRequestTask implements Runnable {
             taskMap.get(player).cancel();
             taskMap.remove(player);
 
-            MessageUtils.sendMessage(player, messages.getTeleportCancelled());
+            sendMessage(player, messages.getTeleportCancelled());
             return;
         }
 
@@ -69,7 +69,7 @@ public class TeleportRequestTask implements Runnable {
             taskMap.get(player).cancel();
             taskMap.remove(player);
 
-            MessageUtils.sendMessage(player, messages.getTeleportSuccess());
+            sendMessage(player, messages.getTeleportSuccess());
             return;
         }
 

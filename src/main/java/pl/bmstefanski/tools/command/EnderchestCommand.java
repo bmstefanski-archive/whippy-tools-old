@@ -37,7 +37,7 @@ import pl.bmstefanski.tools.util.TabCompleterUtils;
 
 import java.util.List;
 
-public class EnderchestCommand {
+public class EnderchestCommand implements MessageUtils {
 
     private final Tools plugin;
     private final Messages messages;
@@ -65,7 +65,7 @@ public class EnderchestCommand {
         }
 
         if (Bukkit.getPlayer(context.getParam(0)) == null) {
-            MessageUtils.sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
+            sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
             return;
         }
 

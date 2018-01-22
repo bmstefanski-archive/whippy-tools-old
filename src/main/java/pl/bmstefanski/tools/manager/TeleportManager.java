@@ -36,7 +36,7 @@ import pl.bmstefanski.tools.util.MessageUtils;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TeleportManager {
+public class TeleportManager implements MessageUtils {
 
     private final Tools plugin;
     private final Messages messages;
@@ -50,11 +50,11 @@ public class TeleportManager {
     public void teleport(Player player, Location location, int delay) {
 
         if (taskMap.containsKey(player)) {
-            MessageUtils.sendMessage(player, messages.getCurrentlyTeleporting());
+            sendMessage(player, messages.getCurrentlyTeleporting());
             return;
         }
 
-        MessageUtils.sendMessage(player, messages.getTeleport());
+        sendMessage(player, messages.getTeleport());
 
         Runnable runnable = new TeleportRequestTask(plugin, player, location, delay);
         BukkitTask task = Bukkit.getScheduler().runTaskTimer(plugin, runnable, 0, 20);

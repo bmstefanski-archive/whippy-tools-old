@@ -31,7 +31,7 @@ import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
 import pl.bmstefanski.tools.util.MessageUtils;
 
-public class DisableCommand {
+public class DisableCommand implements MessageUtils {
 
     private final Tools plugin;
     private final Messages messages;
@@ -48,6 +48,6 @@ public class DisableCommand {
     )
     public void disable(CommandSender commandSender, CommandContext context) {
         plugin.getServer().getPluginManager().disablePlugin(plugin);
-        MessageUtils.sendMessage(commandSender, messages.getSuccessfullyDisabled());
+        sendMessage(commandSender, messages.getSuccessfullyDisabled());
     }
 }

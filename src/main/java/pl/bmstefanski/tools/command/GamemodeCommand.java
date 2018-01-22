@@ -41,7 +41,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class GamemodeCommand {
+public class GamemodeCommand implements MessageUtils {
 
     private final Tools plugin;
     private final Messages messages;
@@ -68,18 +68,18 @@ public class GamemodeCommand {
             GameMode gameMode = GamemodeUtils.parseGameMode(context.getParam(0));
 
             if (gameMode == null) {
-                MessageUtils.sendMessage(player, messages.getGamemodeFail());
+                sendMessage(player, messages.getGamemodeFail());
                 return;
             }
 
             player.setGameMode(gameMode);
-            MessageUtils.sendMessage(player, StringUtils.replace(messages.getGamemodeSuccess(), "%gamemode%", gameMode.toString()));
+            sendMessage(player, StringUtils.replace(messages.getGamemodeSuccess(), "%gamemode%", gameMode.toString()));
 
             return;
         }
 
         if (Bukkit.getPlayer(context.getParam(1)) == null) {
-            MessageUtils.sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(1)));
+            sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(1)));
             return;
         }
 
@@ -87,14 +87,14 @@ public class GamemodeCommand {
         GameMode gameMode = GamemodeUtils.parseGameMode(context.getParam(0));
 
         if (gameMode == null) {
-            MessageUtils.sendMessage(player, messages.getGamemodeFail());
+            sendMessage(player, messages.getGamemodeFail());
             return;
         }
 
         target.setGameMode(gameMode);
 
-        MessageUtils.sendMessage(target, StringUtils.replace(messages.getGamemodeSuccess(), "%gamemode%", gameMode.toString()));
-        MessageUtils.sendMessage(player, StringUtils.replaceEach(messages.getGamemodeSuccessOther(),
+        sendMessage(target, StringUtils.replace(messages.getGamemodeSuccess(), "%gamemode%", gameMode.toString()));
+        sendMessage(player, StringUtils.replaceEach(messages.getGamemodeSuccessOther(),
                 new String[] {"%gamemode%", "%player%"},
                 new String[] {gameMode.toString(), target.getName()}));
     }

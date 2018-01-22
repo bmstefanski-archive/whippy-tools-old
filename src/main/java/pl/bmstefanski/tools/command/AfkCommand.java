@@ -38,6 +38,7 @@ public class AfkCommand implements MessageUtils{
             sendMessage(player, messages.getNoLongerAfk());
             Bukkit.getOnlinePlayers().forEach(p ->
             sendMessage(p, StringUtils.replace(messages.getNoLongerAfkGlobal(), "%player%", player.getName())));
+            return;
         }
 
         user.setAfk(true);

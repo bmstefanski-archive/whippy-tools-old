@@ -24,25 +24,43 @@
 
 package pl.bmstefanski.tools.listener;
 
+import org.apache.commons.lang3.StringUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import pl.bmstefanski.tools.Tools;
+import pl.bmstefanski.tools.api.basic.User;
+import pl.bmstefanski.tools.basic.manager.UserManager;
+import pl.bmstefanski.tools.storage.configuration.Messages;
+import pl.bmstefanski.tools.util.MessageUtils;
 
 public class PlayerMove implements Listener {
 
     private final Tools plugin;
+    private final Messages messages;
 
     public PlayerMove(Tools plugin) {
         this.plugin = plugin;
+        this.messages = plugin.getMessages();
     }
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
+        Player player = event.getPlayer();
+        User user = UserManager.getUser(player.getUniqueId());
         if (event.getFrom().getBlockX() != event.getTo().getBlockX()
                 || event.getFrom().getBlockY() != event.getTo().getBlockY()
                 || event.getFrom().getBlockZ() != event.getTo().getBlockZ()) {
 
+        }
+        //Warning: bad code :nokappa:
+        if (user.isAfk()) {
+            user.setAfk(false);
+            MessageUtils.sendMessage(player, messages.getNoLongerAfk());
+            Bukkit.getOnlinePlayers().forEach(p ->
+                    MessageUtils.sendMessage(p, StringUtils.replace(messages.getNoLongerAfkGlobal(), "%player%", player.getName())));
         }
     }
 }

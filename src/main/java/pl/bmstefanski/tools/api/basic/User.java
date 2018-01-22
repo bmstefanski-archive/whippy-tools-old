@@ -46,9 +46,13 @@ public interface User {
 
     void setGod(boolean god);
 
+    void setAfk(boolean afk);
+
     boolean isGod();
 
     boolean isOnline();
 
     boolean isBanned();
+
+    boolean isAfk();
 }

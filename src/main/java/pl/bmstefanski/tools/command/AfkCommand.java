@@ -13,7 +13,7 @@ import pl.bmstefanski.tools.storage.configuration.Messages;
 import pl.bmstefanski.tools.util.MessageUtils;
 
 //Warning: bad code :nokappa:
-public class AfkCommand {
+public class AfkCommand implements MessageUtils{
 
     private final Tools plugin;
     private final Messages messages;
@@ -33,16 +33,16 @@ public class AfkCommand {
         Player player = (Player) sender;
         User user = UserManager.getUser(player.getUniqueId());
 
-        if (user.isAfk()) {
+        if(user.isAfk()){
             user.setAfk(false);
-            MessageUtils.sendMessage(player, messages.getNoLongerAfk());
+            sendMessage(player, messages.getNoLongerAfk());
             Bukkit.getOnlinePlayers().forEach(p ->
-                    MessageUtils.sendMessage(p, StringUtils.replace(messages.getNoLongerAfkGlobal(), "%player%", player.getName())));
+            sendMessage(p, StringUtils.replace(messages.getNoLongerAfkGlobal(), "%player%", player.getName())));
         }
 
         user.setAfk(true);
-        MessageUtils.sendMessage(player, messages.getAfk());
+        sendMessage(player, messages.getAfk());
         Bukkit.getOnlinePlayers().forEach(p ->
-                MessageUtils.sendMessage(p, StringUtils.replace(messages.getAfkGlobal(), "%player%", player.getName())));
+        sendMessage(p, StringUtils.replace(messages.getAfkGlobal(), "%player%", player.getName())));
     }
 }

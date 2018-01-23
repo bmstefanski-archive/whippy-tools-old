@@ -21,6 +21,7 @@ If you want help, pick one of goals to do, and just create pull request with it.
 - [ ] Payable warps
 
 #### Commands
+- [ ] Tp
 - [x] Back
 - [x] Ban 
 - [ ] Tempban

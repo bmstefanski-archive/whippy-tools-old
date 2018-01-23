@@ -55,7 +55,7 @@ public class PlayerMove implements Listener, MessageUtils{
                 || event.getFrom().getBlockZ() != event.getTo().getBlockZ()) {
 
         }
-        //Warning: bad code :nokappa:
+
         if (user.isAfk()) {
             user.setAfk(false);
             sendMessage(player, messages.getNoLongerAfk());

@@ -3,7 +3,6 @@ package pl.bmstefanski.tools.command;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import pl.bmstefanski.tools.Tools;
@@ -31,9 +30,11 @@ public class HatCommand implements MessageUtils {
     public void hat(CommandSender sender, CommandContext context) {
 
         Player player = (Player) sender;
-        ItemStack item = player.getItemInHand().clone();
-        item.setAmount(1);
+
         PlayerInventory playerInventory = player.getInventory();
+        ItemStack item = playerInventory.getItemInMainHand().clone();
+
+        item.setAmount(1);
 
         if (playerInventory.getItemInMainHand().getType().equals(Material.AIR)) {
             sendMessage(player, messages.getHatCantBeAir());

@@ -52,15 +52,20 @@ public class FlyCommand implements MessageUtils, Parser {
             name = "fly",
             description = "fly command",
             usage = "[player]",
-            userOnly = true,
             permission = "fly",
             completer = "flyCompleter"
     )
     public void fly(CommandSender commandSender, CommandContext context) {
 
-        Player player = (Player) commandSender;
-
         if (context.getArgs().length == 0) {
+
+            if (!(commandSender instanceof Player)) {
+                sendMessage(commandSender, messages.getOnlyPlayer());
+                return;
+            }
+
+            Player player = (Player) commandSender;
+
             boolean flyState = !player.isFlying();
             player.setAllowFlight(flyState);
 
@@ -70,7 +75,7 @@ public class FlyCommand implements MessageUtils, Parser {
         }
 
         if (Bukkit.getPlayer(context.getParam(0)) == null) {
-            sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
+            sendMessage(commandSender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
             return;
         }
 
@@ -79,7 +84,7 @@ public class FlyCommand implements MessageUtils, Parser {
 
         target.setAllowFlight(flyState);
 
-        sendMessage(player, StringUtils.replaceEach(messages.getFlySwitchedOther(),
+        sendMessage(commandSender, StringUtils.replaceEach(messages.getFlySwitchedOther(),
                 new String[] {"%state%", "%player%"},
                 new String[] {parseBoolean(flyState), target.getName()}));
 

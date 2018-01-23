@@ -55,16 +55,20 @@ public class GamemodeCommand implements MessageUtils {
             name = {"gamemode", "gm"},
             description = "gamemode command",
             usage = "0/1/2/3 [player]",
-            userOnly = true,
             permission = "gamemode",
             completer = "gamemodeCompleter",
             min = 1
     )
     public void gamemode(CommandSender commandSender, CommandContext context) {
 
-        Player player = (Player) commandSender;
-
         if (context.getArgs().length == 1) {
+
+            if (!(commandSender instanceof Player)) {
+                sendMessage(commandSender, messages.getOnlyPlayer());
+                return;
+            }
+
+            Player player = (Player) commandSender;
             GameMode gameMode = GamemodeUtils.parseGameMode(context.getParam(0));
 
             if (gameMode == null) {
@@ -79,7 +83,7 @@ public class GamemodeCommand implements MessageUtils {
         }
 
         if (Bukkit.getPlayer(context.getParam(1)) == null) {
-            sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(1)));
+            sendMessage(commandSender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(1)));
             return;
         }
 
@@ -87,14 +91,14 @@ public class GamemodeCommand implements MessageUtils {
         GameMode gameMode = GamemodeUtils.parseGameMode(context.getParam(0));
 
         if (gameMode == null) {
-            sendMessage(player, messages.getGamemodeFail());
+            sendMessage(commandSender, messages.getGamemodeFail());
             return;
         }
 
         target.setGameMode(gameMode);
 
         sendMessage(target, StringUtils.replace(messages.getGamemodeSuccess(), "%gamemode%", gameMode.toString()));
-        sendMessage(player, StringUtils.replaceEach(messages.getGamemodeSuccessOther(),
+        sendMessage(commandSender, StringUtils.replaceEach(messages.getGamemodeSuccessOther(),
                 new String[] {"%gamemode%", "%player%"},
                 new String[] {gameMode.toString(), target.getName()}));
     }

@@ -48,6 +48,10 @@ public class UserImpl implements User {
         UserManager.addUser(this);
     }
 
+    public UserImpl(String playerName) {
+        this.name = playerName;
+    }
+
     @Override
     public UUID getUUID() {
         return uuid;

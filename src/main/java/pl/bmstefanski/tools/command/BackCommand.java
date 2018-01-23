@@ -51,22 +51,27 @@ public class BackCommand implements MessageUtils {
             name = "back",
             description = "back command",
             usage = "[player]",
-            userOnly = true,
             permission = "back",
             completer = "backCompleter"
     )
     public void back(CommandSender commandSender, CommandContext context) {
 
-        Player player = (Player) commandSender;
-
         if (context.getArgs().length == 0) {
+
+            if (!(commandSender instanceof Player)) {
+                sendMessage(commandSender, messages.getOnlyPlayer());
+                return;
+            }
+
+            Player player = (Player) commandSender;
+
 //            Location location = new TeleportUtils().getLocation(player);
 //            new TeleportManager(plugin, player).start();
             return;
         }
 
         if (Bukkit.getPlayer(context.getParam(0)) == null) {
-            sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
+            sendMessage(commandSender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
             return;
         }
 

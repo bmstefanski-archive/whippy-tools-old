@@ -56,7 +56,6 @@ public class BroadcastCommand implements MessageUtils {
             name = {"broadcast", "bc"},
             description = "broadcast command",
             usage = "<action/title/subtitle/chat>",
-            userOnly = true,
             permission = "broadcast",
             min = 2,
             completer = "broadcastCompleter"
@@ -64,7 +63,6 @@ public class BroadcastCommand implements MessageUtils {
     public void broadcast(CommandSender commandSender, CommandContext context) {
 
         StringBuilder stringBuilder = new StringBuilder();
-        Player player = (Player) commandSender;
 
         for (int i = 1; i < context.getArgs().length; i++) {
             stringBuilder.append(" ");

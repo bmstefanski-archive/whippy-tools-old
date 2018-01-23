@@ -54,34 +54,39 @@ public class WhoisCommand implements MessageUtils, Parser {
             name = "whois",
             description = "whois command",
             permission = "whois",
-            userOnly = true,
             usage = "[player]",
             completer = "whoisCompleter"
     )
     public void whois(CommandSender commandSender, CommandContext context) {
 
-        Player player = (Player) commandSender;
 
         if (context.getArgs().length == 0) {
+
+            if (!(commandSender instanceof Player)) {
+                sendMessage(commandSender, messages.getOnlyPlayer());
+                return;
+            }
+
+            Player player = (Player) commandSender;
             OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(player.getUniqueId());
 
-            send(player, offlinePlayer);
+            sendMessage(player, messageContent(player, offlinePlayer));
 
             return;
         }
 
         if (Bukkit.getPlayer(context.getParam(0)) == null) {
-            sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
+            sendMessage(commandSender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
             return;
         }
 
         Player target = Bukkit.getPlayer(context.getParam(0));
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(target.getUniqueId());
 
-        send(target, offlinePlayer);
+        sendMessage(commandSender, messageContent(target, offlinePlayer));
     }
 
-    private void send(Player player, OfflinePlayer offlinePlayer) {
+    private String messageContent(Player player, OfflinePlayer offlinePlayer) {
         User user = UserManager.getUser(offlinePlayer.getUniqueId());
 
         Location location = offlinePlayer.getPlayer().getLocation();
@@ -95,15 +100,14 @@ public class WhoisCommand implements MessageUtils, Parser {
                 + location.getBlockZ() + ")";
         String playerJoin = parseLong(offlinePlayer.getFirstPlayed());
         String playerLast = user.isOnline() ? "online" : parseLong(offlinePlayer.getLastPlayed());
-
         String whois = listToString(messages.getWhois());
 
-        sendMessage(player, StringUtils.replaceEach(whois,
+        return StringUtils.replaceEach(whois,
                 new String[] {"%nickname%", "%uuid%", "%ip%", "%registered%", "%last%", "%location%", "%hp%", "%hunger%", "%gamemode%", "%god%", "%fly%"},
                 new String[] {offlinePlayer.getName(), offlinePlayer.getUniqueId().toString(), offlinePlayer.getPlayer().getAddress().getHostName(),
                         playerJoin, playerLast, playerLocation, playerHealth, playerFoodLevel, playerGamemode, parseBoolean(user.isGod()),
                         parseBoolean(offlinePlayer.getPlayer().isFlying())
-                }));
+                });
     }
 
     public List<String> whoisCompleter(CommandSender commandSender, CommandContext context) {

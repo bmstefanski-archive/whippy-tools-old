@@ -50,21 +50,18 @@ public class ListCommand implements MessageUtils {
             name = "list",
             description = "list command",
             usage = "[full/basic]",
-            userOnly = true,
             completer = "listCompleter",
             min = 1
     )
     public void list(CommandSender commandSender, CommandContext context) {
-        Player player = (Player) commandSender;
-
         int playersOnlineSize = plugin.getUserManager().getOnlinePlayers().size();
         int maxPlayers = Bukkit.getMaxPlayers();
 
         if (context.getArgs().length == 1) {
             if (context.getParam(0).equalsIgnoreCase("full")) {
-                sendMessage(player, StringUtils.replace(messages.getListFull(), "%online%", Arrays.toString(plugin.getUserManager().getOnlinePlayers().toArray())));
+                sendMessage(commandSender, StringUtils.replace(messages.getListFull(), "%online%", Arrays.toString(plugin.getUserManager().getOnlinePlayers().toArray())));
             } else if (context.getParam(0).equalsIgnoreCase("basic")) {
-                sendMessage(player, StringUtils.replaceEach(messages.getListBasic(),
+                sendMessage(commandSender, StringUtils.replaceEach(messages.getListBasic(),
                         new String[] {"%online%", "%max%"},
                         new String[] {playersOnlineSize + "", maxPlayers + ""}));
             }

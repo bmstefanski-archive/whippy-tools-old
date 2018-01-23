@@ -54,15 +54,19 @@ public class GodCommand implements MessageUtils, Parser {
             name = "god",
             description = "god command",
             usage = "[player]",
-            userOnly = true,
             permission = "god",
             completer = "godCompleter"
     )
     public void god(CommandSender commandSender, CommandContext context) {
 
-        Player player = (Player) commandSender;
-
         if (context.getArgs().length == 0) {
+
+            if (!(commandSender instanceof Player)) {
+                sendMessage(commandSender, messages.getOnlyPlayer());
+                return;
+            }
+
+            Player player = (Player) commandSender;
             User user = UserManager.getUser(player.getUniqueId());
 
             if (user == null) {
@@ -78,7 +82,7 @@ public class GodCommand implements MessageUtils, Parser {
         }
 
         if (Bukkit.getPlayer(context.getParam(0)) == null) {
-            sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
+            sendMessage(commandSender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
             return;
         }
 
@@ -93,7 +97,7 @@ public class GodCommand implements MessageUtils, Parser {
         user.setGod(godState);
 
 
-        sendMessage(player, StringUtils.replaceEach(messages.getGodSwitchedOther(),
+        sendMessage(commandSender, StringUtils.replaceEach(messages.getGodSwitchedOther(),
                 new String[] {"%state%", "%player%"},
                 new String[] {parseBoolean(godState), target.getName()}));
         sendMessage(target, StringUtils.replace(messages.getGodSwitched(), "%state%", parseBoolean(godState)));

@@ -36,17 +36,20 @@ import java.util.concurrent.TimeUnit;
 
 public class UserManager {
 
-    private static final Map<UUID, User> players = new HashMap<>();
-    private static final Cache<UUID, User> playersCache = CacheBuilder.newBuilder().expireAfterAccess(5, TimeUnit.MINUTES).build();
+    private static final Map<UUID, User> UUID_USER_MAP = new HashMap<>();
+    private static final Map<String, User> NAME_USER_MAP = new HashMap<>();
+
+    private static final Cache<UUID, User> UUID_USER_CACHE = CacheBuilder.newBuilder().expireAfterAccess(5, TimeUnit.MINUTES).build();
+    private static final Cache<String, User> NAME_USER_CACHE = CacheBuilder.newBuilder().expireAfterAccess(5, TimeUnit.MINUTES).build();
 
     public static User getUser(UUID uuid) {
-        User user = playersCache.getIfPresent(uuid);
+        User user = UUID_USER_CACHE.getIfPresent(uuid);
 
         if (user == null) {
-            user = players.get(uuid);
+            user = UUID_USER_MAP.get(uuid);
 
             if (user != null) {
-                players.put(uuid, user);
+                UUID_USER_MAP.put(uuid, user);
                 return user;
             }
 
@@ -56,22 +59,39 @@ public class UserManager {
         return user;
     }
 
+    public static User getUser(String playerName) {
+        User user = NAME_USER_CACHE.getIfPresent(playerName);
+
+        if (user == null) {
+            user = NAME_USER_MAP.get(playerName);
+
+            if (user != null) {
+                NAME_USER_MAP.put(playerName, user);
+                return user;
+            }
+
+            return new UserImpl(playerName);
+        }
+
+        return user;
+    }
+
     public static void addUser(User user) {
-        players.put(user.getUUID(), user);
-        playersCache.put(user.getUUID(), user);
+        UUID_USER_MAP.put(user.getUUID(), user);
+        UUID_USER_CACHE.put(user.getUUID(), user);
+
+        if (user.getName() != null) {
+            NAME_USER_MAP.put(user.getName(), user);
+            NAME_USER_CACHE.put(user.getName(), user);
+        }
     }
 
     public static void removeUser(User user) {
-        players.remove(user.getUUID());
-        playersCache.invalidate(user.getUUID());
-    }
+        UUID_USER_MAP.remove(user.getUUID());
+        UUID_USER_CACHE.invalidate(user.getUUID());
 
-    public Collection<User> getPlayers() {
-        return players.values();
-    }
-
-    public Collection<User> getPlayersCache() {
-        return playersCache.asMap().values();
+        NAME_USER_MAP.remove(user.getName());
+        NAME_USER_CACHE.invalidate(user.getName());
     }
 
     public Collection<User> getOnlinePlayers() {

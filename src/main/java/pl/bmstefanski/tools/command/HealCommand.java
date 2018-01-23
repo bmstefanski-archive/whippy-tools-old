@@ -51,15 +51,20 @@ public class HealCommand implements MessageUtils {
             name = "heal",
             description = "heal command",
             usage = "[player]",
-            userOnly = true,
             permission = "heal",
             completer = "healCompleter"
     )
     public void heal(CommandSender commandSender, CommandContext context) {
 
-        Player player = (Player) commandSender;
-
         if (context.getArgs().length == 0) {
+
+            if (!(commandSender instanceof Player)) {
+                sendMessage(commandSender, messages.getOnlyPlayer());
+                return;
+            }
+
+            Player player = (Player) commandSender;
+
             player.setHealth(20D);
 
             sendMessage(player, messages.getHealed());
@@ -68,7 +73,7 @@ public class HealCommand implements MessageUtils {
         }
 
         if (Bukkit.getPlayer(context.getParam(0)) == null) {
-            sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
+            sendMessage(commandSender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
             return;
         }
 
@@ -77,7 +82,7 @@ public class HealCommand implements MessageUtils {
         target.setHealth(20D);
 
         sendMessage(target, messages.getHealed());
-        sendMessage(player, StringUtils.replace(messages.getHealedOther(), "%player%", target.getName()));
+        sendMessage(commandSender, StringUtils.replace(messages.getHealedOther(), "%player%", target.getName()));
     }
 
     public List<String> healCompleter(CommandSender commandSender, CommandContext context) {

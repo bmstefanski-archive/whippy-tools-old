@@ -34,7 +34,7 @@ public interface Ban {
 
     Player getPunishedPlayer();
 
-    UUID getPunisher();
+    String getPunisher();
 
     Player getPunisherPlayer();
 

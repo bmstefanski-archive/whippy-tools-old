@@ -55,7 +55,7 @@ public class BanResourceManager extends AbstractStorage {
 
             while (resultSet.next()) {
                 UUID punished = UUID.fromString(resultSet.getString("punished"));
-                UUID punisher = UUID.fromString(resultSet.getString("punisher"));
+                String punisher = resultSet.getString("punisher");
 
                 Ban ban = new BanImpl(punished, punisher);
 
@@ -96,7 +96,7 @@ public class BanResourceManager extends AbstractStorage {
         try {
             PreparedStatement preparedStatement = getStorage().getPreparedStatement(StatementType.ADD_BAN);
 
-            preparedStatement.setString(1, ban.getPunisher().toString());
+            preparedStatement.setString(1, ban.getPunisher());
             preparedStatement.setString(2, ban.getPunished().toString());
             preparedStatement.setLong(3, ban.getTime());
             preparedStatement.setString(4, ban.getReason());

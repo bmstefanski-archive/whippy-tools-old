@@ -56,13 +56,11 @@ public class SpawnCommand implements MessageUtils {
             name = "spawn",
             description = "spawn command",
             permission = "spawn",
-            userOnly = true,
             usage = "[player]",
             completer = "spawnCompleter"
     )
     public void spawn(CommandSender commandSender, CommandContext context) {
 
-        Player player = (Player) commandSender;
         TeleportManager taskManager = new TeleportManager(plugin);
 
         if (config.getExists()) {
@@ -75,12 +73,20 @@ public class SpawnCommand implements MessageUtils {
             Location location = new Location(Bukkit.getWorld(worldName), x, y, z);
 
             if (context.getArgs().length == 0) {
+
+                if (!(commandSender instanceof Player)) {
+                    sendMessage(commandSender, messages.getOnlyPlayer());
+                    return;
+                }
+
+                Player player = (Player) commandSender;
+
                 taskManager.teleport(player, location, plugin.getConfiguration().getSpawnDelay());
                 return;
             }
 
             if (Bukkit.getPlayer(context.getParam(0)) == null) {
-                sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
+                sendMessage(commandSender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
                 return;
             }
 
@@ -90,7 +96,7 @@ public class SpawnCommand implements MessageUtils {
             return;
         }
 
-        sendMessage(player, messages.getSpawnFailed());
+        sendMessage(commandSender, messages.getSpawnFailed());
     }
 
     public List<String> spawnCompleter(CommandSender commandSender, CommandContext context) {

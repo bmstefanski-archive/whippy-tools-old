@@ -45,14 +45,11 @@ public class ToolsCommand implements MessageUtils {
     @CommandInfo(
             name = {"tools"},
             description = "tools command",
-            permission = "tools",
-            userOnly = true
+            permission = "tools"
     )
     public void tools(CommandSender commandSender, CommandContext context) {
 
-        Player player = (Player) commandSender;
-
-        sendMessage(player, "&e" + plugin.getDescription().getName() +
+        sendMessage(commandSender, "&e" + plugin.getDescription().getName() +
                                         "&f(" + config.getLanguage().toUpperCase() +
                                         ") &7" + plugin.getDescription().getVersion() +
                                         " by §e" + plugin.getDescription().getAuthors());

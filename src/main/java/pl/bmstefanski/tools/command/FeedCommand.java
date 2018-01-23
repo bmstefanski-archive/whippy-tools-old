@@ -51,15 +51,19 @@ public class FeedCommand implements MessageUtils {
             name = "feed",
             description = "feed command",
             usage = "[player]",
-            userOnly = true,
             permission = "feed",
             completer = "feedCompleter"
     )
     public void feed(CommandSender commandSender, CommandContext context) {
 
-        Player player = (Player) commandSender;
-
         if (context.getArgs().length == 0) {
+
+            if (!(commandSender instanceof Player)) {
+                sendMessage(commandSender, messages.getOnlyPlayer());
+                return;
+            }
+
+            Player player = (Player) commandSender;
             player.setFoodLevel(20);
 
             sendMessage(player, messages.getFed());
@@ -68,7 +72,7 @@ public class FeedCommand implements MessageUtils {
         }
 
         if (Bukkit.getPlayer(context.getParam(0)) == null) {
-            sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
+            sendMessage(commandSender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
             return;
         }
 
@@ -77,7 +81,7 @@ public class FeedCommand implements MessageUtils {
         target.setFoodLevel(20);
 
         sendMessage(target, messages.getFed());
-        sendMessage(player, StringUtils.replace(messages.getFedOther(), "%player%", target.getName()));
+        sendMessage(commandSender, StringUtils.replace(messages.getFedOther(), "%player%", target.getName()));
     }
 
     public List<String> feedCompleter(CommandSender commandSender, CommandContext context) {

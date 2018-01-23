@@ -51,23 +51,28 @@ public class ClearCommand implements MessageUtils {
             name = {"clear", "ci"},
             description = "clear command",
             usage = "[player]",
-            userOnly = true,
             permission = "clear",
             completer = "clearCompleter"
     )
     public void clear(CommandSender commandSender, CommandContext context) {
 
-        Player player = (Player) commandSender;
-
         if (context.getArgs().length == 0) {
+
+            if (!(commandSender instanceof Player)) {
+                sendMessage(commandSender, messages.getOnlyPlayer());
+                return;
+            }
+
+            Player player = (Player) commandSender;
             player.getInventory().clear();
+
             sendMessage(player, messages.getClear());
 
             return;
         }
 
         if (Bukkit.getPlayer(context.getParam(0)) == null) {
-            sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
+            sendMessage(commandSender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
             return;
         }
 
@@ -76,7 +81,7 @@ public class ClearCommand implements MessageUtils {
         target.getInventory().clear();
 
         sendMessage(target, messages.getClear());
-        sendMessage(player, StringUtils.replace(messages.getClearOther(), "%player%", target.getName()));
+        sendMessage(commandSender, StringUtils.replace(messages.getClearOther(), "%player%", target.getName()));
     }
 
     public List<String> clearCompleter(CommandSender commandSender, CommandContext context) {

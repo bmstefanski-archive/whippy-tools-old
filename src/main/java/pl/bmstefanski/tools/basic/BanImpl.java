@@ -32,12 +32,12 @@ import java.util.UUID;
 
 public class BanImpl implements Ban {
 
+    private final String punisher;
     private final UUID punished;
-    private final UUID punisher;
     private String reason;
     private long time;
 
-    public BanImpl(UUID punished, UUID punisher) {
+    public BanImpl(UUID punished, String punisher) {
         this.punished = punished;
         this.punisher = punisher;
     }
@@ -53,7 +53,7 @@ public class BanImpl implements Ban {
     }
 
     @Override
-    public UUID getPunisher() {
+    public String getPunisher() {
         return punisher;
     }
 

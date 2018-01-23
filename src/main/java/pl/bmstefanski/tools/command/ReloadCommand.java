@@ -45,8 +45,7 @@ public class ReloadCommand implements MessageUtils {
     @CommandInfo(
             name = "tools-reload",
             description = "reload command",
-            permission = "reload",
-            userOnly = true
+            permission = "reload"
     )
     public void reload(CommandSender commandSender, CommandContext context) {
 

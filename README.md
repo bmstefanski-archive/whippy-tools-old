@@ -47,7 +47,7 @@ If you want help, pick one of goals to do, and just create pull request with it.
 - [ ] Give
 - [ ] Repair
 - [ ] Chat (toggle, clear and the like)
-- [ ] Head
+- [ ] Skull
 - [x] Hat
 - [ ] Power Tool
 - [ ] World

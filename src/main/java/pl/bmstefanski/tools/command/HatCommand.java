@@ -35,7 +35,7 @@ public class HatCommand implements MessageUtils {
         item.setAmount(1);
         PlayerInventory playerInventory = player.getInventory();
 
-        if (player.getItemInHand().getType().equals(Material.AIR)) {
+        if (playerInventory.getItemInMainHand().getType().equals(Material.AIR)) {
             sendMessage(player, messages.getHatCantBeAir());
             return;
         }

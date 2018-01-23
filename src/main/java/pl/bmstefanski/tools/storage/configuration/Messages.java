@@ -217,4 +217,8 @@ public interface Messages extends Config {
     default String getHatCantBeAir() { return "&cNie masz nic w rece!"; }
 
     default String getHat() { return "&6Ciesz sie nowa czapka!"; }
+
+    default String getSkullOnly(){ return "&6Dostales swoja glowe!"; }
+
+    default String getSkullSomeone(){ return "&6Dostales glowe gracza &7%player%"; }
 }

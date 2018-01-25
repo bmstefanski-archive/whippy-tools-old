@@ -4,20 +4,21 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>pl.bmstefanski</groupId>
-    <artifactId>tools</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <parent>
+        <groupId>pl.bmstefanski</groupId>
+        <artifactId>whippy-modules</artifactId>
+        <version>1</version>
+    </parent>
 
     <name>Tools</name>
+    <artifactId>tools</artifactId>
+    <version>1</version>
 
-    <description>Tools plugin</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
-    <url>www.bmstefanski.pl</url>
 
     <build>
         <plugins>
@@ -33,6 +34,7 @@
     </build>
 
     <repositories>
+
         <repository>
             <id>destroystokyo-repo</id>
             <url>https://repo.destroystokyo.com/repository/maven-public/</url>
@@ -47,9 +49,11 @@
             <id>diorite</id>
             <url>https://repo.diorite.org/repository/diorite/</url>
         </repository>
+
     </repositories>
 
     <dependencies>
+
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
@@ -75,5 +79,6 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.7</version>
         </dependency>
+
     </dependencies>
 </project>

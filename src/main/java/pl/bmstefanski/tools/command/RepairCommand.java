@@ -4,7 +4,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Repairable;
 import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
@@ -33,19 +34,20 @@ public class RepairCommand implements MessageUtils {
     )
     public void repair(CommandSender commandSender, CommandContext context) {
         Player player = (Player) commandSender;
-        PlayerInventory playerInventory = player.getInventory();
+        ItemStack item = player.getInventory().getItemInMainHand();
 
-        if (playerInventory.getItemInMainHand().getType() == Material.AIR) {
+        if (item.getType() == Material.AIR) {
             sendMessage(player, messages.getCannotRepair());
             return;
         }
-        if (playerInventory.getItemInMainHand().getDurability() == playerInventory.getItemInMainHand().getType().getMaxDurability()) {
+
+        if (item.getDurability() == item.getType().getMaxDurability()) {
             sendMessage(player, messages.getCannotRepairFull());
             return;
         }
 
-        playerInventory.getItemInMainHand().setDurability(playerInventory.getItemInMainHand().getType().getMaxDurability());
-        sendMessage(player, StringUtils.replace(messages.getRepaired(), "%item%", playerInventory.getItemInMainHand().getType().name().toLowerCase()));
+        item.setDurability((short) 0);
+        sendMessage(player, StringUtils.replace(messages.getRepaired(), "%item%", item.getType().name().toLowerCase()));
 
     }
 

@@ -246,9 +246,9 @@ public interface Messages extends Config {
         return "&7Ustawiono noc na swiecie &e%world%";
     }
 
-    default String getCannotRepair(){ return "&cNie mozesz naprawic niczego!"; }
+    default String getCannotRepair() { return "&cNie mozesz naprawic niczego!"; }
 
-    default String getCannotRepairFull(){ return "&cNie mozesz naprawic "; }
+    default String getCannotRepairFull() { return "&cNie mozesz naprawic "; }
 
-    default String getRepaired(){ return "&aNaprawiles &7%item%"; }
+    default String getRepaired() { return "&aNaprawiles &7%item%"; }
 }

@@ -9,6 +9,9 @@ import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
 import pl.bmstefanski.tools.util.MessageUtils;
+import pl.bmstefanski.tools.util.TabCompleterUtils;
+
+import java.util.List;
 
 public class TpCommand implements MessageUtils {
 
@@ -25,7 +28,8 @@ public class TpCommand implements MessageUtils {
             description = "tp command",
             usage = "[player] [target]",
             permission = "tp",
-            min = 1
+            min = 1,
+            completer = "tpCompleter"
     )
     private void tp(CommandSender sender, CommandContext context) {
 
@@ -64,5 +68,12 @@ public class TpCommand implements MessageUtils {
         sendMessage(sender, StringUtils.replaceEach(messages.getTpSuccess(),
                 new String[] {"%player%", "%target%"},
                 new String[] {player.getName(), target.getName()}));
+    }
+
+    public List<String> tpCompleter(CommandSender commandSender, CommandContext context) {
+        List<String> availableList = TabCompleterUtils.getAvailableList(context);
+        if (availableList != null) return availableList;
+
+        return null;
     }
 }

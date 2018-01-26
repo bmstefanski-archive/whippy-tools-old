@@ -44,8 +44,8 @@ If you want help, pick one of goals to do, and just create pull request with it.
 - [x] Whois
 - [x] Workbench
 - [ ] Tpa (tpaaccept, tpadeny)
-- [ ] Day
-- [ ] Night
+- [x] Day
+- [x] Night
 - [ ] Weather
 - [ ] Give
 - [ ] Repair

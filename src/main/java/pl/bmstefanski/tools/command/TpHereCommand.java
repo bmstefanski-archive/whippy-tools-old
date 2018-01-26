@@ -9,6 +9,9 @@ import pl.bmstefanski.tools.command.basic.CommandContext;
 import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
 import pl.bmstefanski.tools.util.MessageUtils;
+import pl.bmstefanski.tools.util.TabCompleterUtils;
+
+import java.util.List;
 
 public class TpHereCommand implements MessageUtils {
 
@@ -26,7 +29,8 @@ public class TpHereCommand implements MessageUtils {
             usage = "[player]",
             permission = "tphere",
             min = 1,
-            userOnly = true
+            userOnly = true,
+            completer = "tphereCompleter"
     )
     private void tpHere(CommandSender sender, CommandContext context) {
 
@@ -42,5 +46,12 @@ public class TpHereCommand implements MessageUtils {
         sendMessage(player, StringUtils.replaceEach(messages.getTpSuccess(),
                 new String[] {"%player%", "%target%"},
                 new String[] {target.getName(), player.getName()}));
+    }
+
+    public List<String> tphereCompleter(CommandSender commandSender, CommandContext context) {
+        List<String> availableList = TabCompleterUtils.getAvailableList(context);
+        if (availableList != null) return availableList;
+
+        return null;
     }
 }

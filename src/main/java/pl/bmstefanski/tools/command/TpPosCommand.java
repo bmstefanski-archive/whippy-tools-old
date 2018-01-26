@@ -11,6 +11,9 @@ import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
 import pl.bmstefanski.tools.util.MessageUtils;
 import pl.bmstefanski.tools.util.Parser;
+import pl.bmstefanski.tools.util.TabCompleterUtils;
+
+import java.util.List;
 
 public class TpPosCommand implements MessageUtils, Parser {
 
@@ -27,7 +30,8 @@ public class TpPosCommand implements MessageUtils, Parser {
             description = "tppos description",
             permission = "tppos",
             usage = "[x] [y] [z] [player]",
-            min = 3
+            min = 3,
+            completer = "tpposCompleter"
     )
     private void tppos(CommandSender sender, CommandContext context) {
 
@@ -65,5 +69,12 @@ public class TpPosCommand implements MessageUtils, Parser {
         sendMessage(player, StringUtils.replaceEach(messages.getTppos(),
                 new String[] {"%player%" ,"%x%", "%y%", "%z%"},
                 new String[] {player.getName(), x + "", y + "", z + ""}));
+    }
+
+    public List<String> tpposCompleter(CommandSender commandSender, CommandContext context) {
+        List<String> availableList = TabCompleterUtils.getAvailableList(context);
+        if (availableList != null) return availableList;
+
+        return null;
     }
 }

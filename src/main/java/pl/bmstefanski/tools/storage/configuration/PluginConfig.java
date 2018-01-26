@@ -46,6 +46,10 @@ public interface PluginConfig extends Config {
         return 5;
     }
 
+    default int getBackDelay() {
+        return 3;
+    }
+
     @CustomKey("mysql")
     default MySQL getMySQLSection() {
         return ConfigManager.createInstance(MySQL.class);

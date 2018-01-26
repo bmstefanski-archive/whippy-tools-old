@@ -28,7 +28,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import pl.bmstefanski.tools.Tools;
-import pl.bmstefanski.tools.util.TeleportUtils;
+import pl.bmstefanski.tools.manager.LocationManager;
 
 public class PlayerDeath implements Listener {
 
@@ -42,7 +42,7 @@ public class PlayerDeath implements Listener {
     public void onPlayerDeath(PlayerDeathEvent event) {
 
         if (event.getEntity() != null) {
-//            new TeleportUtils().setLocation(event.getEntity());
+            LocationManager.setLastLocation(event.getEntity());
         }
     }
 }

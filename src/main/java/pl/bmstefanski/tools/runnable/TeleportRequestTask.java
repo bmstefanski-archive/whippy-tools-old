@@ -54,7 +54,7 @@ public class TeleportRequestTask implements Runnable, MessageUtils {
 
     @Override
     public void run() {
-        Map<Player, BukkitTask> taskMap = TeleportManager.taskMap;
+        Map<Player, BukkitTask> taskMap = TeleportManager.TASK_MAP;
 
         if (player.getLocation().distance(startLocation) > 0.5) {
             taskMap.get(player).cancel();

@@ -40,7 +40,8 @@ public class TeleportManager implements MessageUtils {
 
     private final Tools plugin;
     private final Messages messages;
-    public static final Map<Player, BukkitTask> taskMap = new HashMap<>();
+
+    public static final Map<Player, BukkitTask> TASK_MAP = new HashMap<>();
 
     public TeleportManager(Tools plugin) {
         this.plugin = plugin;
@@ -49,7 +50,7 @@ public class TeleportManager implements MessageUtils {
 
     public void teleport(Player player, Location location, int delay) {
 
-        if (taskMap.containsKey(player)) {
+        if (TASK_MAP.containsKey(player)) {
             sendMessage(player, messages.getCurrentlyTeleporting());
             return;
         }
@@ -58,6 +59,6 @@ public class TeleportManager implements MessageUtils {
 
         Runnable runnable = new TeleportRequestTask(plugin, player, location, delay);
         BukkitTask task = Bukkit.getScheduler().runTaskTimer(plugin, runnable, 0, 20);
-        taskMap.put(player, task);
+        TASK_MAP.put(player, task);
     }
 }

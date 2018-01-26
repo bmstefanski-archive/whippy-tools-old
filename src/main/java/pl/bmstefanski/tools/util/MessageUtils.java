@@ -32,8 +32,6 @@ import java.util.List;
 
 public interface MessageUtils {
 
-    StringBuilder stringBuilder = new StringBuilder();
-
     default String fixColor(String string) {
         return ChatColor.translateAlternateColorCodes('&', string);
     }
@@ -59,6 +57,7 @@ public interface MessageUtils {
     }
 
     default String listToString(List<String> list) {
+        StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.setLength(0);
         String result = null;
 

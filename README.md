@@ -48,7 +48,7 @@ If you want help, pick one of goals to do, and just create pull request with it.
 - [x] Night
 - [ ] Weather
 - [ ] Give
-- [ ] Repair
+- [x] Repair
 - [ ] Chat (toggle, clear and the like)
 - [x] Skull
 - [x] Hat

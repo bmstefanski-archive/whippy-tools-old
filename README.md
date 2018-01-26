@@ -1,9 +1,12 @@
-## <img src="https://avatars1.githubusercontent.com/u/35628511?s=200&v=4" width="48"> [![Codacy Badge](https://api.codacy.com/project/badge/Grade/6f800b26da2148a1b5f2b69da656cacf)](https://www.codacy.com/app/bmstefanski/whippy-tools?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=whippytools/whippy-tools&amp;utm_campaign=Badge_Grade) [![Build Status](https://travis-ci.org/whippytools/whippy-tools.svg?branch=master)](https://travis-ci.org/whippytools/whippy-tools) Whippy Tools 
+## <img src="https://avatars1.githubusercontent.com/u/35628511?s=200&v=4" width="48">  Whippy Tools 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6f800b26da2148a1b5f2b69da656cacf)](https://www.codacy.com/app/bmstefanski/whippy-tools?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=whippytools/whippy-tools&amp;utm_campaign=Badge_Grade) [![Build Status](https://travis-ci.org/whippytools/whippy-tools.svg?branch=master)](https://travis-ci.org/whippytools/whippy-tools) 
 
-# Maven
-To build with maven, use that command: 
-- `git clone https://github.com/whippytools/whippy-tools.git`
-- `mvn clean package`
+# How to build
+To build with [Maven](https://maven.apache.org/), use that commands: 
+```
+$ git clone https://github.com/whippytools/whippy-tools.git
+$ mvn clean package
+```
 
 # Goals
 If you want help, pick one of goals to do, and just create pull request with it.
@@ -21,7 +24,7 @@ If you want help, pick one of goals to do, and just create pull request with it.
 - [ ] Payable warps
 
 #### Commands
-- [ ] Tp
+- [x] Tp
 - [x] Back
 - [x] Ban 
 - [ ] Tempban
@@ -47,16 +50,16 @@ If you want help, pick one of goals to do, and just create pull request with it.
 - [ ] Give
 - [ ] Repair
 - [ ] Chat (toggle, clear and the like)
-- [ ] Skull
+- [x] Skull
 - [x] Hat
 - [ ] Power Tool
 - [ ] World
 - [x] Afk
 - [ ] Burn
 - [ ] Vanish
-- [ ] Tppos
-- [ ] Tpall
-- [ ] Tphere
+- [x] Tppos
+- [x] Tpall
+- [x] Tphere
 - [ ] Spawnmob
 - [ ] Speed
 - [ ] SocialSpy
@@ -75,4 +78,3 @@ If you want help, pick one of goals to do, and just create pull request with it.
 - [ ] Jails' system
 - [ ] New commands' system
 - [ ] PMs' system (reply) 
-

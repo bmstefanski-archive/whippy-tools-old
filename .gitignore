@@ -42,3 +42,6 @@ tools.iml
 .idea/misc.xml
 .idea/encodings.xml
 .idea/inspectionProfiles/Project_Default.xml
+.idea/artifacts/tools_jar.xml
+.idea/uiDesigner.xml
+target/classes/plugin.yml

@@ -218,7 +218,15 @@ public interface Messages extends Config {
 
     default String getHat() { return "&6Ciesz sie nowa czapka!"; }
 
-    default String getSkullOnly(){ return "&6Dostales swoja glowe!"; }
+    default String getSkullOnly() { return "&6Dostales swoja glowe!"; }
 
-    default String getSkullSomeone(){ return "&6Dostales glowe gracza &7%player%"; }
+    default String getSkullSomeone() { return "&6Dostales glowe gracza &7%player%"; }
+
+    default String getTpSuccess() {
+        return "&7Pomyslnie przeteleportowano gracza &e%player% &7do gracza &e%target%";
+    }
+
+    default String getTpFailed() {
+        return "&cNie mozna teleportowac, poniewaz &7%player% &club &7%target% &cjest offline";
+    }
 }

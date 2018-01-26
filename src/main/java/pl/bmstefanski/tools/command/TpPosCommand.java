@@ -25,6 +25,7 @@ public class TpPosCommand implements MessageUtils, Parser {
     @CommandInfo(
             name = "tppos",
             description = "tppos description",
+            permission = "tppos",
             usage = "[x] [y] [z] [player]",
             min = 3
     )

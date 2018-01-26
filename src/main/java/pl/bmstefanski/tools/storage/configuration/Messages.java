@@ -233,4 +233,12 @@ public interface Messages extends Config {
     default String getTppos() {
         return "&7Teleportowano gracza &e%player% &7na koordynaty: x: &e%x%&7, y: &e%y%&7, z: &e%z%";
     }
+
+    default String getDay() {
+        return "&7Ustawiono dzien na swiecie &e%world%";
+    }
+
+    default String getWorldNotFound() {
+        return "&cNie znaleziono swiata o nazwie &7%world%";
+    }
 }

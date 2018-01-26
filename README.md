@@ -28,7 +28,7 @@ If you want help, pick one of goals to do, and just create pull request with it.
 - [x] Back
 - [x] Ban 
 - [ ] Tempban
-- [ ] Kick
+- [x] Kick
 - [x] Broadcast
 - [x] Clear (inventory)
 - [x] Enderchest
@@ -67,7 +67,7 @@ If you want help, pick one of goals to do, and just create pull request with it.
 - [ ] Realname
 - [ ] Mute
 - [ ] Lightning
-- [ ] Kickall
+- [x] Kickall
 - [ ] Ignore
 - [ ] Invsee
 - [ ] Helpop

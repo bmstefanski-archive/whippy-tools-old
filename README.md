@@ -24,7 +24,7 @@ If you want help, pick one of goals to do, and just create pull request with it.
 - [ ] Payable warps
 
 #### Commands
-- [ ] Tp
+- [x] Tp
 - [x] Back
 - [x] Ban 
 - [ ] Tempban
@@ -50,16 +50,16 @@ If you want help, pick one of goals to do, and just create pull request with it.
 - [ ] Give
 - [ ] Repair
 - [ ] Chat (toggle, clear and the like)
-- [ ] Skull
+- [x] Skull
 - [x] Hat
 - [ ] Power Tool
 - [ ] World
 - [x] Afk
 - [ ] Burn
 - [ ] Vanish
-- [ ] Tppos
-- [ ] Tpall
-- [ ] Tphere
+- [x] Tppos
+- [x] Tpall
+- [x] Tphere
 - [ ] Spawnmob
 - [ ] Speed
 - [ ] SocialSpy

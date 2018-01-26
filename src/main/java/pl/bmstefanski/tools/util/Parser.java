@@ -47,4 +47,8 @@ public interface Parser {
         return date.format(formatter);
     }
 
+    default int parseInt(String integer) {
+        return Integer.parseInt(String.valueOf(integer));
+    }
+
 }

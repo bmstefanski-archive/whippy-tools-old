@@ -229,4 +229,8 @@ public interface Messages extends Config {
     default String getTpFailed() {
         return "&cNie mozna teleportowac, poniewaz &7%player% &club &7%target% &cjest offline";
     }
+
+    default String getTppos() {
+        return "&7Teleportowano gracza &e%player% &7na koordynaty: x: &e%x%&7, y: &e%y%&7, z: &e%z%";
+    }
 }

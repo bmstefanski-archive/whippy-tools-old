@@ -124,7 +124,8 @@ public class Tools extends JavaPlugin implements ToolsAPI {
                 new HatCommand(this),
                 new SkullCommand(this),
                 new TpCommand(this),
-                new TpHereCommand(this)
+                new TpHereCommand(this),
+                new TpPosCommand(this)
         );
     }
 

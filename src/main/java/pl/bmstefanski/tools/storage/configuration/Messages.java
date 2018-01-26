@@ -241,4 +241,8 @@ public interface Messages extends Config {
     default String getWorldNotFound() {
         return "&cNie znaleziono swiata o nazwie &7%world%";
     }
+
+    default String getNight() {
+        return "&7Ustawiono noc na swiecie &e%world%";
+    }
 }

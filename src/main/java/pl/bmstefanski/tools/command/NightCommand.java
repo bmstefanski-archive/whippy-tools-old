@@ -11,23 +11,23 @@ import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
 import pl.bmstefanski.tools.util.MessageUtils;
 
-public class DayCommand implements MessageUtils {
+public class NightCommand implements MessageUtils {
 
     private final Tools plugin;
     private final Messages messages;
 
-    public DayCommand(Tools plugin) {
+    public NightCommand(Tools plugin) {
         this.plugin = plugin;
         this.messages = plugin.getMessages();
     }
 
     @CommandInfo(
-            name = "day",
-            description = "day command",
-            permission = "day",
+            name = "night",
+            description = "night command",
+            permission = "night",
             usage = "[world]"
     )
-    private void day(CommandSender sender, CommandContext context) {
+    private void night(CommandSender sender, CommandContext context) {
 
         if (context.getArgs().length == 0) {
 
@@ -37,9 +37,9 @@ public class DayCommand implements MessageUtils {
             }
 
             Player player = (Player) sender;
-            player.getWorld().setTime(24000);
+            player.getWorld().setTime(12566);
 
-            sendMessage(player, StringUtils.replace(messages.getDay(), "%world%", player.getWorld().getName()));
+            sendMessage(player, StringUtils.replace(messages.getNight(), "%world%", player.getWorld().getName()));
 
             return;
         }
@@ -50,8 +50,8 @@ public class DayCommand implements MessageUtils {
         }
 
         World world = Bukkit.getWorld(context.getParam(0));
-        world.setTime(24000);
+        world.setTime(12566);
 
-        sendMessage(sender, StringUtils.replace(messages.getDay(), "%world%", world.getName()));
+        sendMessage(sender, StringUtils.replace(messages.getNight(), "%world%", world.getName()));
     }
 }

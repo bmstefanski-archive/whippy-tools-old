@@ -50,11 +50,4 @@ public class RepairCommand implements MessageUtils {
         sendMessage(player, StringUtils.replace(messages.getRepaired(), "%item%", item.getType().name().toLowerCase()));
 
     }
-
-    public List<String> repairCompleter(CommandSender commandSender, CommandContext context) {
-        List<String> availableList = TabCompleterUtils.getAvailableList(context);
-        if (availableList != null) return availableList;
-
-        return null;
-    }
 }

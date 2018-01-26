@@ -251,4 +251,8 @@ public interface Messages extends Config {
     default String getCannotRepairFull() { return "&cNie mozesz naprawic "; }
 
     default String getRepaired() { return "&aNaprawiles &7%item%"; }
+
+    default String getCannotKickYourself() {
+        return "&cNie mozesz wyrzucic samego siebie!";
+    }
 }

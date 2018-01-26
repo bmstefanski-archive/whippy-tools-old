@@ -128,7 +128,8 @@ public class Tools extends JavaPlugin implements ToolsAPI {
                 new TpPosCommand(this),
                 new DayCommand(this),
                 new NightCommand(this),
-                new RepairCommand(this)
+                new RepairCommand(this),
+                new KickCommand(this)
         );
     }
 

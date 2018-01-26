@@ -123,7 +123,8 @@ public class Tools extends JavaPlugin implements ToolsAPI {
                 new AfkCommand(this),
                 new HatCommand(this),
                 new SkullCommand(this),
-                new TpCommand(this)
+                new TpCommand(this),
+                new TpHereCommand(this)
         );
     }
 

@@ -45,3 +45,6 @@ tools.iml
 .idea/artifacts/tools_jar.xml
 .idea/uiDesigner.xml
 target/classes/plugin.yml
+target/maven-archiver/pom.properties
+target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst

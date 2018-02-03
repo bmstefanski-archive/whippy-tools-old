@@ -76,5 +76,5 @@ If you want help, pick one of goals to do, and just create pull request with it.
 #### Others
 - [ ] Homes' system
 - [ ] Jails' system
-- [ ] New commands' system
+- [x] New commands' system
 - [ ] PMs' system (reply)

@@ -27,14 +27,14 @@ package pl.bmstefanski.tools.runnable;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
+import pl.bmstefanski.commands.Messageable;
 import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.manager.TeleportManager;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.util.MessageUtils;
 
 import java.util.Map;
 
-public class TeleportRequestTask implements Runnable, MessageUtils {
+public class TeleportRequestTask implements Runnable, Messageable {
 
     private final Tools plugin;
     private final Player player;

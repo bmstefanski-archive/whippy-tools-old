@@ -2,20 +2,17 @@ package pl.bmstefanski.tools.command;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Material;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Repairable;
+import pl.bmstefanski.commands.Arguments;
+import pl.bmstefanski.commands.Messageable;
+import pl.bmstefanski.commands.annotation.Command;
+import pl.bmstefanski.commands.annotation.GameOnly;
+import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
-import pl.bmstefanski.tools.command.basic.CommandContext;
-import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.util.MessageUtils;
-import pl.bmstefanski.tools.util.TabCompleterUtils;
 
-import java.util.List;
-
-public class RepairCommand implements MessageUtils {
+public class RepairCommand implements Messageable {
 
     private final Tools plugin;
     private final Messages messages;
@@ -25,15 +22,11 @@ public class RepairCommand implements MessageUtils {
         this.messages = plugin.getMessages();
     }
 
-    @CommandInfo(
-            name = "repair",
-            description = "repair command",
-            userOnly = true,
-            permission = "repair",
-            completer = "repairCompleter"
-    )
-    public void repair(CommandSender commandSender, CommandContext context) {
-        Player player = (Player) commandSender;
+    @Command(name = "repair")
+    @Permission("tools.command.repair")
+    @GameOnly
+    public void command(Arguments arguments) {
+        Player player = (Player) arguments.getSender();
         ItemStack item = player.getInventory().getItemInMainHand();
 
         if (item.getType() == Material.AIR) {

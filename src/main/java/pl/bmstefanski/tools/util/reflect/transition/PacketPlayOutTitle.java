@@ -26,7 +26,6 @@ package pl.bmstefanski.tools.util.reflect.transition;
 
 import net.minecraft.server.v1_12_R1.IChatBaseComponent;
 import org.bukkit.ChatColor;
-import pl.bmstefanski.tools.util.MessageUtils;
 import pl.bmstefanski.tools.util.reflect.Reflections;
 
 import java.lang.reflect.InvocationTargetException;

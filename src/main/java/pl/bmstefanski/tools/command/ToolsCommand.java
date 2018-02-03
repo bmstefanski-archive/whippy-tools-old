@@ -24,15 +24,15 @@
 
 package pl.bmstefanski.tools.command;
 
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import pl.bmstefanski.commands.Arguments;
+import pl.bmstefanski.commands.Messageable;
+import pl.bmstefanski.commands.annotation.Command;
+import pl.bmstefanski.commands.annotation.GameOnly;
+import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
-import pl.bmstefanski.tools.command.basic.CommandContext;
-import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.PluginConfig;
-import pl.bmstefanski.tools.util.MessageUtils;
 
-public class ToolsCommand implements MessageUtils {
+public class ToolsCommand implements Messageable {
 
     private final Tools plugin;
     private final PluginConfig config;
@@ -42,14 +42,12 @@ public class ToolsCommand implements MessageUtils {
         this.config = plugin.getConfiguration();
     }
 
-    @CommandInfo(
-            name = {"tools"},
-            description = "tools command",
-            permission = "tools"
-    )
-    public void tools(CommandSender commandSender, CommandContext context) {
+    @Command(name = "tools")
+    @Permission("tools.command.tools")
+    @GameOnly(false)
+    public void command(Arguments arguments) {
 
-        sendMessage(commandSender, "&e" + plugin.getDescription().getName() +
+        sendMessage(arguments.getSender(), "&e" + plugin.getDescription().getName() +
                                         "&f(" + config.getLanguage().toUpperCase() +
                                         ") &7" + plugin.getDescription().getVersion() +
                                         " by §e" + plugin.getDescription().getAuthors());

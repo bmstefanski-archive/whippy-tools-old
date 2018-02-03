@@ -26,17 +26,18 @@ package pl.bmstefanski.tools.command;
 
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import pl.bmstefanski.commands.Arguments;
+import pl.bmstefanski.commands.Messageable;
+import pl.bmstefanski.commands.annotation.Command;
+import pl.bmstefanski.commands.annotation.Completer;
+import pl.bmstefanski.commands.annotation.GameOnly;
+import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
-import pl.bmstefanski.tools.command.basic.CommandContext;
-import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.util.MessageUtils;
 
 import java.util.*;
 
-public class ListCommand implements MessageUtils {
+public class ListCommand implements Messageable {
 
     private final Tools plugin;
     private final Messages messages;
@@ -46,30 +47,32 @@ public class ListCommand implements MessageUtils {
         this.messages = plugin.getMessages();
     }
 
-    @CommandInfo(
-            name = "list",
-            description = "list command",
-            usage = "[full/basic]",
-            completer = "listCompleter",
-            min = 1
-    )
-    public void list(CommandSender commandSender, CommandContext context) {
+    @Command(name = "list", usage = "[full/basic]", min = 1, max = 1)
+    @Permission("tools.command.list")
+    @GameOnly(false)
+    public void command(Arguments arguments) {
+
+    }
+
+    @Command(name = "list.basic")
+    public void basic(Arguments arguments) {
+
         int playersOnlineSize = plugin.getUserManager().getOnlinePlayers().size();
         int maxPlayers = Bukkit.getMaxPlayers();
 
-        if (context.getArgs().length == 1) {
-            if (context.getParam(0).equalsIgnoreCase("full")) {
-                sendMessage(commandSender, StringUtils.replace(messages.getListFull(), "%online%", Arrays.toString(plugin.getUserManager().getOnlinePlayers().toArray())));
-            } else if (context.getParam(0).equalsIgnoreCase("basic")) {
-                sendMessage(commandSender, StringUtils.replaceEach(messages.getListBasic(),
-                        new String[] {"%online%", "%max%"},
-                        new String[] {playersOnlineSize + "", maxPlayers + ""}));
-            }
-        }
+        sendMessage(arguments.getSender(), StringUtils.replaceEach(messages.getListBasic(),
+                new String[] {"%online%", "%max%"},
+                new String[] {playersOnlineSize + "", maxPlayers + ""}));
     }
 
-    public List<String> listCompleter(CommandSender commandSender, CommandContext context) {
-        if (context.getArgs().length == 1) {
+    @Command(name = "list.full")
+    public void full(Arguments arguments) {
+        sendMessage(arguments.getSender(), StringUtils.replace(messages.getListFull(), "%online%", Arrays.toString(plugin.getUserManager().getOnlinePlayers().toArray())));
+    }
+
+    @Completer("list")
+    public List<String> completer(Arguments arguments) {
+        if (arguments.getArgs().length == 1) {
             List<String> availableList = Arrays.asList("basic", "full");
 
             Collections.sort(availableList);

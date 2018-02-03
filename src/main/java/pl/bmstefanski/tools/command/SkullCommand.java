@@ -4,17 +4,18 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
+import pl.bmstefanski.commands.Arguments;
+import pl.bmstefanski.commands.Messageable;
+import pl.bmstefanski.commands.annotation.Command;
+import pl.bmstefanski.commands.annotation.GameOnly;
+import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
-import pl.bmstefanski.tools.command.basic.CommandContext;
-import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.util.MessageUtils;
 
-public class SkullCommand implements MessageUtils {
+public class SkullCommand implements Messageable {
 
     private final Tools plugin;
     private final Messages messages;
@@ -24,20 +25,16 @@ public class SkullCommand implements MessageUtils {
         this.messages = plugin.getMessages();
     }
 
-    @CommandInfo(
-            name = "skull",
-            description = "skull command",
-            permission = "skull",
-            userOnly = true,
-            usage = "[player]"
-    )
-    public void skull(CommandSender sender, CommandContext context) {
+    @Command(name = "skull", usage = "[player]", max = 1)
+    @Permission("tools.command.skull")
+    @GameOnly
+    public void command(Arguments arguments) {
         
-        Player player = (Player) sender;
+        Player player = (Player) arguments.getSender();
         ItemStack skullItem = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         SkullMeta skullMeta = (SkullMeta) skullItem.getItemMeta();
 
-        if (context.getArgs().length == 0) {
+        if (arguments.getArgs().length == 0) {
             skullMeta.setOwningPlayer(player);
             skullItem.setItemMeta(skullMeta);
             player.getInventory().addItem(skullItem);
@@ -45,10 +42,10 @@ public class SkullCommand implements MessageUtils {
             return;
         }
 
-        OfflinePlayer skullOwner = Bukkit.getOfflinePlayer(context.getParam(0));
+        OfflinePlayer skullOwner = Bukkit.getOfflinePlayer(arguments.getArgs(0));
         skullMeta.setOwningPlayer(skullOwner);
         skullItem.setItemMeta(skullMeta);
         player.getInventory().addItem(skullItem);
-        sendMessage(player, StringUtils.replace(messages.getSkullSomeone(), "%player%", context.getParam(0)));
+        sendMessage(player, StringUtils.replace(messages.getSkullSomeone(), "%player%", arguments.getArgs(0)));
     }
 }

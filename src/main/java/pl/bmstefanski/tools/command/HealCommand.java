@@ -28,16 +28,19 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import pl.bmstefanski.commands.Arguments;
+import pl.bmstefanski.commands.Messageable;
+import pl.bmstefanski.commands.annotation.Command;
+import pl.bmstefanski.commands.annotation.Completer;
+import pl.bmstefanski.commands.annotation.GameOnly;
+import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
-import pl.bmstefanski.tools.command.basic.CommandContext;
-import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.util.MessageUtils;
 import pl.bmstefanski.tools.util.TabCompleterUtils;
 
 import java.util.List;
 
-public class HealCommand implements MessageUtils {
+public class HealCommand implements Messageable {
 
     private final Tools plugin;
     private final Messages messages;
@@ -47,23 +50,21 @@ public class HealCommand implements MessageUtils {
         this.messages = plugin.getMessages();
     }
 
-    @CommandInfo(
-            name = "heal",
-            description = "heal command",
-            usage = "[player]",
-            permission = "heal",
-            completer = "healCompleter"
-    )
-    public void heal(CommandSender commandSender, CommandContext context) {
+    @Command(name = "heal", usage = "[player]", max = 1)
+    @Permission("tools.command.heal")
+    @GameOnly(false)
+    public void command(Arguments arguments) {
 
-        if (context.getArgs().length == 0) {
+        CommandSender sender = arguments.getSender();
 
-            if (!(commandSender instanceof Player)) {
-                sendMessage(commandSender, messages.getOnlyPlayer());
+        if (arguments.getArgs().length == 0) {
+
+            if (!(sender instanceof Player)) {
+                sendMessage(sender, messages.getOnlyPlayer());
                 return;
             }
 
-            Player player = (Player) commandSender;
+            Player player = (Player) sender;
 
             player.setHealth(20D);
 
@@ -72,21 +73,22 @@ public class HealCommand implements MessageUtils {
             return;
         }
 
-        if (Bukkit.getPlayer(context.getParam(0)) == null) {
-            sendMessage(commandSender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
+        if (Bukkit.getPlayer(arguments.getArgs(0)) == null) {
+            sendMessage(sender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", arguments.getArgs(0)));
             return;
         }
 
-        Player target = Bukkit.getPlayer(context.getParam(0));
+        Player target = Bukkit.getPlayer(arguments.getArgs(0));
 
         target.setHealth(20D);
 
         sendMessage(target, messages.getHealed());
-        sendMessage(commandSender, StringUtils.replace(messages.getHealedOther(), "%player%", target.getName()));
+        sendMessage(sender, StringUtils.replace(messages.getHealedOther(), "%player%", target.getName()));
     }
 
-    public List<String> healCompleter(CommandSender commandSender, CommandContext context) {
-        List<String> availableList = TabCompleterUtils.getAvailableList(context);
+    @Completer("heal")
+    public List<String> completer(Arguments arguments) {
+        List<String> availableList = TabCompleterUtils.getAvailableList(arguments);
         if (availableList != null) return availableList;
 
         return null;

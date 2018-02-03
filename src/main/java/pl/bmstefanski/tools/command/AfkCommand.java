@@ -2,17 +2,18 @@ package pl.bmstefanski.tools.command;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import pl.bmstefanski.commands.Arguments;
+import pl.bmstefanski.commands.Messageable;
+import pl.bmstefanski.commands.annotation.Command;
+import pl.bmstefanski.commands.annotation.GameOnly;
+import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.api.basic.User;
 import pl.bmstefanski.tools.basic.manager.UserManager;
-import pl.bmstefanski.tools.command.basic.CommandContext;
-import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.util.MessageUtils;
 
-public class AfkCommand implements MessageUtils {
+public class AfkCommand implements Messageable {
 
     private final Tools plugin;
     private final Messages messages;
@@ -22,14 +23,11 @@ public class AfkCommand implements MessageUtils {
         this.messages = plugin.getMessages();
     }
 
-    @CommandInfo(
-            name = "afk",
-            description = "afk command",
-            permission = "afk",
-            userOnly = true
-    )
-    public void afk(CommandSender sender, CommandContext context) {
-        Player player = (Player) sender;
+    @Command(name = "afk")
+    @Permission("tools.command.afk")
+    @GameOnly
+    public void command(Arguments arguments) {
+        Player player = (Player) arguments.getSender();
         User user = UserManager.getUser(player.getUniqueId());
 
         if(user.isAfk()){
@@ -45,4 +43,5 @@ public class AfkCommand implements MessageUtils {
         Bukkit.getOnlinePlayers().forEach(p ->
                 sendMessage(p, StringUtils.replace(messages.getAfkGlobal(), "%player%", player.getName())));
     }
+
 }

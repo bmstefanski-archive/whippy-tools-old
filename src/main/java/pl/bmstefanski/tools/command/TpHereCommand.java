@@ -4,16 +4,19 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import pl.bmstefanski.commands.Arguments;
+import pl.bmstefanski.commands.Messageable;
+import pl.bmstefanski.commands.annotation.Command;
+import pl.bmstefanski.commands.annotation.Completer;
+import pl.bmstefanski.commands.annotation.GameOnly;
+import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
-import pl.bmstefanski.tools.command.basic.CommandContext;
-import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.util.MessageUtils;
 import pl.bmstefanski.tools.util.TabCompleterUtils;
 
 import java.util.List;
 
-public class TpHereCommand implements MessageUtils {
+public class TpHereCommand implements Messageable {
 
     private final Tools plugin;
     private final Messages messages;
@@ -23,24 +26,20 @@ public class TpHereCommand implements MessageUtils {
         this.messages = plugin.getMessages();
     }
 
-    @CommandInfo(
-            name = "tphere",
-            description = "tphere description",
-            usage = "[player]",
-            permission = "tphere",
-            min = 1,
-            userOnly = true,
-            completer = "tphereCompleter"
-    )
-    private void tpHere(CommandSender sender, CommandContext context) {
+    @Command(name = "tphere", usage = "[player]", min = 1, max = 1)
+    @Permission("tools.command.tphere")
+    @GameOnly
+    private void command(Arguments arguments) {
 
-        if (Bukkit.getPlayer(context.getParam(0)) == null) {
-            sendMessage(sender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
+        CommandSender sender = arguments.getSender();
+
+        if (Bukkit.getPlayer(arguments.getArgs(0)) == null) {
+            sendMessage(sender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", arguments.getArgs(0)));
             return;
         }
 
         Player player = (Player) sender;
-        Player target = Bukkit.getPlayer(context.getParam(0));
+        Player target = Bukkit.getPlayer(arguments.getArgs(0));
 
         target.teleport(player);
         sendMessage(player, StringUtils.replaceEach(messages.getTpSuccess(),
@@ -48,8 +47,9 @@ public class TpHereCommand implements MessageUtils {
                 new String[] {target.getName(), player.getName()}));
     }
 
-    public List<String> tphereCompleter(CommandSender commandSender, CommandContext context) {
-        List<String> availableList = TabCompleterUtils.getAvailableList(context);
+    @Completer("tphere")
+    public List<String> completer(Arguments arguments) {
+        List<String> availableList = TabCompleterUtils.getAvailableList(arguments);
         if (availableList != null) return availableList;
 
         return null;

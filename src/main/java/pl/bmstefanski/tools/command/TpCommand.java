@@ -4,16 +4,19 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import pl.bmstefanski.commands.Arguments;
+import pl.bmstefanski.commands.Messageable;
+import pl.bmstefanski.commands.annotation.Command;
+import pl.bmstefanski.commands.annotation.Completer;
+import pl.bmstefanski.commands.annotation.GameOnly;
+import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
-import pl.bmstefanski.tools.command.basic.CommandContext;
-import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.util.MessageUtils;
 import pl.bmstefanski.tools.util.TabCompleterUtils;
 
 import java.util.List;
 
-public class TpCommand implements MessageUtils {
+public class TpCommand implements Messageable {
 
     private final Tools plugin;
     private final Messages messages;
@@ -23,30 +26,27 @@ public class TpCommand implements MessageUtils {
         this.messages = plugin.getMessages();
     }
 
-    @CommandInfo(
-            name = "tp",
-            description = "tp command",
-            usage = "[player] [target]",
-            permission = "tp",
-            min = 1,
-            completer = "tpCompleter"
-    )
-    private void tp(CommandSender sender, CommandContext context) {
+    @Command(name = "tp", usage = "[player] [target]", min = 1, max = 2)
+    @Permission("tools.command.tp")
+    @GameOnly(false)
+    private void command(Arguments arguments) {
 
-        if (context.getArgs().length == 1) {
+        CommandSender sender = arguments.getSender();
+
+        if (arguments.getArgs().length == 1) {
 
             if (!(sender instanceof Player)) {
                 sendMessage(sender, messages.getOnlyPlayer());
                 return;
             }
 
-            if (Bukkit.getPlayer(context.getParam(0)) == null) {
-                sendMessage(sender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
+            if (Bukkit.getPlayer(arguments.getArgs(0)) == null) {
+                sendMessage(sender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", arguments.getArgs(0)));
                 return;
             }
 
             Player player = (Player) sender;
-            Player target = Bukkit.getPlayer(context.getParam(0));
+            Player target = Bukkit.getPlayer(arguments.getArgs(0));
 
             player.teleport(target);
             sendMessage(sender, messages.getTeleportSuccess());
@@ -54,15 +54,15 @@ public class TpCommand implements MessageUtils {
             return;
         }
 
-        if (Bukkit.getPlayer(context.getParam(0)) == null || Bukkit.getPlayer(context.getParam(1)) == null) {
+        if (Bukkit.getPlayer(arguments.getArgs(0)) == null || Bukkit.getPlayer(arguments.getArgs(1)) == null) {
             sendMessage(sender, StringUtils.replaceEach(messages.getTpFailed(),
                     new String[] {"%player%", "%target%"},
-                    new String[] {context.getParam(0), context.getParam(1)}));
+                    new String[] {arguments.getArgs(0), arguments.getArgs(1)}));
             return;
         }
 
-        Player player = Bukkit.getPlayer(context.getParam(0));
-        Player target = Bukkit.getPlayer(context.getParam(1));
+        Player player = Bukkit.getPlayer(arguments.getArgs(0));
+        Player target = Bukkit.getPlayer(arguments.getArgs(1));
 
         player.teleport(target);
         sendMessage(sender, StringUtils.replaceEach(messages.getTpSuccess(),
@@ -70,8 +70,9 @@ public class TpCommand implements MessageUtils {
                 new String[] {player.getName(), target.getName()}));
     }
 
-    public List<String> tpCompleter(CommandSender commandSender, CommandContext context) {
-        List<String> availableList = TabCompleterUtils.getAvailableList(context);
+    @Completer("tp")
+    public List<String> completer(Arguments arguments) {
+        List<String> availableList = TabCompleterUtils.getAvailableList(arguments);
         if (availableList != null) return availableList;
 
         return null;

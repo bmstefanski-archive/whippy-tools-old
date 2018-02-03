@@ -30,6 +30,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import pl.bmstefanski.commands.Messageable;
 import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.api.basic.Ban;
 import pl.bmstefanski.tools.api.basic.User;
@@ -37,9 +38,8 @@ import pl.bmstefanski.tools.basic.manager.BanManager;
 import pl.bmstefanski.tools.basic.manager.UserManager;
 import pl.bmstefanski.tools.runnable.LoadDataTask;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.util.MessageUtils;
 
-public class PlayerPreLogin implements Listener, MessageUtils {
+public class PlayerPreLogin implements Listener, Messageable {
 
     private final Tools plugin;
     private final Messages messages;

@@ -28,19 +28,22 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import pl.bmstefanski.commands.Arguments;
+import pl.bmstefanski.commands.Messageable;
+import pl.bmstefanski.commands.annotation.Command;
+import pl.bmstefanski.commands.annotation.Completer;
+import pl.bmstefanski.commands.annotation.GameOnly;
+import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.api.basic.User;
 import pl.bmstefanski.tools.basic.manager.UserManager;
-import pl.bmstefanski.tools.command.basic.CommandContext;
-import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.util.MessageUtils;
 import pl.bmstefanski.tools.util.Parser;
 import pl.bmstefanski.tools.util.TabCompleterUtils;
 
 import java.util.List;
 
-public class GodCommand implements MessageUtils, Parser {
+public class GodCommand implements Messageable, Parser {
 
     private final Tools plugin;
     private final Messages messages;
@@ -50,23 +53,21 @@ public class GodCommand implements MessageUtils, Parser {
         this.messages = plugin.getMessages();
     }
 
-    @CommandInfo(
-            name = "god",
-            description = "god command",
-            usage = "[player]",
-            permission = "god",
-            completer = "godCompleter"
-    )
-    public void god(CommandSender commandSender, CommandContext context) {
+    @Command(name = "god", usage = "[player]", max = 1)
+    @Permission("tools.command.god")
+    @GameOnly(false)
+    public void command(Arguments arguments) {
 
-        if (context.getArgs().length == 0) {
+        CommandSender sender = arguments.getSender();
 
-            if (!(commandSender instanceof Player)) {
-                sendMessage(commandSender, messages.getOnlyPlayer());
+        if (arguments.getArgs().length == 0) {
+
+            if (!(sender instanceof Player)) {
+                sendMessage(sender, messages.getOnlyPlayer());
                 return;
             }
 
-            Player player = (Player) commandSender;
+            Player player = (Player) sender;
             User user = UserManager.getUser(player.getUniqueId());
 
             if (user == null) {
@@ -81,12 +82,12 @@ public class GodCommand implements MessageUtils, Parser {
             return;
         }
 
-        if (Bukkit.getPlayer(context.getParam(0)) == null) {
-            sendMessage(commandSender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
+        if (Bukkit.getPlayer(arguments.getArgs(0)) == null) {
+            sendMessage(sender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", arguments.getArgs(0)));
             return;
         }
 
-        Player target = Bukkit.getPlayer(context.getParam(0));
+        Player target = Bukkit.getPlayer(arguments.getArgs(0));
         User user = UserManager.getUser(target.getUniqueId());
 
         if (user == null) {
@@ -97,14 +98,15 @@ public class GodCommand implements MessageUtils, Parser {
         user.setGod(godState);
 
 
-        sendMessage(commandSender, StringUtils.replaceEach(messages.getGodSwitchedOther(),
+        sendMessage(sender, StringUtils.replaceEach(messages.getGodSwitchedOther(),
                 new String[] {"%state%", "%player%"},
                 new String[] {parseBoolean(godState), target.getName()}));
         sendMessage(target, StringUtils.replace(messages.getGodSwitched(), "%state%", parseBoolean(godState)));
     }
 
-    public List<String> godCompleter(CommandSender commandSender, CommandContext context) {
-        List<String> availableList = TabCompleterUtils.getAvailableList(context);
+    @Completer("god")
+    public List<String> completer(Arguments arguments) {
+        List<String> availableList = TabCompleterUtils.getAvailableList(arguments);
         if (availableList != null) return availableList;
 
         return null;

@@ -2,15 +2,16 @@ package pl.bmstefanski.tools.command;
 
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import pl.bmstefanski.commands.Arguments;
+import pl.bmstefanski.commands.Messageable;
+import pl.bmstefanski.commands.annotation.Command;
+import pl.bmstefanski.commands.annotation.GameOnly;
+import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
-import pl.bmstefanski.tools.command.basic.CommandContext;
-import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.util.MessageUtils;
 
-public class KickAllCommand implements MessageUtils {
+public class KickAllCommand implements Messageable {
 
     private final Tools plugin;
     private final Messages messages;
@@ -20,18 +21,16 @@ public class KickAllCommand implements MessageUtils {
         this.messages = plugin.getMessages();
     }
 
-    @CommandInfo(
-            name = "kickall",
-            description = "kick all command",
-            permission = "kickall"
-    )
-    private void kickAll(CommandSender sender, CommandContext context) {
+    @Command(name = "kickall")
+    @Permission("tools.command.kickall")
+    @GameOnly(false)
+    private void kickAll(Arguments arguments) {
 
         String reason = "";
 
-        if (context.getArgs().length == 0) {
+        if (arguments.getArgs().length == 0) {
             reason = fixColor(messages.getDefaultReason());
-        } else if (context.getArgs().length > 0) reason = fixColor(StringUtils.join(context.getArgs(), " ", 1, context.getArgs().length));
+        } else if (arguments.getArgs().length > 0) reason = fixColor(StringUtils.join(arguments.getArgs(), " ", 1, arguments.getArgs().length));
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.kickPlayer(reason);

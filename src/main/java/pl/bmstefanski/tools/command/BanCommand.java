@@ -29,20 +29,23 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import pl.bmstefanski.commands.Arguments;
+import pl.bmstefanski.commands.Messageable;
+import pl.bmstefanski.commands.annotation.Command;
+import pl.bmstefanski.commands.annotation.Completer;
+import pl.bmstefanski.commands.annotation.GameOnly;
+import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.api.basic.Ban;
 import pl.bmstefanski.tools.api.basic.User;
 import pl.bmstefanski.tools.basic.BanImpl;
 import pl.bmstefanski.tools.basic.manager.UserManager;
-import pl.bmstefanski.tools.command.basic.CommandContext;
-import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.util.MessageUtils;
 import pl.bmstefanski.tools.util.TabCompleterUtils;
 
 import java.util.List;
 
-public class BanCommand implements MessageUtils {
+public class BanCommand implements Messageable {
 
     private final Tools plugin;
     private final Messages messages;
@@ -52,41 +55,37 @@ public class BanCommand implements MessageUtils {
         this.messages = plugin.getMessages();
     }
 
-    @CommandInfo(
-            name = "ban",
-            description = "ban command",
-            usage = "[player] [reason]",
-            permission = "ban",
-            min = 1,
-            completer = "banCompleter"
-    )
-    private void ban(CommandSender commandSender, CommandContext context) {
+    @Command(name = "ban", usage = "[player] [reason]", min = 1, max = 16)
+    @Permission("tools.command.ban")
+    @GameOnly(false)
+    private void command(Arguments arguments) {
 
-        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(context.getParam(0));
+        CommandSender sender = arguments.getSender();
+        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(arguments.getArgs(0));
 
-        User punisher = UserManager.getUser(commandSender.getName());
+        User punisher = UserManager.getUser(sender.getName());
         User punished = UserManager.getUser(offlinePlayer.getUniqueId());
 
         if (!offlinePlayer.hasPlayedBefore()) {
-            sendMessage(commandSender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
+            sendMessage(sender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", arguments.getArgs(0)));
             return;
         }
 
         if (punished.getName().equals(punisher.getName())) {
-            sendMessage(commandSender, messages.getCannotBanYourself());
+            sendMessage(sender, messages.getCannotBanYourself());
             return;
         }
 
         if (punished.isBanned()) {
-            sendMessage(commandSender, StringUtils.replace(messages.getAlreadyBanned(), "%player%", offlinePlayer.getName()));
+            sendMessage(sender, StringUtils.replace(messages.getAlreadyBanned(), "%player%", offlinePlayer.getName()));
             return;
         }
 
         String reason = "";
 
-        if (context.getArgs().length == 1) {
+        if (arguments.getArgs().length == 1) {
             reason = fixColor(messages.getDefaultReason());
-        } else if (context.getArgs().length > 1) reason = fixColor(StringUtils.join(context.getArgs(), " ", 1, context.getArgs().length));
+        } else if (arguments.getArgs().length > 1) reason = fixColor(StringUtils.join(arguments.getArgs(), " ", 1, arguments.getArgs().length));
 
         Ban ban = new BanImpl(punished.getUUID(), punisher.getName());
         ban.setReason(reason);
@@ -105,11 +104,12 @@ public class BanCommand implements MessageUtils {
                     new String[]{ban.getPunisher(), untilFormat, reason}));
         }
 
-        sendMessage(commandSender, StringUtils.replace(messages.getSuccessfullyBanned(), "%player%", offlinePlayer.getName()));
+        sendMessage(sender, StringUtils.replace(messages.getSuccessfullyBanned(), "%player%", offlinePlayer.getName()));
     }
 
-    public List<String> banCompleter(CommandSender commandSender, CommandContext context) {
-        List<String> availableList = TabCompleterUtils.getAvailableList(context);
+    @Completer("ban")
+    public List<String> completer(Arguments arguments) {
+        List<String> availableList = TabCompleterUtils.getAvailableList(arguments);
         if (availableList != null) return availableList;
 
         return null;

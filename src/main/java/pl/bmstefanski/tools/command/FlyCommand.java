@@ -28,17 +28,20 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import pl.bmstefanski.commands.Arguments;
+import pl.bmstefanski.commands.Messageable;
+import pl.bmstefanski.commands.annotation.Command;
+import pl.bmstefanski.commands.annotation.Completer;
+import pl.bmstefanski.commands.annotation.GameOnly;
+import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
-import pl.bmstefanski.tools.command.basic.CommandContext;
-import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.util.MessageUtils;
 import pl.bmstefanski.tools.util.Parser;
 import pl.bmstefanski.tools.util.TabCompleterUtils;
 
 import java.util.List;
 
-public class FlyCommand implements MessageUtils, Parser {
+public class FlyCommand implements Messageable, Parser {
 
     private final Tools plugin;
     private final Messages messages;
@@ -48,23 +51,21 @@ public class FlyCommand implements MessageUtils, Parser {
         this.messages = plugin.getMessages();
     }
 
-    @CommandInfo(
-            name = "fly",
-            description = "fly command",
-            usage = "[player]",
-            permission = "fly",
-            completer = "flyCompleter"
-    )
-    public void fly(CommandSender commandSender, CommandContext context) {
+    @Command(name = "fly", usage = "[player]", max = 1)
+    @Permission("tools.command.fly")
+    @GameOnly(false)
+    public void command(Arguments arguments) {
 
-        if (context.getArgs().length == 0) {
+        CommandSender sender = arguments.getSender();
 
-            if (!(commandSender instanceof Player)) {
-                sendMessage(commandSender, messages.getOnlyPlayer());
+        if (arguments.getArgs().length == 0) {
+
+            if (!(sender instanceof Player)) {
+                sendMessage(sender, messages.getOnlyPlayer());
                 return;
             }
 
-            Player player = (Player) commandSender;
+            Player player = (Player) sender;
 
             boolean flyState = !player.isFlying();
             player.setAllowFlight(flyState);
@@ -74,25 +75,26 @@ public class FlyCommand implements MessageUtils, Parser {
             return;
         }
 
-        if (Bukkit.getPlayer(context.getParam(0)) == null) {
-            sendMessage(commandSender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
+        if (Bukkit.getPlayer(arguments.getArgs(0)) == null) {
+            sendMessage(sender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", arguments.getArgs(0)));
             return;
         }
 
-        Player target = Bukkit.getPlayer(context.getParam(0));
+        Player target = Bukkit.getPlayer(arguments.getArgs(0));
         boolean flyState = !target.isFlying();
 
         target.setAllowFlight(flyState);
 
-        sendMessage(commandSender, StringUtils.replaceEach(messages.getFlySwitchedOther(),
+        sendMessage(sender, StringUtils.replaceEach(messages.getFlySwitchedOther(),
                 new String[] {"%state%", "%player%"},
                 new String[] {parseBoolean(flyState), target.getName()}));
 
         sendMessage(target, StringUtils.replace(messages.getFlySwitched(), "%state%", parseBoolean(flyState)));
     }
 
-    public List<String> flyCompleter(CommandSender commandSender, CommandContext context) {
-        List<String> availableList = TabCompleterUtils.getAvailableList(context);
+    @Completer("fly")
+    public List<String> completer(Arguments arguments) {
+        List<String> availableList = TabCompleterUtils.getAvailableList(arguments);
         if (availableList != null) return availableList;
 
         return null;

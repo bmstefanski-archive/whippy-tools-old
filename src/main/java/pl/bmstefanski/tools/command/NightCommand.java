@@ -5,13 +5,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import pl.bmstefanski.commands.Arguments;
+import pl.bmstefanski.commands.Messageable;
+import pl.bmstefanski.commands.annotation.Command;
+import pl.bmstefanski.commands.annotation.GameOnly;
+import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
-import pl.bmstefanski.tools.command.basic.CommandContext;
-import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.util.MessageUtils;
 
-public class NightCommand implements MessageUtils {
+public class NightCommand implements Messageable {
 
     private final Tools plugin;
     private final Messages messages;
@@ -21,15 +23,14 @@ public class NightCommand implements MessageUtils {
         this.messages = plugin.getMessages();
     }
 
-    @CommandInfo(
-            name = "night",
-            description = "night command",
-            permission = "night",
-            usage = "[world]"
-    )
-    private void night(CommandSender sender, CommandContext context) {
+    @Command(name = "night", usage = "[world]", max = 1)
+    @Permission("tools.command.night")
+    @GameOnly(false)
+    private void command(Arguments arguments) {
 
-        if (context.getArgs().length == 0) {
+        CommandSender sender = arguments.getSender();
+
+        if (arguments.getArgs().length == 0) {
 
             if (!(sender instanceof Player)) {
                 sendMessage(sender, messages.getOnlyPlayer());
@@ -44,12 +45,12 @@ public class NightCommand implements MessageUtils {
             return;
         }
 
-        if (Bukkit.getWorld(context.getParam(0)) == null) {
-            sendMessage(sender, StringUtils.replace(messages.getWorldNotFound(), "%world%", context.getParam(0)));
+        if (Bukkit.getWorld(arguments.getArgs(0)) == null) {
+            sendMessage(sender, StringUtils.replace(messages.getWorldNotFound(), "%world%", arguments.getArgs(0)));
             return;
         }
 
-        World world = Bukkit.getWorld(context.getParam(0));
+        World world = Bukkit.getWorld(arguments.getArgs(0));
         world.setTime(12566);
 
         sendMessage(sender, StringUtils.replace(messages.getNight(), "%world%", world.getName()));

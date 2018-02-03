@@ -28,12 +28,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.diorite.config.ConfigManager;
+import pl.bmstefanski.commands.BukkitCommands;
 import pl.bmstefanski.tools.api.ToolsAPI;
 import pl.bmstefanski.tools.api.storage.Storage;
 import pl.bmstefanski.tools.basic.manager.UserManager;
 import pl.bmstefanski.tools.command.*;
-import pl.bmstefanski.tools.command.basic.BukkitCommands;
-import pl.bmstefanski.tools.command.basic.Commands;
 import pl.bmstefanski.tools.storage.StorageConnector;
 import pl.bmstefanski.tools.storage.configuration.Messages;
 import pl.bmstefanski.tools.storage.configuration.PluginConfig;
@@ -132,10 +131,10 @@ public class Tools extends JavaPlugin implements ToolsAPI {
     }
 
     private void registerCommands(Object... commands) {
-        Commands bukkitCommands = new BukkitCommands(this);
+        BukkitCommands bukkitCommands = new BukkitCommands(this);
 
         for (Object object : commands) {
-            bukkitCommands.registerCommandObject(object);
+            bukkitCommands.registerCommands(object);
         }
     }
 

@@ -29,11 +29,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.help.HelpTopic;
+import pl.bmstefanski.commands.Messageable;
 import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.util.MessageUtils;
 
-public class PlayerCommandPreprocess implements Listener, MessageUtils {
+public class PlayerCommandPreprocess implements Listener, Messageable {
 
     private final Tools plugin;
     private final Messages messages;

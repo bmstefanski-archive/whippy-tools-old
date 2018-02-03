@@ -24,14 +24,15 @@
 
 package pl.bmstefanski.tools.command;
 
-import org.bukkit.command.CommandSender;
+import pl.bmstefanski.commands.Arguments;
+import pl.bmstefanski.commands.Messageable;
+import pl.bmstefanski.commands.annotation.Command;
+import pl.bmstefanski.commands.annotation.GameOnly;
+import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
-import pl.bmstefanski.tools.command.basic.CommandContext;
-import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.util.MessageUtils;
 
-public class DisableCommand implements MessageUtils {
+public class DisableCommand implements Messageable {
 
     private final Tools plugin;
     private final Messages messages;
@@ -41,13 +42,11 @@ public class DisableCommand implements MessageUtils {
         this.messages = plugin.getMessages();
     }
 
-    @CommandInfo(
-            name = "tools-disable",
-            description = "disable command",
-            permission = "disable"
-    )
-    public void disable(CommandSender commandSender, CommandContext context) {
+    @Command(name = "disable")
+    @Permission("tools.command.disable")
+    @GameOnly(false)
+    public void command(Arguments arguments) {
         plugin.getServer().getPluginManager().disablePlugin(plugin);
-        sendMessage(commandSender, messages.getSuccessfullyDisabled());
+        sendMessage(arguments.getSender(), messages.getSuccessfullyDisabled());
     }
 }

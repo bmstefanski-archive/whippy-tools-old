@@ -4,16 +4,19 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import pl.bmstefanski.commands.Arguments;
+import pl.bmstefanski.commands.Messageable;
+import pl.bmstefanski.commands.annotation.Command;
+import pl.bmstefanski.commands.annotation.Completer;
+import pl.bmstefanski.commands.annotation.GameOnly;
+import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
-import pl.bmstefanski.tools.command.basic.CommandContext;
-import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.util.MessageUtils;
 import pl.bmstefanski.tools.util.TabCompleterUtils;
 
 import java.util.List;
 
-public class KickCommand implements MessageUtils {
+public class KickCommand implements Messageable {
 
     private final Tools plugin;
     private final Messages messages;
@@ -23,22 +26,19 @@ public class KickCommand implements MessageUtils {
         this.messages = plugin.getMessages();
     }
 
-    @CommandInfo(
-            name = "kick",
-            description = "kick command",
-            usage = "[player] [reason]",
-            permission = "kick",
-            min = 1,
-            completer = "kickCompleter"
-    )
-    private void kick(CommandSender sender, CommandContext context) {
+    @Command(name = "kick", usage = "[player] [reason]", min = 1, max = 16)
+    @Permission("tools.command.kick")
+    @GameOnly(false)
+    private void command(Arguments arguments) {
 
-        if (Bukkit.getPlayer(context.getParam(0)) == null) {
-            sendMessage(sender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
+        CommandSender sender = arguments.getSender();
+
+        if (Bukkit.getPlayer(arguments.getArgs(0)) == null) {
+            sendMessage(sender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", arguments.getArgs(0)));
             return;
         }
 
-        Player target = Bukkit.getPlayer(context.getParam(0));
+        Player target = Bukkit.getPlayer(arguments.getArgs(0));
 
         if (sender.getName().equals(target.getName())) {
             sendMessage(sender, messages.getCannotKickYourself());
@@ -47,15 +47,16 @@ public class KickCommand implements MessageUtils {
 
         String reason = "";
 
-        if (context.getArgs().length == 1) {
+        if (arguments.getArgs().length == 1) {
             reason = fixColor(messages.getDefaultReason());
-        } else if (context.getArgs().length > 1) reason = fixColor(StringUtils.join(context.getArgs(), " ", 1, context.getArgs().length));
+        } else if (arguments.getArgs().length > 1) reason = fixColor(StringUtils.join(arguments.getArgs(), " ", 1, arguments.getArgs().length));
 
         target.kickPlayer(reason);
     }
 
-    public List<String> kickCompleter(CommandSender commandSender, CommandContext context) {
-        List<String> availableList = TabCompleterUtils.getAvailableList(context);
+    @Completer("kick")
+    public List<String> completer(Arguments arguments) {
+        List<String> availableList = TabCompleterUtils.getAvailableList(arguments);
         if (availableList != null) return availableList;
 
         return null;

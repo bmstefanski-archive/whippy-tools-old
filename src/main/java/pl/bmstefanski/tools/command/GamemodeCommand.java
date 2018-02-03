@@ -29,19 +29,22 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import pl.bmstefanski.commands.Arguments;
+import pl.bmstefanski.commands.Messageable;
+import pl.bmstefanski.commands.annotation.Command;
+import pl.bmstefanski.commands.annotation.Completer;
+import pl.bmstefanski.commands.annotation.GameOnly;
+import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
-import pl.bmstefanski.tools.command.basic.CommandContext;
-import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
 import pl.bmstefanski.tools.util.GamemodeUtils;
-import pl.bmstefanski.tools.util.MessageUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class GamemodeCommand implements MessageUtils {
+public class GamemodeCommand implements Messageable {
 
     private final Tools plugin;
     private final Messages messages;
@@ -51,25 +54,22 @@ public class GamemodeCommand implements MessageUtils {
         this.messages = plugin.getMessages();
     }
 
-    @CommandInfo(
-            name = {"gamemode", "gm"},
-            description = "gamemode command",
-            usage = "0/1/2/3 [player]",
-            permission = "gamemode",
-            completer = "gamemodeCompleter",
-            min = 1
-    )
-    public void gamemode(CommandSender commandSender, CommandContext context) {
+    @Command(name = "gamemode", usage = "<0/1/2/3> [player]", min = 1, max = 2, aliases = {"gm"})
+    @Permission("tools.command.gamemode")
+    @GameOnly(false)
+    public void command(Arguments arguments) {
 
-        if (context.getArgs().length == 1) {
+        CommandSender sender = arguments.getSender();
 
-            if (!(commandSender instanceof Player)) {
-                sendMessage(commandSender, messages.getOnlyPlayer());
+        if (arguments.getArgs().length == 1) {
+
+            if (!(sender instanceof Player)) {
+                sendMessage(sender, messages.getOnlyPlayer());
                 return;
             }
 
-            Player player = (Player) commandSender;
-            GameMode gameMode = GamemodeUtils.parseGameMode(context.getParam(0));
+            Player player = (Player) sender;
+            GameMode gameMode = GamemodeUtils.parseGameMode(arguments.getArgs(0));
 
             if (gameMode == null) {
                 sendMessage(player, messages.getGamemodeFail());
@@ -82,38 +82,39 @@ public class GamemodeCommand implements MessageUtils {
             return;
         }
 
-        if (Bukkit.getPlayer(context.getParam(1)) == null) {
-            sendMessage(commandSender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(1)));
+        if (Bukkit.getPlayer(arguments.getArgs(1)) == null) {
+            sendMessage(sender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", arguments.getArgs(1)));
             return;
         }
 
-        Player target = Bukkit.getPlayer(context.getParam(1));
-        GameMode gameMode = GamemodeUtils.parseGameMode(context.getParam(0));
+        Player target = Bukkit.getPlayer(arguments.getArgs(1));
+        GameMode gameMode = GamemodeUtils.parseGameMode(arguments.getArgs(0));
 
         if (gameMode == null) {
-            sendMessage(commandSender, messages.getGamemodeFail());
+            sendMessage(sender, messages.getGamemodeFail());
             return;
         }
 
         target.setGameMode(gameMode);
 
         sendMessage(target, StringUtils.replace(messages.getGamemodeSuccess(), "%gamemode%", gameMode.toString()));
-        sendMessage(commandSender, StringUtils.replaceEach(messages.getGamemodeSuccessOther(),
+        sendMessage(sender, StringUtils.replaceEach(messages.getGamemodeSuccessOther(),
                 new String[] {"%gamemode%", "%player%"},
                 new String[] {gameMode.toString(), target.getName()}));
     }
 
-    public List<String> gamemodeCompleter(CommandSender sender, CommandContext context) {
-        if (context.getArgs().length == 1) {
+    @Completer("gamemode")
+    public List<String> completer(Arguments arguments) {
+        if (arguments.getArgs().length == 1) {
             List<String> availableGamemodes = Arrays.asList("0", "1", "2", "3");
 
             Collections.sort(availableGamemodes);
             return availableGamemodes;
-        } else if (context.getArgs().length == 2) {
+        } else if (arguments.getArgs().length == 2) {
             List<String> availableList = new ArrayList<>();
 
             for (Player player : Bukkit.getOnlinePlayers()) {
-                if (player.getName().startsWith(context.getParam(0).toLowerCase())) {
+                if (player.getName().startsWith(arguments.getArgs(0).toLowerCase())) {
                     availableList.add(player.getName());
                 }
             }

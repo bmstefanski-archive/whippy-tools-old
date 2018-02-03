@@ -28,15 +28,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
+import pl.bmstefanski.commands.Messageable;
 import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.runnable.TeleportRequestTask;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.util.MessageUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class TeleportManager implements MessageUtils {
+public class TeleportManager implements Messageable {
 
     private final Tools plugin;
     private final Messages messages;

@@ -1,17 +1,18 @@
 package pl.bmstefanski.tools.command;
 
 import org.bukkit.Material;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import pl.bmstefanski.commands.Arguments;
+import pl.bmstefanski.commands.Messageable;
+import pl.bmstefanski.commands.annotation.Command;
+import pl.bmstefanski.commands.annotation.GameOnly;
+import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
-import pl.bmstefanski.tools.command.basic.CommandContext;
-import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.util.MessageUtils;
 
-public class HatCommand implements MessageUtils {
+public class HatCommand implements Messageable {
 
     private final Tools plugin;
     private final Messages messages;
@@ -21,15 +22,12 @@ public class HatCommand implements MessageUtils {
         this.messages = plugin.getMessages();
     }
 
-    @CommandInfo(
-            name = "hat",
-            description = "hat command",
-            userOnly = true,
-            permission = "hat"
-    )
-    public void hat(CommandSender sender, CommandContext context) {
+    @Command(name = "hat")
+    @Permission("tools.command.hat")
+    @GameOnly
+    public void command(Arguments arguments) {
 
-        Player player = (Player) sender;
+        Player player = (Player) arguments.getSender();
 
         PlayerInventory playerInventory = player.getInventory();
         ItemStack item = playerInventory.getItemInMainHand().clone();

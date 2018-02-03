@@ -26,18 +26,20 @@ package pl.bmstefanski.tools.command;
 
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import pl.bmstefanski.commands.Arguments;
+import pl.bmstefanski.commands.Messageable;
+import pl.bmstefanski.commands.annotation.Command;
+import pl.bmstefanski.commands.annotation.Completer;
+import pl.bmstefanski.commands.annotation.GameOnly;
+import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
-import pl.bmstefanski.tools.command.basic.CommandContext;
-import pl.bmstefanski.tools.command.basic.CommandInfo;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.util.MessageUtils;
 import pl.bmstefanski.tools.util.TabCompleterUtils;
 
 import java.util.List;
 
-public class WorkbenchCommand implements MessageUtils {
+public class WorkbenchCommand implements Messageable {
 
     private final Tools plugin;
     private final Messages messages;
@@ -47,34 +49,30 @@ public class WorkbenchCommand implements MessageUtils {
         this.messages = plugin.getMessages();
     }
 
-    @CommandInfo(
-            name = {"workbench", "wb", "crafting"},
-            description = "workbench command",
-            permission = "workbench",
-            userOnly = true,
-            usage = "[player]",
-            completer = "workbenchCompleter"
-    )
-    public void workbench(CommandSender commandSender, CommandContext context) {
+    @Command(name = "workbench", usage = "[player]", max = 1, aliases = {"wb", "crafting"})
+    @Permission("tools.command.workbench")
+    @GameOnly
+    public void command(Arguments arguments) {
 
-        Player player = (Player) commandSender;
+        Player player = (Player) arguments.getSender();
 
-        if (context.getArgs().length == 0) {
+        if (arguments.getArgs().length == 0) {
             player.openInventory(player.getInventory());
             return;
         }
 
-        if (Bukkit.getPlayer(context.getParam(0)) == null) {
-            sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", context.getParam(0)));
+        if (Bukkit.getPlayer(arguments.getArgs(0)) == null) {
+            sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", arguments.getArgs(0)));
             return;
         }
 
-        Player target = Bukkit.getPlayer(context.getParam(0));
+        Player target = Bukkit.getPlayer(arguments.getArgs(0));
         player.openInventory(target.getInventory());
     }
 
-    public List<String> workbenchCompleter(CommandSender commandSender, CommandContext context) {
-        List<String> availableList = TabCompleterUtils.getAvailableList(context);
+    @Completer("workbench")
+    public List<String> completer(Arguments arguments) {
+        List<String> availableList = TabCompleterUtils.getAvailableList(arguments);
         if (availableList != null) return availableList;
 
         return null;

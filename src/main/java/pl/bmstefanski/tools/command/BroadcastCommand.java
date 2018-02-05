@@ -36,7 +36,7 @@ import pl.bmstefanski.commands.annotation.GameOnly;
 import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.util.reflect.PacketSender;
+import pl.bmstefanski.tools.util.TitleSender;
 import pl.bmstefanski.tools.util.reflect.transition.PacketPlayOutTitle;
 
 import java.util.Arrays;
@@ -44,7 +44,7 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class BroadcastCommand implements Messageable {
+public class BroadcastCommand implements Messageable, TitleSender {
 
     private final Tools plugin;
     private final Messages messages;
@@ -73,28 +73,16 @@ public class BroadcastCommand implements Messageable {
 
         switch (arguments.getArgs(0)) {
             case "action":
-                List<Object> actionPackets = Collections.singletonList(
-                        PacketPlayOutTitle.getPacket(EnumTitleAction.ACTIONBAR, message, -1, -1, -1)
-                );
-
-                PacketSender.sendPacket(Bukkit.getOnlinePlayers(), actionPackets);
+                send(PacketPlayOutTitle.EnumTitleAction.ACTIONBAR, Bukkit.getOnlinePlayers(), message);
                 break;
 
             case "title":
-                List<Object> titlePackets = Collections.singletonList(
-                        PacketPlayOutTitle.getPacket(EnumTitleAction.TITLE, message, -1, -1, -1)
-                );
-
-                PacketSender.sendPacket(Bukkit.getOnlinePlayers(), titlePackets);
+                send(PacketPlayOutTitle.EnumTitleAction.TITLE, Bukkit.getOnlinePlayers(), message);
                 break;
 
             case "subtitle":
-                List<Object> subtitlePackets = Arrays.asList(
-                        PacketPlayOutTitle.getPacket(EnumTitleAction.TITLE, "", -1, -1, -1),
-                        PacketPlayOutTitle.getPacket(EnumTitleAction.SUBTITLE, message, -1, -1, -1)
-                );
-
-                PacketSender.sendPacket(Bukkit.getOnlinePlayers(), subtitlePackets);
+                send(PacketPlayOutTitle.EnumTitleAction.TITLE, Bukkit.getOnlinePlayers(), "");
+                send(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, Bukkit.getOnlinePlayers(), message);
                 break;
 
             case "chat":

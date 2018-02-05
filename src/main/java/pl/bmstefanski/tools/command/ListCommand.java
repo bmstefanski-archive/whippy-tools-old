@@ -55,6 +55,8 @@ public class ListCommand implements Messageable {
     }
 
     @Command(name = "list.basic")
+    @Permission("tools.command.basic")
+    @GameOnly(false)
     public void basic(Arguments arguments) {
 
         int playersOnlineSize = plugin.getUserManager().getOnlinePlayers().size();
@@ -66,6 +68,8 @@ public class ListCommand implements Messageable {
     }
 
     @Command(name = "list.full")
+    @Permission("tools.command.full")
+    @GameOnly(false)
     public void full(Arguments arguments) {
         sendMessage(arguments.getSender(), StringUtils.replace(messages.getListFull(), "%online%", Arrays.toString(plugin.getUserManager().getOnlinePlayers().toArray())));
     }

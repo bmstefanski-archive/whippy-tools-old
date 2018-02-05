@@ -24,7 +24,6 @@
 
 package pl.bmstefanski.tools.command;
 
-import net.minecraft.server.v1_12_R1.PacketPlayOutTitle.EnumTitleAction;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -68,8 +67,6 @@ public class BroadcastCommand implements Messageable, TitleSender {
         }
 
         String message = stringBuilder.toString();
-
-        // todo builder  do packetplayouttitle :D
 
         switch (arguments.getArgs(0)) {
             case "action":

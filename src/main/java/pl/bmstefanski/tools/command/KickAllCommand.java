@@ -24,7 +24,7 @@ public class KickAllCommand implements Messageable {
     @Command(name = "kickall")
     @Permission("tools.command.kickall")
     @GameOnly(false)
-    private void kickAll(Arguments arguments) {
+    public void command(Arguments arguments) {
 
         String reason = "";
 

@@ -29,7 +29,7 @@ public class TpHereCommand implements Messageable {
     @Command(name = "tphere", usage = "[player]", min = 1, max = 1)
     @Permission("tools.command.tphere")
     @GameOnly
-    private void command(Arguments arguments) {
+    public void command(Arguments arguments) {
 
         CommandSender sender = arguments.getSender();
 

@@ -26,7 +26,7 @@ public class NightCommand implements Messageable {
     @Command(name = "night", usage = "[world]", max = 1)
     @Permission("tools.command.night")
     @GameOnly(false)
-    private void command(Arguments arguments) {
+    public void command(Arguments arguments) {
 
         CommandSender sender = arguments.getSender();
 

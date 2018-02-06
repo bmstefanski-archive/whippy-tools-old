@@ -58,7 +58,7 @@ public class BanCommand implements Messageable {
     @Command(name = "ban", usage = "[player] [reason]", min = 1, max = 16)
     @Permission("tools.command.ban")
     @GameOnly(false)
-    private void command(Arguments arguments) {
+    public void command(Arguments arguments) {
 
         CommandSender sender = arguments.getSender();
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(arguments.getArgs(0));

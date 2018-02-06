@@ -29,7 +29,7 @@ public class TpCommand implements Messageable {
     @Command(name = "tp", usage = "[player] [target]", min = 1, max = 2)
     @Permission("tools.command.tp")
     @GameOnly(false)
-    private void command(Arguments arguments) {
+    public void command(Arguments arguments) {
 
         CommandSender sender = arguments.getSender();
 

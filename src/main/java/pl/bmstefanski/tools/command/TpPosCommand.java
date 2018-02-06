@@ -31,7 +31,7 @@ public class TpPosCommand implements Messageable, Parser {
     @Command(name = "tppos", usage = "[x] [y] [z] [player]", min = 3, max = 4)
     @Permission("tools.command.tppos")
     @GameOnly(false)
-    private void command(Arguments arguments) {
+    public void command(Arguments arguments) {
 
         CommandSender sender = arguments.getSender();
 

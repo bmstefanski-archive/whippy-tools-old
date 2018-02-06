@@ -57,7 +57,7 @@ public class UnbanCommand implements Messageable {
     @Command(name = "unban", usage = "[player]", min = 1, max = 2)
     @Permission("tools.command.unban")
     @GameOnly(false)
-    private void command(Arguments arguments) {
+    public void command(Arguments arguments) {
 
         CommandSender sender = arguments.getSender();
 

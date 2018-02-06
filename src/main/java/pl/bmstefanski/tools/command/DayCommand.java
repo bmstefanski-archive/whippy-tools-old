@@ -26,7 +26,7 @@ public class DayCommand implements Messageable {
     @Command(name = "day", usage = "[world]", max = 1)
     @Permission("tools.command.day")
     @GameOnly(false)
-    private void command(Arguments arguments) {
+    public void command(Arguments arguments) {
 
         CommandSender sender = arguments.getSender();
 

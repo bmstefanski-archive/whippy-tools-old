@@ -29,7 +29,7 @@ public class KickCommand implements Messageable {
     @Command(name = "kick", usage = "[player] [reason]", min = 1, max = 16)
     @Permission("tools.command.kick")
     @GameOnly(false)
-    private void command(Arguments arguments) {
+    public void command(Arguments arguments) {
 
         CommandSender sender = arguments.getSender();
 

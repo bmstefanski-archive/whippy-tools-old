@@ -71,7 +71,7 @@ public class WhoisCommand implements Messageable, Parser {
             Player player = (Player) commandSender;
             OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(player.getUniqueId());
 
-            sendMessage(player, messageContent(player, offlinePlayer));
+            sendMessage(player, messageContent(offlinePlayer));
 
             return;
         }
@@ -84,10 +84,10 @@ public class WhoisCommand implements Messageable, Parser {
         Player target = Bukkit.getPlayer(arguments.getArgs(0));
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(target.getUniqueId());
 
-        sendMessage(commandSender, messageContent(target, offlinePlayer));
+        sendMessage(commandSender, messageContent(offlinePlayer));
     }
 
-    private String messageContent(Player player, OfflinePlayer offlinePlayer) {
+    private String messageContent(OfflinePlayer offlinePlayer) {
         User user = UserManager.getUser(offlinePlayer.getUniqueId());
 
         Location location = offlinePlayer.getPlayer().getLocation();
@@ -105,7 +105,7 @@ public class WhoisCommand implements Messageable, Parser {
 
         return StringUtils.replaceEach(whois,
                 new String[] {"%nickname%", "%uuid%", "%ip%", "%registered%", "%last%", "%location%", "%hp%", "%hunger%", "%gamemode%", "%god%", "%fly%"},
-                new String[] {offlinePlayer.getName(), offlinePlayer.getUniqueId().toString(), offlinePlayer.getPlayer().getAddress().getHostName(),
+                new String[] {offlinePlayer.getName(), offlinePlayer.getUniqueId().toString(), offlinePlayer.getPlayer().getAddress().getAddress().toString(),
                         playerJoin, playerLast, playerLocation, playerHealth, playerFoodLevel, playerGamemode, parseBoolean(user.isGod()),
                         parseBoolean(offlinePlayer.getPlayer().isFlying())
                 });

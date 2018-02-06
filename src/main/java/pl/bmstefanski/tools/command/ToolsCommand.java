@@ -47,9 +47,9 @@ public class ToolsCommand implements Messageable {
     @GameOnly(false)
     public void command(Arguments arguments) {
 
-        sendMessage(arguments.getSender(), "&e" + plugin.getDescription().getName() +
-                                        "&f(" + config.getLanguage().toUpperCase() +
-                                        ") &7" + plugin.getDescription().getVersion() +
-                                        " by §e" + plugin.getDescription().getAuthors());
+        String message = "&e" + plugin.getDescription().getName() +" &7" + plugin.getDescription().getVersion() +
+                " by §e" + plugin.getDescription().getAuthors();
+
+        sendMessage(arguments.getSender(), message);
     }
 }

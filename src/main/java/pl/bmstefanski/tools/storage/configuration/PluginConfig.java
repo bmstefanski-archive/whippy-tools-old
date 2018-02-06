@@ -30,24 +30,34 @@ import org.diorite.config.annotations.CustomKey;
 
 public interface PluginConfig extends Config {
 
-    default String getLanguage() {
-        return "pl";
-    }
-
+    @CustomKey("join-format")
     default String getJoinFormat() {
         return "&e%player% &adolaczyl do gierki!";
     }
 
+    @CustomKey("quit-format")
     default String getQuitFormat() {
         return "&e%player% &cwyszedl z gierki!";
     }
 
+    @CustomKey("spawn-delay")
     default int getSpawnDelay() {
         return 5;
     }
 
+    @CustomKey("back-delay")
     default int getBackDelay() {
         return 3;
+    }
+
+    @CustomKey("spawn-on-respawn")
+    default boolean getSpawnRespawn() {
+        return true;
+    }
+
+    @CustomKey("spawn-on-firstjoin")
+    default boolean getSpawnFirstjoin() {
+        return true;
     }
 
     @CustomKey("mysql")

@@ -75,21 +75,24 @@ public class FlyCommand implements Messageable, Parser {
             return;
         }
 
-        if (Bukkit.getPlayer(arguments.getArgs(0)) == null) {
-            sendMessage(sender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", arguments.getArgs(0)));
-            return;
+        if (sender.hasPermission("tools.command.fly.other")) {
+
+            if (Bukkit.getPlayer(arguments.getArgs(0)) == null) {
+                sendMessage(sender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", arguments.getArgs(0)));
+                return;
+            }
+
+            Player target = Bukkit.getPlayer(arguments.getArgs(0));
+            boolean flyState = !target.isFlying();
+
+            target.setAllowFlight(flyState);
+
+            sendMessage(sender, StringUtils.replaceEach(messages.getFlySwitchedOther(),
+                    new String[] {"%state%", "%player%"},
+                    new String[] {parseBoolean(flyState), target.getName()}));
+
+            sendMessage(target, StringUtils.replace(messages.getFlySwitched(), "%state%", parseBoolean(flyState)));
         }
-
-        Player target = Bukkit.getPlayer(arguments.getArgs(0));
-        boolean flyState = !target.isFlying();
-
-        target.setAllowFlight(flyState);
-
-        sendMessage(sender, StringUtils.replaceEach(messages.getFlySwitchedOther(),
-                new String[] {"%state%", "%player%"},
-                new String[] {parseBoolean(flyState), target.getName()}));
-
-        sendMessage(target, StringUtils.replace(messages.getFlySwitched(), "%state%", parseBoolean(flyState)));
     }
 
     @Completer("fly")

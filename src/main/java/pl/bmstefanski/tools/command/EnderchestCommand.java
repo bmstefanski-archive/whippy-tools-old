@@ -61,13 +61,18 @@ public class EnderchestCommand implements Messageable {
             return;
         }
 
-        if (Bukkit.getPlayer(arguments.getArgs(0)) == null) {
-            sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", arguments.getArgs(0)));
-            return;
+        if (player.hasPermission("tools.command.enderchest.other")) {
+
+            if (Bukkit.getPlayer(arguments.getArgs(0)) == null) {
+                sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", arguments.getArgs(0)));
+                return;
+            }
+
+            Player target = Bukkit.getPlayer(arguments.getArgs(0));
+            player.openInventory(target.getEnderChest());
+
         }
 
-        Player target = Bukkit.getPlayer(arguments.getArgs(0));
-        player.openInventory(target.getEnderChest());
     }
 
     @Completer("enderchest")

@@ -75,14 +75,17 @@ public class BackCommand implements Messageable {
             return;
         }
 
-        if (Bukkit.getPlayer(arguments.getArgs(0)) == null) {
-            sendMessage(sender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", arguments.getArgs(0)));
-            return;
-        }
+        if (sender.hasPermission("tools.command.back.other")) {
 
-        Player target = Bukkit.getPlayer(arguments.getArgs(0));
-        Location location = LocationManager.getLastLocation(target);
-        target.teleport(location);
+            if (Bukkit.getPlayer(arguments.getArgs(0)) == null) {
+                sendMessage(sender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", arguments.getArgs(0)));
+                return;
+            }
+
+            Player target = Bukkit.getPlayer(arguments.getArgs(0));
+            Location location = LocationManager.getLastLocation(target);
+            target.teleport(location);
+        }
     }
 
     @Completer("back")

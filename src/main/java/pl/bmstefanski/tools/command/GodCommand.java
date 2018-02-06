@@ -82,26 +82,26 @@ public class GodCommand implements Messageable, Parser {
             return;
         }
 
-        if (Bukkit.getPlayer(arguments.getArgs(0)) == null) {
-            sendMessage(sender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", arguments.getArgs(0)));
-            return;
+        if (sender.hasPermission("tools.command.god.other")) {
+
+            if (Bukkit.getPlayer(arguments.getArgs(0)) == null) {
+                sendMessage(sender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", arguments.getArgs(0)));
+                return;
+            }
+
+            Player target = Bukkit.getPlayer(arguments.getArgs(0));
+            User user = UserManager.getUser(target.getUniqueId());
+
+            boolean godState = !user.isGod();
+            user.setGod(godState);
+
+
+            sendMessage(sender, StringUtils.replaceEach(messages.getGodSwitchedOther(),
+                    new String[] {"%state%", "%player%"},
+                    new String[] {parseBoolean(godState), target.getName()}));
+            sendMessage(target, StringUtils.replace(messages.getGodSwitched(), "%state%", parseBoolean(godState)));
+
         }
-
-        Player target = Bukkit.getPlayer(arguments.getArgs(0));
-        User user = UserManager.getUser(target.getUniqueId());
-
-        if (user == null) {
-            return;
-        }
-
-        boolean godState = !user.isGod();
-        user.setGod(godState);
-
-
-        sendMessage(sender, StringUtils.replaceEach(messages.getGodSwitchedOther(),
-                new String[] {"%state%", "%player%"},
-                new String[] {parseBoolean(godState), target.getName()}));
-        sendMessage(target, StringUtils.replace(messages.getGodSwitched(), "%state%", parseBoolean(godState)));
     }
 
     @Completer("god")

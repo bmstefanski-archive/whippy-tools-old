@@ -76,15 +76,20 @@ public class WhoisCommand implements Messageable, Parser {
             return;
         }
 
-        if (Bukkit.getPlayer(arguments.getArgs(0)) == null) {
-            sendMessage(commandSender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", arguments.getArgs(0)));
-            return;
+        if (commandSender.hasPermission("tools.command.whois.other")) {
+
+            if (Bukkit.getPlayer(arguments.getArgs(0)) == null) {
+                sendMessage(commandSender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", arguments.getArgs(0)));
+                return;
+            }
+
+            Player target = Bukkit.getPlayer(arguments.getArgs(0));
+            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(target.getUniqueId());
+
+            sendMessage(commandSender, messageContent(offlinePlayer));
+
         }
 
-        Player target = Bukkit.getPlayer(arguments.getArgs(0));
-        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(target.getUniqueId());
-
-        sendMessage(commandSender, messageContent(offlinePlayer));
     }
 
     private String messageContent(OfflinePlayer offlinePlayer) {

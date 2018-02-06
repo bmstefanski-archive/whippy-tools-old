@@ -82,25 +82,29 @@ public class GamemodeCommand implements Messageable {
             return;
         }
 
-        if (Bukkit.getPlayer(arguments.getArgs(1)) == null) {
-            sendMessage(sender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", arguments.getArgs(1)));
-            return;
+        if (sender.hasPermission("tools.command.gamemode.other")) {
+
+            if (Bukkit.getPlayer(arguments.getArgs(1)) == null) {
+                sendMessage(sender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", arguments.getArgs(1)));
+                return;
+            }
+
+            Player target = Bukkit.getPlayer(arguments.getArgs(1));
+            GameMode gameMode = GamemodeUtils.parseGameMode(arguments.getArgs(0));
+
+            if (gameMode == null) {
+                sendMessage(sender, messages.getGamemodeFail());
+                return;
+            }
+
+            target.setGameMode(gameMode);
+
+            sendMessage(target, StringUtils.replace(messages.getGamemodeSuccess(), "%gamemode%", gameMode.toString()));
+            sendMessage(sender, StringUtils.replaceEach(messages.getGamemodeSuccessOther(),
+                    new String[] {"%gamemode%", "%player%"},
+                    new String[] {gameMode.toString(), target.getName()}));
+
         }
-
-        Player target = Bukkit.getPlayer(arguments.getArgs(1));
-        GameMode gameMode = GamemodeUtils.parseGameMode(arguments.getArgs(0));
-
-        if (gameMode == null) {
-            sendMessage(sender, messages.getGamemodeFail());
-            return;
-        }
-
-        target.setGameMode(gameMode);
-
-        sendMessage(target, StringUtils.replace(messages.getGamemodeSuccess(), "%gamemode%", gameMode.toString()));
-        sendMessage(sender, StringUtils.replaceEach(messages.getGamemodeSuccessOther(),
-                new String[] {"%gamemode%", "%player%"},
-                new String[] {gameMode.toString(), target.getName()}));
     }
 
     @Completer("gamemode")

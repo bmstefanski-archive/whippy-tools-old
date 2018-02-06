@@ -73,17 +73,21 @@ public class HealCommand implements Messageable {
             return;
         }
 
-        if (Bukkit.getPlayer(arguments.getArgs(0)) == null) {
-            sendMessage(sender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", arguments.getArgs(0)));
-            return;
+        if (sender.hasPermission("tools.command.heal.other")) {
+
+            if (Bukkit.getPlayer(arguments.getArgs(0)) == null) {
+                sendMessage(sender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", arguments.getArgs(0)));
+                return;
+            }
+
+            Player target = Bukkit.getPlayer(arguments.getArgs(0));
+
+            target.setHealth(20D);
+
+            sendMessage(target, messages.getHealed());
+            sendMessage(sender, StringUtils.replace(messages.getHealedOther(), "%player%", target.getName()));
+
         }
-
-        Player target = Bukkit.getPlayer(arguments.getArgs(0));
-
-        target.setHealth(20D);
-
-        sendMessage(target, messages.getHealed());
-        sendMessage(sender, StringUtils.replace(messages.getHealedOther(), "%player%", target.getName()));
     }
 
     @Completer("heal")

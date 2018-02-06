@@ -45,16 +45,19 @@ public class PlayerQuit implements Listener, Messageable {
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
+
         Player player = event.getPlayer();
         User user = UserManager.getUser(player.getUniqueId());
 
-        if (user != null) {
-            user.setIp(player.getAddress().getHostName());
-        }
+        user.setIp(player.getAddress().getHostName());
 
         event.setQuitMessage(fixColor(StringUtils.replace(plugin.getConfiguration().getQuitFormat(), "%player%", player.getName())));
 
         SaveDataTask saveDataTask = new SaveDataTask(plugin.getStorage(), user);
         new Thread(saveDataTask).run();
+
+        if (plugin.getConfiguration().getRemoveGodOnDisconnect() && user.isGod()) {
+            user.setGod(false);
+        }
     }
 }

@@ -60,6 +60,31 @@ public interface PluginConfig extends Config {
         return true;
     }
 
+    @CustomKey("remove-god-on-disconnect")
+    default boolean getRemoveGodOnDisconnect() {
+        return false;
+    }
+
+    @CustomKey("fly-on-join")
+    default boolean getFlyOnJoin() {
+        return true;
+    }
+
+    @CustomKey("freeze-afk-players")
+    default boolean getFreezeAfkPlayers() {
+        return true;
+    }
+
+    @CustomKey("safe-login")
+    default boolean getSafeLogin() {
+        return true;
+    }
+
+    @CustomKey("cancel-afk-on-move")
+    default boolean getCancelAfkOnMove() {
+        return true;
+    }
+
     @CustomKey("mysql")
     default MySQL getMySQLSection() {
         return ConfigManager.createInstance(MySQL.class);

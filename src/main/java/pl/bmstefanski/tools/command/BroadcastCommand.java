@@ -35,7 +35,7 @@ import pl.bmstefanski.commands.annotation.GameOnly;
 import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.util.TitleSender;
+import pl.bmstefanski.tools.util.reflect.TitleSender;
 import pl.bmstefanski.tools.util.reflect.transition.PacketPlayOutTitle;
 
 import java.util.Arrays;
@@ -43,7 +43,7 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class BroadcastCommand implements Messageable, TitleSender {
+public class BroadcastCommand implements Messageable {
 
     private final Tools plugin;
     private final Messages messages;
@@ -67,19 +67,20 @@ public class BroadcastCommand implements Messageable, TitleSender {
         }
 
         String message = stringBuilder.toString();
+        TitleSender title = new TitleSender();
 
         switch (arguments.getArgs(0)) {
             case "action":
-                send(PacketPlayOutTitle.EnumTitleAction.ACTIONBAR, Bukkit.getOnlinePlayers(), message);
+                title.send(PacketPlayOutTitle.EnumTitleAction.ACTIONBAR, Bukkit.getOnlinePlayers(), message);
                 break;
 
             case "title":
-                send(PacketPlayOutTitle.EnumTitleAction.TITLE, Bukkit.getOnlinePlayers(), message);
+                title.send(PacketPlayOutTitle.EnumTitleAction.TITLE, Bukkit.getOnlinePlayers(), message);
                 break;
 
             case "subtitle":
-                send(PacketPlayOutTitle.EnumTitleAction.TITLE, Bukkit.getOnlinePlayers(), "");
-                send(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, Bukkit.getOnlinePlayers(), message);
+                title.send(PacketPlayOutTitle.EnumTitleAction.TITLE, Bukkit.getOnlinePlayers(), "");
+                title.send(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, Bukkit.getOnlinePlayers(), message);
                 break;
 
             case "chat":

@@ -2,10 +2,10 @@ package pl.bmstefanski.tools.util.reflect;
 
 import org.bukkit.entity.Player;
 import pl.bmstefanski.commands.Messageable;
+import pl.bmstefanski.tools.api.util.Packet;
 import pl.bmstefanski.tools.util.reflect.transition.PacketPlayOutTitle;
 
 import java.util.Collection;
-import java.util.Collections;
 
 public class TitleSender implements Messageable {
 
@@ -13,14 +13,18 @@ public class TitleSender implements Messageable {
         resetTitle();
 
         String json = "{\"text\":\"" + fixColor(message) + "\"}";
-        PacketSender.sendPacket(player, Collections.singletonList(new PacketPlayOutTitle(action, json).getPacket()));
+        Packet packet = new PacketPlayOutTitle(action, json);
+
+        packet.send(player);
     }
 
     public void send(PacketPlayOutTitle.EnumTitleAction action, Collection<? extends Player> players, String message) {
         resetTitle();
 
         String json = "{\"text\":\"" + fixColor(message) + "\"}";
-        PacketSender.sendPacket(players, Collections.singletonList(new PacketPlayOutTitle(action, json).getPacket()));
+        Packet packet = new PacketPlayOutTitle(action, json);
+
+        packet.send(players);
     }
 
     public void clearTitle() {

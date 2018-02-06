@@ -24,13 +24,13 @@
 
 package pl.bmstefanski.tools.util.reflect.transition;
 
+import pl.bmstefanski.tools.util.reflect.AbstractPacket;
 import pl.bmstefanski.tools.util.reflect.Reflections;
 
 import java.lang.reflect.InvocationTargetException;
 
-public class PacketPlayOutTitle {
+public class PacketPlayOutTitle extends AbstractPacket {
 
-    private Object packet;
     private static Class<?> packetClass;
     private static Class<?> titleActionClass;
     private static Class<?> chatSerializerClass;
@@ -80,9 +80,5 @@ public class PacketPlayOutTitle {
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
-    }
-
-    public Object getPacket() {
-        return packet;
     }
 }

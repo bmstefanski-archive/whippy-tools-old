@@ -85,6 +85,11 @@ public interface PluginConfig extends Config {
         return true;
     }
 
+    @CustomKey("max-nickname-length")
+    default int getMaxNicknameLength() {
+        return 16;
+    }
+
     @CustomKey("mysql")
     default MySQL getMySQLSection() {
         return ConfigManager.createInstance(MySQL.class);

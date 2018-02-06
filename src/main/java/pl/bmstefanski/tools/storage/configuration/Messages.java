@@ -255,4 +255,8 @@ public interface Messages extends Config {
     default String getCannotKickYourself() {
         return "&cNie mozesz wyrzucic samego siebie!";
     }
+
+    default String getTooLongNickname() {
+        return "&cTwoj nick jest za dlugi! Maksymalna dlugosc nicku to: &7%max%";
+    }
 }

@@ -95,6 +95,16 @@ public interface PluginConfig extends Config {
         return true;
     }
 
+    @CustomKey("disable-item-pickup-while-afk")
+    default boolean getDisableItemPickupWhileAfk() {
+        return true;
+    }
+
+    @CustomKey("death-messages")
+    default boolean getDeathMessages() {
+        return false;
+    }
+
     @CustomKey("mysql")
     default MySQL getMySQLSection() {
         return ConfigManager.createInstance(MySQL.class);

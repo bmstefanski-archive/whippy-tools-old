@@ -44,5 +44,10 @@ public class PlayerDeath implements Listener {
         if (event.getEntity() != null) {
             LocationManager.setLastLocation(event.getEntity());
         }
+
+        if (!plugin.getConfiguration().getDeathMessages()) {
+            event.setDeathMessage("");
+        }
+
     }
 }

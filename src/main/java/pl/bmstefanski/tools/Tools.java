@@ -89,7 +89,8 @@ public class Tools extends JavaPlugin implements ToolsAPI {
                 new PlayerMove(this),
                 new EntityDamage(this),
                 new PlayerDeath(this),
-                new PlayerLogin(this)
+                new PlayerLogin(this),
+                new PlayerInteract(this)
         );
 
         registerCommands(

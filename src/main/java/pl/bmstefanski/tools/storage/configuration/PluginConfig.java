@@ -90,6 +90,11 @@ public interface PluginConfig extends Config {
         return 16;
     }
 
+    @CustomKey("cancel-afk-on-interact")
+    default boolean getCancelAfkOnInteract() {
+        return true;
+    }
+
     @CustomKey("mysql")
     default MySQL getMySQLSection() {
         return ConfigManager.createInstance(MySQL.class);

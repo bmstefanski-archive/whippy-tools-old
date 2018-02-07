@@ -64,7 +64,7 @@ public class UserImpl implements User {
 
     @Override
     public String getIp() {
-        return isOnline() ? getPlayer().getAddress().getHostName() : ip;
+        return isOnline() ? getPlayer().getAddress().getAddress().toString() : ip;
     }
 
     @Override

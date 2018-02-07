@@ -28,6 +28,8 @@ import org.diorite.config.Config;
 import org.diorite.config.ConfigManager;
 import org.diorite.config.annotations.CustomKey;
 
+import java.util.List;
+
 public interface PluginConfig extends Config {
 
     @CustomKey("join-format")
@@ -104,6 +106,11 @@ public interface PluginConfig extends Config {
     default boolean getDeathMessages() {
         return false;
     }
+
+    @CustomKey("blocked-commands")
+    List<String> getBlockedCommands();
+
+    boolean containsBlockedCommands(String string);
 
     @CustomKey("mysql")
     default MySQL getMySQLSection() {

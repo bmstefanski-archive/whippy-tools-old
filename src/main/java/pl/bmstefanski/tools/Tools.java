@@ -29,6 +29,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.diorite.config.ConfigManager;
 import pl.bmstefanski.commands.BukkitCommands;
+import pl.bmstefanski.commands.annotation.Command;
 import pl.bmstefanski.tools.api.ToolsAPI;
 import pl.bmstefanski.tools.api.storage.Storage;
 import pl.bmstefanski.tools.basic.manager.UserManager;
@@ -41,6 +42,7 @@ import pl.bmstefanski.tools.storage.resource.BanResourceManager;
 import pl.bmstefanski.tools.type.DatabaseType;
 
 import java.io.File;
+import java.lang.reflect.Method;
 
 public class Tools extends JavaPlugin implements ToolsAPI {
 
@@ -126,6 +128,7 @@ public class Tools extends JavaPlugin implements ToolsAPI {
                 new DayCommand(this),
                 new NightCommand(this)
         );
+
     }
 
     @Override
@@ -139,7 +142,20 @@ public class Tools extends JavaPlugin implements ToolsAPI {
         BukkitCommands bukkitCommands = new BukkitCommands(this);
 
         for (Object object : commands) {
-            bukkitCommands.registerCommands(object);
+
+            for (Method method : object.getClass().getMethods()) {
+
+                if (method.isAnnotationPresent(Command.class)) {
+                    Command commandAnnotation = method.getAnnotation(Command.class);
+
+                    if (getConfiguration().containsBlockedCommands(commandAnnotation.name())) {
+                        continue;
+                    }
+
+                    bukkitCommands.registerCommands(object);
+                }
+
+            }
         }
     }
 

@@ -27,6 +27,7 @@ package pl.bmstefanski.tools.command;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryType;
 import pl.bmstefanski.commands.Arguments;
 import pl.bmstefanski.commands.Messageable;
 import pl.bmstefanski.commands.annotation.Command;
@@ -57,7 +58,7 @@ public class WorkbenchCommand implements Messageable {
         Player player = (Player) arguments.getSender();
 
         if (arguments.getArgs().length == 0) {
-            player.openInventory(player.getInventory());
+            player.openWorkbench(player.getLocation(), true);
             return;
         }
 
@@ -67,7 +68,7 @@ public class WorkbenchCommand implements Messageable {
         }
 
         Player target = Bukkit.getPlayer(arguments.getArgs(0));
-        player.openInventory(target.getInventory());
+        target.openWorkbench(player.getLocation(), true);
     }
 
     @Completer("workbench")

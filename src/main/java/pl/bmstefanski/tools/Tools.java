@@ -31,18 +31,20 @@ import org.diorite.config.ConfigManager;
 import pl.bmstefanski.commands.BukkitCommands;
 import pl.bmstefanski.commands.annotation.Command;
 import pl.bmstefanski.tools.api.ToolsAPI;
-import pl.bmstefanski.tools.api.storage.Storage;
+import pl.bmstefanski.tools.api.storage.Database;
 import pl.bmstefanski.tools.basic.manager.UserManager;
 import pl.bmstefanski.tools.command.*;
-import pl.bmstefanski.tools.storage.StorageConnector;
+import pl.bmstefanski.tools.storage.DatabaseStorageConnector;
 import pl.bmstefanski.tools.storage.configuration.Messages;
 import pl.bmstefanski.tools.storage.configuration.PluginConfig;
 import pl.bmstefanski.tools.listener.*;
 import pl.bmstefanski.tools.storage.resource.BanResourceManager;
 import pl.bmstefanski.tools.type.DatabaseType;
+import pl.bmstefanski.tools.type.StatementType;
 
 import java.io.File;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 public class Tools extends JavaPlugin implements ToolsAPI {
 
@@ -55,7 +57,7 @@ public class Tools extends JavaPlugin implements ToolsAPI {
     private PluginConfig pluginConfig;
     private UserManager userManager;
     private Messages messages;
-    private Storage storage;
+    private Database database;
 
     public Tools() {
         instance = this;
@@ -76,12 +78,21 @@ public class Tools extends JavaPlugin implements ToolsAPI {
         this.messages.load();
         this.messages.save();
 
-        setUpStorage();
+        setUpDatabase();
+
+        System.out.println("database: " + getDatabase());
+        System.out.println("connection: " + getDatabase().getConnection());
+        System.out.println("statement-type: " + Arrays.toString(StatementType.values()));
+        System.out.println(" " + StatementType.ADD_BAN);
+        System.out.println(" " + StatementType.CHECK_BAN);
+        System.out.println(" " + StatementType.CHECK_PLAYER);
+        System.out.println(" " + StatementType.SAVE_PLAYER);
 
         this.userManager = new UserManager();
-        this.banResource = new BanResourceManager(storage);
+        this.banResource = new BanResourceManager(this);
 
         this.banResource.load();
+
 
         registerListeners(
                 new PlayerCommandPreprocess(this),
@@ -166,8 +177,8 @@ public class Tools extends JavaPlugin implements ToolsAPI {
         }
     }
 
-    private void setUpStorage() {
-        this.storage = new StorageConnector(this, DatabaseType.MYSQL).getStorage();
+    private void setUpDatabase() {
+        this.database = new DatabaseStorageConnector(this, DatabaseType.MYSQL).getDatabase();
     }
 
     @Override
@@ -176,8 +187,8 @@ public class Tools extends JavaPlugin implements ToolsAPI {
     }
 
     @Override
-    public Storage getStorage() {
-        return storage;
+    public Database getDatabase() {
+        return database;
     }
 
     @Override

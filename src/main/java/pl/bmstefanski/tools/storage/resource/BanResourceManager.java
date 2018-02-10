@@ -24,11 +24,11 @@
 
 package pl.bmstefanski.tools.storage.resource;
 
+import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.api.basic.Ban;
-import pl.bmstefanski.tools.api.storage.Storage;
+import pl.bmstefanski.tools.api.storage.Resource;
 import pl.bmstefanski.tools.basic.BanImpl;
 import pl.bmstefanski.tools.basic.manager.BanManager;
-import pl.bmstefanski.tools.storage.AbstractStorage;
 import pl.bmstefanski.tools.type.StatementType;
 
 import java.sql.PreparedStatement;
@@ -37,20 +37,24 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-public class BanResourceManager extends AbstractStorage {
+public class BanResourceManager implements Resource {
 
+    private final Tools plugin;
     private final List<Ban> banList = BanManager.getBans();
 
-    public BanResourceManager(Storage storage) {
-        super(storage);
+    public BanResourceManager(Tools plugin) {
+        this.plugin = plugin;
     }
 
+    @Override
     public void load() {
-
-        getStorage().connect();
-
         try {
-            PreparedStatement preparedStatement = getStorage().getPreparedStatement(StatementType.LOAD_BANS);
+            PreparedStatement preparedStatement = StatementType.LOAD_BANS.build();
+
+            if (preparedStatement == null) {
+                return;
+            }
+
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -69,13 +73,16 @@ public class BanResourceManager extends AbstractStorage {
         }
     }
 
+    @Override
     public void save() {
-
-        getStorage().connect();
 
         try {
             for (Ban ban : banList) {
-                PreparedStatement preparedStatement = getStorage().getPreparedStatement(StatementType.SAVE_BANS);
+                PreparedStatement preparedStatement = StatementType.SAVE_BANS.build();
+
+                if (preparedStatement == null) {
+                    return;
+                }
 
                 preparedStatement.setString(1, ban.getReason());
                 preparedStatement.setLong(2, ban.getTime());
@@ -91,10 +98,12 @@ public class BanResourceManager extends AbstractStorage {
 
     public void add(Ban ban) {
 
-        getStorage().connect();
-
         try {
-            PreparedStatement preparedStatement = getStorage().getPreparedStatement(StatementType.ADD_BAN);
+            PreparedStatement preparedStatement = StatementType.ADD_BAN.build();
+
+            if (preparedStatement == null) {
+                return;
+            }
 
             preparedStatement.setString(1, ban.getPunisher());
             preparedStatement.setString(2, ban.getPunished().toString());
@@ -111,10 +120,13 @@ public class BanResourceManager extends AbstractStorage {
 
     public void remove(Ban ban) {
 
-        getStorage().connect();
-
         try {
-            PreparedStatement preparedStatement = getStorage().getPreparedStatement(StatementType.REMOVE_BAN);
+            PreparedStatement preparedStatement = StatementType.REMOVE_BAN.build();
+
+            if (preparedStatement == null) {
+                return;
+            }
+
             preparedStatement.setString(1, ban.getPunished().toString());
 
             preparedStatement.executeUpdate();
@@ -124,8 +136,5 @@ public class BanResourceManager extends AbstractStorage {
             ex.printStackTrace();
         }
     }
-
-
-
 
 }

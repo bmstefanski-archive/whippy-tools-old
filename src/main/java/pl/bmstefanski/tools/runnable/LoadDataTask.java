@@ -24,9 +24,8 @@
 
 package pl.bmstefanski.tools.runnable;
 
+import org.bukkit.scheduler.BukkitRunnable;
 import pl.bmstefanski.tools.api.basic.User;
-import pl.bmstefanski.tools.api.storage.Storage;
-import pl.bmstefanski.tools.storage.AbstractStorage;
 import pl.bmstefanski.tools.type.StatementType;
 
 import java.sql.PreparedStatement;
@@ -34,22 +33,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
-public class LoadDataTask extends AbstractStorage implements Runnable {
+public class LoadDataTask extends BukkitRunnable {
 
     private final User user;
 
-    public LoadDataTask(Storage storage, User user) {
-        super(storage);
-
+    public LoadDataTask(User user) {
         this.user = user;
     }
 
     @Override
     public void run() {
-        getStorage().connect();
 
         try {
-            PreparedStatement preparedStatement = getStorage().getPreparedStatement(StatementType.LOAD_PLAYER);
+            PreparedStatement preparedStatement = StatementType.LOAD_PLAYER.build();
+
+            if (preparedStatement == null) { // wincyj ifów xD TODO
+                return;
+            }
+
             preparedStatement.setString(1, user.getUUID().toString());
 
             ResultSet resultSet = preparedStatement.executeQuery();

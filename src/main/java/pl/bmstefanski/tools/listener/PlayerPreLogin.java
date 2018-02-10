@@ -73,7 +73,6 @@ public class PlayerPreLogin implements Listener, Messageable {
                 new String[]{"%punisher%", "%until%", "%reason%"},
                 new String[]{ban.getPunisher(), ban.getTime() <= 0 ? untilFormat : ban.getTime() + "", ban.getReason()}));
 
-        LoadDataTask loadDataTask = new LoadDataTask(plugin.getStorage(), user);
-        new Thread(loadDataTask).run();
+        new LoadDataTask(user).runTask(plugin);
     }
 }

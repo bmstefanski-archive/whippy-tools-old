@@ -22,19 +22,12 @@
  SOFTWARE.
  */
 
-package pl.bmstefanski.tools.storage;
+package pl.bmstefanski.tools.api.storage;
 
-import pl.bmstefanski.tools.api.storage.Storage;
+public interface Resource {
 
-public abstract class AbstractStorage {
+    void load();
 
-    private final Storage storage;
+    void save();
 
-    protected AbstractStorage(Storage storage) {
-        this.storage = storage;
-    }
-
-    protected AbstractDatabase getStorage() {
-        return (AbstractDatabase) storage;
-    }
 }

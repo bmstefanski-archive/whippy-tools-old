@@ -53,8 +53,7 @@ public class PlayerQuit implements Listener, Messageable {
 
         event.setQuitMessage(fixColor(StringUtils.replace(plugin.getConfiguration().getQuitFormat(), "%player%", player.getName())));
 
-        SaveDataTask saveDataTask = new SaveDataTask(plugin.getStorage(), user);
-        new Thread(saveDataTask).run();
+        new SaveDataTask(user).runTask(plugin);
 
         if (plugin.getConfiguration().getRemoveGodOnDisconnect() && user.isGod()) {
             user.setGod(false);

@@ -24,14 +24,39 @@
 
 package pl.bmstefanski.tools.type;
 
+import pl.bmstefanski.tools.Tools;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 public enum StatementType {
 
-    LOAD_PLAYER,
-    SAVE_PLAYER,
-    CHECK_PLAYER,
-    LOAD_BANS,
-    SAVE_BANS,
-    ADD_BAN,
-    REMOVE_BAN,
-    CHECK_BAN
+    LOAD_PLAYER("SELECT * FROM `players` WHERE `uuid` = ?"),
+    SAVE_PLAYER("INSERT INTO `players` (`uuid`, `name`, `ip`) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE `uuid`=?, `name`=?, `ip`=?"),
+    CHECK_PLAYER("CREATE TABLE IF NOT EXISTS `players`(`uuid` VARCHAR(100) NOT NULL,`name` VARCHAR(50) NOT NULL,`ip` VARCHAR(32),PRIMARY KEY (`uuid`));"),
+    LOAD_BANS("SELECT * FROM `bans`"),
+    SAVE_BANS("UPDATE `BANS` SET `reason`=?, `until`=? WHERE `punished`=?"),
+    ADD_BAN("INSERT INTO `BANS` (`punisher`, `punished`, `until`, `reason`) VALUES (?, ?, ?, ?)"),
+    REMOVE_BAN("DELETE FROM `BANS` WHERE `punished`=?"),
+    CHECK_BAN("CREATE TABLE IF NOT EXISTS `bans`(`punisher` VARCHAR(100) NOT NULL,`punished` VARCHAR(100) NOT NULL,`until` BIGINT NOT NULL,`reason` VARCHAR(250) NOT NULL);");
+
+    private String sql;
+
+    StatementType(String sql) {
+        this.sql = sql;
+    }
+
+    public PreparedStatement build() {
+
+        Connection connection = Tools.getInstance().getDatabase().getConnection();
+
+        try {
+            return connection.prepareStatement(this.sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

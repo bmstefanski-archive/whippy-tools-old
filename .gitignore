@@ -50,3 +50,9 @@ target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.l
 target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
 .idea/artifacts/WhippyTools_jar.xml
 .idea/libraries/Maven__com_github_whippytools_bukkit_commands_1_2.xml
+.idea/fileTemplates/internal/AnnotationType.java
+.idea/fileTemplates/internal/Class.java
+.idea/fileTemplates/internal/Interface.java
+.idea/fileTemplates/internal/Enum.java
+.idea/libraries/Maven__com_zaxxer_HikariCP_2_7_7.xml
+.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_25.xml

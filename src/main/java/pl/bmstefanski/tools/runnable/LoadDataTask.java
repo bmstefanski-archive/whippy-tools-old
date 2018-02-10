@@ -27,11 +27,11 @@ package pl.bmstefanski.tools.runnable;
 import org.bukkit.scheduler.BukkitRunnable;
 import pl.bmstefanski.tools.api.basic.User;
 import pl.bmstefanski.tools.type.StatementType;
+import pl.bmstefanski.tools.util.UUIDUtils;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.UUID;
 
 public class LoadDataTask extends BukkitRunnable {
 
@@ -56,9 +56,8 @@ public class LoadDataTask extends BukkitRunnable {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                user.setUUID(UUID.fromString(resultSet.getString("uuid")));
+                user.setUUID(UUIDUtils.getUUIDFromBytes(resultSet.getBytes("uuid")));
                 user.setName(resultSet.getString("name"));
-                user.setIp(resultSet.getString("ip"));
             }
 
             resultSet.close();

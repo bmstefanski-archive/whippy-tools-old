@@ -27,6 +27,7 @@ package pl.bmstefanski.tools.runnable;
 import org.bukkit.scheduler.BukkitRunnable;
 import pl.bmstefanski.tools.api.basic.User;
 import pl.bmstefanski.tools.type.StatementType;
+import pl.bmstefanski.tools.util.UUIDUtils;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -48,12 +49,10 @@ public class SaveDataTask extends BukkitRunnable {
                 return;
             }
 
-            preparedStatement.setString(1, user.getUUID().toString());
+            preparedStatement.setBytes(1, UUIDUtils.getBytesFromUUID(user.getUUID()));
             preparedStatement.setString(2, user.getName());
-            preparedStatement.setString(3, user.getIp());
-            preparedStatement.setString(4, user.getUUID().toString());
-            preparedStatement.setString(5, user.getName());
-            preparedStatement.setString(6, user.getIp());
+            preparedStatement.setBytes(3, UUIDUtils.getBytesFromUUID(user.getUUID()));
+            preparedStatement.setString(4, user.getName());
 
             preparedStatement.executeUpdate();
             preparedStatement.close();

@@ -30,6 +30,7 @@ import pl.bmstefanski.tools.api.storage.Resource;
 import pl.bmstefanski.tools.basic.BanImpl;
 import pl.bmstefanski.tools.basic.manager.BanManager;
 import pl.bmstefanski.tools.type.StatementType;
+import pl.bmstefanski.tools.util.UUIDUtils;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -58,7 +59,7 @@ public class BanResourceManager implements Resource {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                UUID punished = UUID.fromString(resultSet.getString("punished"));
+                UUID punished = UUIDUtils.getUUIDFromBytes(resultSet.getBytes("punished"));
                 String punisher = resultSet.getString("punisher");
 
                 Ban ban = new BanImpl(punished, punisher);
@@ -86,7 +87,7 @@ public class BanResourceManager implements Resource {
 
                 preparedStatement.setString(1, ban.getReason());
                 preparedStatement.setLong(2, ban.getTime());
-                preparedStatement.setString(3, ban.getPunished().toString());
+                preparedStatement.setBytes(3, UUIDUtils.getBytesFromUUID(ban.getPunished()));
 
                 preparedStatement.executeUpdate();
                 preparedStatement.close();
@@ -106,7 +107,7 @@ public class BanResourceManager implements Resource {
             }
 
             preparedStatement.setString(1, ban.getPunisher());
-            preparedStatement.setString(2, ban.getPunished().toString());
+            preparedStatement.setBytes(2, UUIDUtils.getBytesFromUUID(ban.getPunished()));
             preparedStatement.setLong(3, ban.getTime());
             preparedStatement.setString(4, ban.getReason());
 
@@ -127,7 +128,7 @@ public class BanResourceManager implements Resource {
                 return;
             }
 
-            preparedStatement.setString(1, ban.getPunished().toString());
+            preparedStatement.setBytes(1, UUIDUtils.getBytesFromUUID(ban.getPunished()));
 
             preparedStatement.executeUpdate();
 

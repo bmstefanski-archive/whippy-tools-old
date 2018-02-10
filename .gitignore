@@ -56,3 +56,4 @@ target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
 .idea/fileTemplates/internal/Enum.java
 .idea/libraries/Maven__com_zaxxer_HikariCP_2_7_7.xml
 .idea/libraries/Maven__org_slf4j_slf4j_api_1_7_25.xml
+.idea/codeStyles/codeStyleConfig.xml

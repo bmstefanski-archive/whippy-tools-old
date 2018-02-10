@@ -44,5 +44,10 @@ public abstract class AbstractDatabase implements Database {
         return true;
     }
 
+    @Override
+    public Connection getConnection() {
+        return connection;
+    }
+
     public abstract void connect();
 }

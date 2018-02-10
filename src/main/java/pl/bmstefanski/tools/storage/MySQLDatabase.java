@@ -2,7 +2,6 @@ package pl.bmstefanski.tools.storage;
 
 import com.zaxxer.hikari.HikariDataSource;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 public class MySQLDatabase extends AbstractDatabase {
@@ -24,6 +23,12 @@ public class MySQLDatabase extends AbstractDatabase {
         this.dataSource = new HikariDataSource();
 
         connect();
+
+        try {
+            connection = dataSource.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -35,16 +40,5 @@ public class MySQLDatabase extends AbstractDatabase {
         this.dataSource.addDataSourceProperty("user", user);
         this.dataSource.addDataSourceProperty("password", password);
         this.dataSource.setMaximumPoolSize(10);
-    }
-
-    @Override
-    public Connection getConnection() {
-        try {
-            return dataSource.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return null;
     }
 }

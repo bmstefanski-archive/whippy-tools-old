@@ -80,14 +80,6 @@ public class Tools extends JavaPlugin implements ToolsAPI {
 
         setUpDatabase();
 
-        System.out.println("database: " + getDatabase());
-        System.out.println("connection: " + getDatabase().getConnection());
-        System.out.println("statement-type: " + Arrays.toString(StatementType.values()));
-        System.out.println(" " + StatementType.ADD_BAN);
-        System.out.println(" " + StatementType.CHECK_BAN);
-        System.out.println(" " + StatementType.CHECK_PLAYER);
-        System.out.println(" " + StatementType.SAVE_PLAYER);
-
         this.userManager = new UserManager();
         this.banResource = new BanResourceManager(this);
 

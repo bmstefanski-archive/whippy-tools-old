@@ -275,4 +275,13 @@ public interface Messages extends Config {
     default String getSetNicknameOther() {
         return "&7Zmieniles nickname gracza &e%player%&7, na %nickname%";
     }
+
+    default String getRealname() {
+        return "&7Twoj prawdziwy nickname: %nickname%";
+    }
+
+    default String getRealnameOther() {
+        return "&7Prawdziwy nickname gracza &e%player%&7 to %nickname%";
+    }
+
 }

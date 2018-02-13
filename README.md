@@ -63,10 +63,10 @@ If you want help, pick one of goals to do, and just create pull request with it.
 - [ ] Spawnmob
 - [ ] Speed
 - [ ] SocialSpy
-- [ ] Nickname
-- [ ] Realname
+- [x] Nickname
+- [x] Realname
 - [ ] Mute
-- [ ] Lightning
+- [x] Lightning
 - [x] Kickall
 - [ ] Ignore
 - [ ] Invsee

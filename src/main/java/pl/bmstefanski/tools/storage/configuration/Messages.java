@@ -259,4 +259,12 @@ public interface Messages extends Config {
     default String getTooLongNickname() {
         return "&cTwoj nick jest za dlugi! Maksymalna dlugosc nicku to: &7%max%";
     }
+
+    default String getStruck() {
+        return "&7Zostales uderzony piorunem!";
+    }
+
+    default String getStruckOther() {
+        return "&7Uderzyles piorunem gracza o nicku &e%player%.";
+    }
 }

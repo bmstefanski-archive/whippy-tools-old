@@ -267,4 +267,12 @@ public interface Messages extends Config {
     default String getStruckOther() {
         return "&7Uderzyles piorunem gracza o nicku &e%player%.";
     }
+
+    default String getSetNickname() {
+        return "&7Twoj nickname zostal zmieniony na %nickname%";
+    }
+
+    default String getSetNicknameOther() {
+        return "&7Zmieniles nickname gracza &e%player%&7, na %nickname%";
+    }
 }

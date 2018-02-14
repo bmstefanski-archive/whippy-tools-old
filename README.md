@@ -72,6 +72,10 @@ If you want help, pick one of goals to do, and just create pull request with it.
 - [ ] Invsee
 - [ ] Helpop
 - [ ] Fireworks
+- [ ] Freeze
+- [ ] Fireball
+- [ ] Motd
+- [ ] Spawner
 
 #### Others
 - [ ] Homes' system

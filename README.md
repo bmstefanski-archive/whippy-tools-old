@@ -69,7 +69,7 @@ If you want help, pick one of goals to do, and just create pull request with it.
 - [x] Lightning
 - [x] Kickall
 - [ ] Ignore
-- [ ] Invsee
+- [x] Invsee
 - [ ] Helpop
 - [ ] Fireworks
 - [ ] Freeze

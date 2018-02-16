@@ -40,11 +40,9 @@ import pl.bmstefanski.tools.storage.configuration.PluginConfig;
 import pl.bmstefanski.tools.listener.*;
 import pl.bmstefanski.tools.storage.resource.BanResourceManager;
 import pl.bmstefanski.tools.type.DatabaseType;
-import pl.bmstefanski.tools.type.StatementType;
 
 import java.io.File;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 
 public class Tools extends JavaPlugin implements ToolsAPI {
 
@@ -85,6 +83,7 @@ public class Tools extends JavaPlugin implements ToolsAPI {
 
         this.banResource.load();
 
+        Bukkit.getMessenger().registerIncomingPluginChannel(this, "MC|CPack", new MessageReceivedListener());
 
         registerListeners(
                 new PlayerCommandPreprocess(this),
@@ -132,8 +131,7 @@ public class Tools extends JavaPlugin implements ToolsAPI {
                 new NightCommand(this),
                 new LightningCommand(this),
                 new NicknameCommand(this),
-                new RealnameCommand(this),
-                new InvseeCommand(this)
+                new RealnameCommand(this)
         );
 
     }

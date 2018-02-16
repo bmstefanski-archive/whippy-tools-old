@@ -40,6 +40,7 @@ public class UserImpl implements User {
     private String ip;
     private boolean god;
     private boolean afk;
+    private boolean secure;
 
     public UserImpl(UUID uuid) {
         this.uuid = uuid;
@@ -126,6 +127,16 @@ public class UserImpl implements User {
     @Override
     public boolean isAfk() {
         return afk;
+    }
+
+    @Override
+    public boolean isSecure() {
+        return secure;
+    }
+
+    @Override
+    public void setSecure(boolean secure) {
+        this.secure = secure;
     }
 
     @Override

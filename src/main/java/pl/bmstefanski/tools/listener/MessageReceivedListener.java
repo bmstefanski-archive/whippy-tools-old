@@ -22,41 +22,31 @@
  SOFTWARE.
  */
 
-package pl.bmstefanski.tools.api.basic;
+package pl.bmstefanski.tools.listener;
 
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.messaging.PluginMessageListener;
+import pl.bmstefanski.tools.api.basic.User;
+import pl.bmstefanski.tools.basic.manager.UserManager;
 
-import java.util.UUID;
+public class MessageReceivedListener implements PluginMessageListener {
 
-public interface User {
+    @Override
+    public void onPluginMessageReceived(String string, Player player, byte[] bytes) {
 
-    UUID getUUID();
+        User user = UserManager.getUser(player.getUniqueId());
 
-    String getName();
+        if (string.contains("CPack")) {
 
-    String getIp();
+            String message = new String(bytes);
 
-    Player getPlayer();
+            if (message.length() != 4) {
+                user.setSecure(false);
+                return;
+            }
 
-    void setUUID(UUID uuid);
+            user.setSecure(true);
+        }
 
-    void setName(String name);
-
-    void setIp(String ip);
-
-    void setGod(boolean god);
-
-    void setAfk(boolean afk);
-
-    boolean isGod();
-
-    boolean isOnline();
-
-    boolean isBanned();
-
-    boolean isAfk();
-
-    boolean isSecure();
-
-    void setSecure(boolean secure);
+    }
 }

@@ -107,12 +107,13 @@ public class WhoisCommand implements Messageable, Parser {
         String playerJoin = parseLong(offlinePlayer.getFirstPlayed());
         String playerLast = user.isOnline() ? "online" : parseLong(offlinePlayer.getLastPlayed());
         String whois = listToString(messages.getWhois());
+        String blazing = parseBoolean(user.isSecure());
 
         return StringUtils.replaceEach(whois,
-                new String[] {"%nickname%", "%uuid%", "%ip%", "%registered%", "%last%", "%location%", "%hp%", "%hunger%", "%gamemode%", "%god%", "%fly%"},
+                new String[] {"%nickname%", "%uuid%", "%ip%", "%registered%", "%last%", "%location%", "%hp%", "%hunger%", "%gamemode%", "%god%", "%fly%", "%blazing%"},
                 new String[] {offlinePlayer.getName(), offlinePlayer.getUniqueId().toString(), offlinePlayer.getPlayer().getAddress().getAddress().toString(),
                         playerJoin, playerLast, playerLocation, playerHealth, playerFoodLevel, playerGamemode, parseBoolean(user.isGod()),
-                        parseBoolean(offlinePlayer.getPlayer().isFlying())
+                        parseBoolean(offlinePlayer.getPlayer().isFlying()), blazing
                 });
     }
 

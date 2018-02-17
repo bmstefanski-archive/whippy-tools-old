@@ -25,8 +25,10 @@
 package pl.bmstefanski.tools.storage;
 
 import pl.bmstefanski.tools.api.storage.Database;
+import pl.bmstefanski.tools.type.StatementType;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public abstract class AbstractDatabase implements Database {
@@ -47,6 +49,15 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public Connection getConnection() {
         return connection;
+    }
+
+    @Override
+    public void checkTable() throws SQLException {
+        PreparedStatement bansTableStatement = StatementType.CHECK_BAN.build();
+        PreparedStatement playersTableStatement = StatementType.CHECK_PLAYER.build();
+
+        bansTableStatement.executeUpdate();
+        playersTableStatement.executeUpdate();
     }
 
     public abstract void connect();

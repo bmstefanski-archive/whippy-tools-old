@@ -43,6 +43,7 @@ import pl.bmstefanski.tools.type.DatabaseType;
 
 import java.io.File;
 import java.lang.reflect.Method;
+import java.sql.SQLException;
 
 public class Tools extends JavaPlugin implements ToolsAPI {
 
@@ -77,6 +78,8 @@ public class Tools extends JavaPlugin implements ToolsAPI {
         this.messages.save();
 
         setUpDatabase();
+
+        this.checkTable();
 
         this.userManager = new UserManager();
         this.banResource = new BanResourceManager(this);
@@ -173,6 +176,14 @@ public class Tools extends JavaPlugin implements ToolsAPI {
 
     private void setUpDatabase() {
         this.database = new DatabaseStorageConnector(this, DatabaseType.MYSQL).getDatabase();
+    }
+
+    private void checkTable() {
+        try {
+            this.database.checkTable();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

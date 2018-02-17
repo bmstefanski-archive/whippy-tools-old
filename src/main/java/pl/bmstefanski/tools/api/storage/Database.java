@@ -29,6 +29,8 @@ import java.sql.SQLException;
 
 public interface Database {
 
+    void checkTable() throws SQLException;
+
     void connect() throws SQLException;
 
     boolean closeConnection() throws SQLException;

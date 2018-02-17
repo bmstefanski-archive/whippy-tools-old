@@ -65,4 +65,5 @@ public class MySQLDatabase extends AbstractDatabase {
         this.dataSource.addDataSourceProperty("password", password);
         this.dataSource.setMaximumPoolSize(10);
     }
+
 }

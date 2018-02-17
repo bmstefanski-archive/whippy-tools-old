@@ -51,12 +51,14 @@ public enum StatementType {
 
         Connection connection = Tools.getInstance().getDatabase().getConnection();
 
+        PreparedStatement statement = null;
+
         try {
-            return connection.prepareStatement(this.sql);
+            statement = connection.prepareStatement(this.sql);
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return null;
+        return statement;
     }
 }

@@ -47,10 +47,6 @@ public class LoadDataTask extends BukkitRunnable {
         try {
             PreparedStatement preparedStatement = StatementType.LOAD_PLAYER.build();
 
-            if (preparedStatement == null) { // wincyj ifów xD TODO
-                return;
-            }
-
             preparedStatement.setString(1, user.getUUID().toString());
 
             ResultSet resultSet = preparedStatement.executeQuery();

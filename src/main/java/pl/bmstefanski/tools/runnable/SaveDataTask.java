@@ -45,10 +45,6 @@ public class SaveDataTask extends BukkitRunnable {
         try {
             PreparedStatement preparedStatement = StatementType.SAVE_PLAYER.build();
 
-            if (preparedStatement == null) {
-                return;
-            }
-
             preparedStatement.setBytes(1, UUIDUtils.getBytesFromUUID(user.getUUID()));
             preparedStatement.setString(2, user.getName());
             preparedStatement.setBytes(3, UUIDUtils.getBytesFromUUID(user.getUUID()));

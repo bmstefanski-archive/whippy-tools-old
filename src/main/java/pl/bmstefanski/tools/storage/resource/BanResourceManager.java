@@ -52,10 +52,6 @@ public class BanResourceManager implements Resource {
         try {
             PreparedStatement preparedStatement = StatementType.LOAD_BANS.build();
 
-            if (preparedStatement == null) {
-                return;
-            }
-
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -81,10 +77,6 @@ public class BanResourceManager implements Resource {
             for (Ban ban : banList) {
                 PreparedStatement preparedStatement = StatementType.SAVE_BANS.build();
 
-                if (preparedStatement == null) {
-                    return;
-                }
-
                 preparedStatement.setString(1, ban.getReason());
                 preparedStatement.setLong(2, ban.getTime());
                 preparedStatement.setBytes(3, UUIDUtils.getBytesFromUUID(ban.getPunished()));
@@ -101,10 +93,6 @@ public class BanResourceManager implements Resource {
 
         try {
             PreparedStatement preparedStatement = StatementType.ADD_BAN.build();
-
-            if (preparedStatement == null) {
-                return;
-            }
 
             preparedStatement.setString(1, ban.getPunisher());
             preparedStatement.setBytes(2, UUIDUtils.getBytesFromUUID(ban.getPunished()));
@@ -123,10 +111,6 @@ public class BanResourceManager implements Resource {
 
         try {
             PreparedStatement preparedStatement = StatementType.REMOVE_BAN.build();
-
-            if (preparedStatement == null) {
-                return;
-            }
 
             preparedStatement.setBytes(1, UUIDUtils.getBytesFromUUID(ban.getPunished()));
 

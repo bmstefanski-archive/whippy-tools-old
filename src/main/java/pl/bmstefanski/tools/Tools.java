@@ -86,7 +86,7 @@ public class Tools extends JavaPlugin implements ToolsAPI {
 
         this.banResource.load();
 
-        Bukkit.getMessenger().registerIncomingPluginChannel(this, "MC|CPack", new MessageReceivedListener());
+        Bukkit.getMessenger().registerIncomingPluginChannel(this, "MC|CPack", new BlazingPackMessageReceivedListener());
 
         registerListeners(
                 new PlayerCommandPreprocess(this),

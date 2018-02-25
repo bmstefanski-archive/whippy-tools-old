@@ -29,7 +29,8 @@ import org.bukkit.plugin.messaging.PluginMessageListener;
 import pl.bmstefanski.tools.api.basic.User;
 import pl.bmstefanski.tools.basic.manager.UserManager;
 
-public class MessageReceivedListener implements PluginMessageListener {
+@Deprecated
+public class BlazingPackMessageReceivedListener implements PluginMessageListener {
 
     @Override
     public void onPluginMessageReceived(String string, Player player, byte[] bytes) {

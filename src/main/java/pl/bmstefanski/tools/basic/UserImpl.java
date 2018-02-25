@@ -130,11 +130,13 @@ public class UserImpl implements User {
     }
 
     @Override
+    @Deprecated
     public boolean isSecure() {
         return secure;
     }
 
     @Override
+    @Deprecated
     public void setSecure(boolean secure) {
         this.secure = secure;
     }

@@ -56,7 +56,9 @@ public interface User {
 
     boolean isAfk();
 
+    @Deprecated
     boolean isSecure();
 
+    @Deprecated
     void setSecure(boolean secure);
 }

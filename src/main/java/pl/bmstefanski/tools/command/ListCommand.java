@@ -24,12 +24,14 @@
 
 package pl.bmstefanski.tools.command;
 
+import jdk.nashorn.internal.runtime.regexp.joni.constants.Arguments;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
-import pl.bmstefanski.commands.Arguments;
+import org.bukkit.command.CommandSender;
+import pl.bmstefanski.commands.CommandArguments;
+import pl.bmstefanski.commands.CommandExecutor;
 import pl.bmstefanski.commands.Messageable;
 import pl.bmstefanski.commands.annotation.Command;
-import pl.bmstefanski.commands.annotation.Completer;
 import pl.bmstefanski.commands.annotation.GameOnly;
 import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
@@ -37,7 +39,7 @@ import pl.bmstefanski.tools.storage.configuration.Messages;
 
 import java.util.*;
 
-public class ListCommand implements Messageable {
+public class ListCommand implements Messageable, CommandExecutor {
 
     private final Tools plugin;
     private final Messages messages;
@@ -50,39 +52,23 @@ public class ListCommand implements Messageable {
     @Command(name = "list", usage = "[full/basic]", min = 1, max = 1)
     @Permission("tools.command.list")
     @GameOnly(false)
-    public void command(Arguments arguments) {
+    @Override
+    public void execute(CommandSender commandSender, CommandArguments commandArguments) {
 
-    }
+        if (commandArguments.getParam(0).equalsIgnoreCase("basic")) {
+            int playersOnlineSize = plugin.getUserManager().getOnlinePlayers().size();
+            int maxPlayers = Bukkit.getMaxPlayers();
 
-    @Command(name = "list.basic")
-    @Permission("tools.command.basic")
-    @GameOnly(false)
-    public void basic(Arguments arguments) {
-
-        int playersOnlineSize = plugin.getUserManager().getOnlinePlayers().size();
-        int maxPlayers = Bukkit.getMaxPlayers();
-
-        sendMessage(arguments.getSender(), StringUtils.replaceEach(messages.getListBasic(),
-                new String[] {"%online%", "%max%"},
-                new String[] {playersOnlineSize + "", maxPlayers + ""}));
-    }
-
-    @Command(name = "list.full")
-    @Permission("tools.command.full")
-    @GameOnly(false)
-    public void full(Arguments arguments) {
-        sendMessage(arguments.getSender(), StringUtils.replace(messages.getListFull(), "%online%", Arrays.toString(plugin.getUserManager().getOnlinePlayers().toArray())));
-    }
-
-    @Completer("list")
-    public List<String> completer(Arguments arguments) {
-        if (arguments.getArgs().length == 1) {
-            List<String> availableList = Arrays.asList("basic", "full");
-
-            Collections.sort(availableList);
-            return availableList;
+            sendMessage(commandSender, StringUtils.replaceEach(messages.getListBasic(),
+                    new String[] {"%online%", "%max%"},
+                    new String[] {playersOnlineSize + "", maxPlayers + ""}));
         }
 
-        return null;
+        else if (commandArguments.getParam(0).equalsIgnoreCase("full")) {
+            sendMessage(commandSender, StringUtils.replace(messages.getListFull(), "%online%", Arrays.toString(plugin.getUserManager().getOnlinePlayers().toArray())));
+        }
+
+
     }
+
 }

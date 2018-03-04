@@ -26,20 +26,18 @@ package pl.bmstefanski.tools.command;
 
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import pl.bmstefanski.commands.Arguments;
+import pl.bmstefanski.commands.CommandArguments;
+import pl.bmstefanski.commands.CommandExecutor;
 import pl.bmstefanski.commands.Messageable;
 import pl.bmstefanski.commands.annotation.Command;
-import pl.bmstefanski.commands.annotation.Completer;
 import pl.bmstefanski.commands.annotation.GameOnly;
 import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.util.TabCompleterUtils;
 
-import java.util.List;
-
-public class EnderchestCommand implements Messageable {
+public class EnderchestCommand implements Messageable, CommandExecutor {
 
     private final Tools plugin;
     private final Messages messages;
@@ -52,34 +50,26 @@ public class EnderchestCommand implements Messageable {
     @Command(name = "enderchest", usage = "[player]", aliases = {"ender", "ec"}, max = 1)
     @Permission("tools.command.enderchest")
     @GameOnly
-    public void command(Arguments arguments) {
+    @Override
+    public void execute(CommandSender commandSender, CommandArguments commandArguments) {
+        Player player = (Player) commandSender;
 
-        Player player = (Player) arguments.getSender();
-
-        if (arguments.getArgs().length == 0) {
+        if (commandArguments.getSize() == 0) {
             player.openInventory(player.getEnderChest());
             return;
         }
 
         if (player.hasPermission("tools.command.enderchest.other")) {
 
-            if (Bukkit.getPlayer(arguments.getArgs(0)) == null) {
-                sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", arguments.getArgs(0)));
+            if (Bukkit.getPlayer(commandArguments.getParam(0)) == null) {
+                sendMessage(player, StringUtils.replace(messages.getPlayerNotFound(), "%player%", commandArguments.getParam(0)));
                 return;
             }
 
-            Player target = Bukkit.getPlayer(arguments.getArgs(0));
+            Player target = Bukkit.getPlayer(commandArguments.getParam(0));
             player.openInventory(target.getEnderChest());
 
         }
 
-    }
-
-    @Completer("enderchest")
-    public List<String> completer(Arguments arguments) {
-        List<String> availableList = TabCompleterUtils.getAvailableList(arguments);
-        if (availableList != null) return availableList;
-
-        return null;
     }
 }

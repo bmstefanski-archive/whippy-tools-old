@@ -30,7 +30,6 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
-                    <outputDirectory>C:/Users/BMStefanski/Desktop/Server/plugins</outputDirectory>
                 </configuration>
             </plugin>
         </plugins>
@@ -66,7 +65,7 @@
         <dependency>
             <groupId>com.github.whippytools</groupId>
             <artifactId>bukkit-commands</artifactId>
-            <version>1.2</version>
+            <version>1.4</version>
         </dependency>
 
         <dependency>

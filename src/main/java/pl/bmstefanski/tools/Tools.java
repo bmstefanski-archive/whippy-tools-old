@@ -29,6 +29,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.diorite.config.ConfigManager;
 import pl.bmstefanski.commands.BukkitCommands;
+import pl.bmstefanski.commands.CommandExecutor;
 import pl.bmstefanski.commands.annotation.Command;
 import pl.bmstefanski.tools.api.ToolsAPI;
 import pl.bmstefanski.tools.api.storage.Database;
@@ -53,6 +54,7 @@ public class Tools extends JavaPlugin implements ToolsAPI {
     private static Tools instance;
 
     private BanResourceManager banResource;
+    private BukkitCommands bukkitCommands;
     private PluginConfig pluginConfig;
     private UserManager userManager;
     private Messages messages;
@@ -83,12 +85,13 @@ public class Tools extends JavaPlugin implements ToolsAPI {
 
         this.userManager = new UserManager();
         this.banResource = new BanResourceManager(this);
+        this.bukkitCommands = new BukkitCommands(this);
 
         this.banResource.load();
 
         Bukkit.getMessenger().registerIncomingPluginChannel(this, "MC|CPack", new BlazingPackMessageReceivedListener());
 
-        registerListeners(
+        this.registerListeners(
                 new PlayerCommandPreprocess(this),
                 new PlayerJoin(this),
                 new PlayerPreLogin(this),
@@ -101,7 +104,7 @@ public class Tools extends JavaPlugin implements ToolsAPI {
                 new EntityPickupItem(this)
         );
 
-        registerCommands(
+        this.registerCommands(
                 new ToolsCommand(this),
                 new WhoisCommand(this),
                 new WorkbenchCommand(this),
@@ -146,25 +149,12 @@ public class Tools extends JavaPlugin implements ToolsAPI {
         this.banResource.save();
     }
 
-    private void registerCommands(Object... commands) {
-        BukkitCommands bukkitCommands = new BukkitCommands(this);
+    private void registerCommands(CommandExecutor... executors) {
 
-        for (Object object : commands) {
-
-            for (Method method : object.getClass().getMethods()) {
-
-                if (method.isAnnotationPresent(Command.class)) {
-                    Command commandAnnotation = method.getAnnotation(Command.class);
-
-                    if (getConfiguration().containsBlockedCommands(commandAnnotation.name())) {
-                        continue;
-                    }
-
-                    bukkitCommands.registerCommands(object);
-                }
-
-            }
+        for (CommandExecutor commandExecutor : executors) {
+            this.bukkitCommands.register(commandExecutor);
         }
+
     }
 
     private void registerListeners(Listener... listeners) {
@@ -209,6 +199,11 @@ public class Tools extends JavaPlugin implements ToolsAPI {
     @Override
     public BanResourceManager getBanResource() {
         return banResource;
+    }
+
+    @Override
+    public BukkitCommands getBukkitCommands() {
+        return bukkitCommands;
     }
 
     public static Tools getInstance() {

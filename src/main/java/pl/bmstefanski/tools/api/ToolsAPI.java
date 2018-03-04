@@ -24,6 +24,7 @@
 
 package pl.bmstefanski.tools.api;
 
+import pl.bmstefanski.commands.BukkitCommands;
 import pl.bmstefanski.tools.api.storage.Database;
 import pl.bmstefanski.tools.basic.manager.UserManager;
 import pl.bmstefanski.tools.storage.configuration.Messages;
@@ -42,4 +43,5 @@ public interface ToolsAPI {
 
     BanResourceManager getBanResource();
 
+    BukkitCommands getBukkitCommands();
 }

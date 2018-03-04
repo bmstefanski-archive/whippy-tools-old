@@ -28,7 +28,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import pl.bmstefanski.commands.Arguments;
+import pl.bmstefanski.commands.CommandArguments;
+import pl.bmstefanski.commands.CommandExecutor;
 import pl.bmstefanski.commands.Messageable;
 import pl.bmstefanski.commands.annotation.Command;
 import pl.bmstefanski.commands.annotation.GameOnly;
@@ -36,7 +37,7 @@ import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.storage.configuration.Messages;
 
-public class RealnameCommand implements Messageable {
+public class RealnameCommand implements Messageable, CommandExecutor {
 
     private final Tools plugin;
     private final Messages messages;
@@ -49,41 +50,38 @@ public class RealnameCommand implements Messageable {
     @Command(name = "realname", max = 1, usage = "[player]")
     @Permission("tools.command.realname.other")
     @GameOnly(false)
-    public void command(Arguments arguments) {
+    @Override
+    public void execute(CommandSender commandSender, CommandArguments commandArguments) {
 
-        CommandSender sender = arguments.getSender();
+        if (commandArguments.getSize() == 0) {
 
-        if (arguments.getArgs().length == 0) {
-
-            if (!(sender instanceof Player)) {
-                sendMessage(sender, messages.getOnlyPlayer());
+            if (!(commandSender instanceof Player)) {
+                sendMessage(commandSender, messages.getOnlyPlayer());
                 return;
             }
 
-            Player player = (Player) sender;
+            Player player = (Player) commandSender;
 
             sendMessage(player, StringUtils.replace(messages.getRealname(), "%nickname%", player.getName()));
 
             return;
         }
 
-        if (sender.hasPermission("tools.command.realname.other")) {
+        if (commandSender.hasPermission("tools.command.realname.other")) {
 
-            if (Bukkit.getPlayer(arguments.getArgs(0)) == null) {
-                sendMessage(sender, org.apache.commons.lang.StringUtils.replace(messages.getPlayerNotFound(), "%player%", arguments.getArgs(0)));
+            if (Bukkit.getPlayer(commandArguments.getParam(0)) == null) {
+                sendMessage(commandSender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", commandArguments.getParam(0)));
                 return;
             }
 
-            Player target = Bukkit.getPlayer(arguments.getArgs(0));
+            Player target = Bukkit.getPlayer(commandArguments.getParam(0));
 
             sendMessage(target, StringUtils.replace(messages.getRealname(), "%nickname%", target.getName()));
-            sendMessage(sender, StringUtils.replaceEach(messages.getRealnameOther(),
+            sendMessage(commandSender, StringUtils.replaceEach(messages.getRealnameOther(),
                     new String[] {"%player%", "%nickname%"},
                     new String[] {target.getName(), target.getName()}
             ));
         }
-
-
 
     }
 

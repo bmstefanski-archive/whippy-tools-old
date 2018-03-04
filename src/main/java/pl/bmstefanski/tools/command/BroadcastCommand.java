@@ -27,10 +27,10 @@ package pl.bmstefanski.tools.command;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import pl.bmstefanski.commands.Arguments;
+import pl.bmstefanski.commands.CommandArguments;
+import pl.bmstefanski.commands.CommandExecutor;
 import pl.bmstefanski.commands.Messageable;
 import pl.bmstefanski.commands.annotation.Command;
-import pl.bmstefanski.commands.annotation.Completer;
 import pl.bmstefanski.commands.annotation.GameOnly;
 import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
@@ -38,12 +38,7 @@ import pl.bmstefanski.tools.storage.configuration.Messages;
 import pl.bmstefanski.tools.util.reflect.TitleSender;
 import pl.bmstefanski.tools.util.reflect.transition.PacketPlayOutTitle;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-
-public class BroadcastCommand implements Messageable {
+public class BroadcastCommand implements Messageable, CommandExecutor {
 
     private final Tools plugin;
     private final Messages messages;
@@ -56,20 +51,19 @@ public class BroadcastCommand implements Messageable {
     @Command(name = "broadcast", usage = "<action/title/subtitle/chat>", min = 2, max = 16, aliases = {"bc"})
     @Permission("tools.command.broadcast")
     @GameOnly(false)
-    public void command(Arguments arguments) {
-
-        CommandSender sender = arguments.getSender();
+    @Override
+    public void execute(CommandSender commandSender, CommandArguments commandArguments) {
         StringBuilder stringBuilder = new StringBuilder();
 
-        for (int i = 1; i < arguments.getArgs().length; i++) {
+        for (int i = 1; i < commandArguments.getSize(); i++) {
             stringBuilder.append(" ");
-            stringBuilder.append(arguments.getArgs()[i]);
+            stringBuilder.append(commandArguments.getParam(i));
         }
 
         String message = stringBuilder.toString();
         TitleSender title = new TitleSender();
 
-        switch (arguments.getArgs(0)) {
+        switch (commandArguments.getParam(0)) {
             case "action":
                 title.send(PacketPlayOutTitle.EnumTitleAction.ACTIONBAR, Bukkit.getOnlinePlayers(), message);
                 break;
@@ -87,17 +81,5 @@ public class BroadcastCommand implements Messageable {
                 Bukkit.broadcastMessage(fixColor(StringUtils.replace(messages.getBroadcastFormat(), "%message%", stringBuilder.toString())));
                 break;
         }
-    }
-
-    @Completer("broadcast")
-    public List<String> completer(Arguments arguments) {
-        if (arguments.getArgs().length == 1) {
-            List<String> availableGamemodes = Arrays.asList("action", "title", "subtitle", "chat");
-
-            Collections.sort(availableGamemodes);
-            return availableGamemodes;
-        }
-
-        return null;
     }
 }

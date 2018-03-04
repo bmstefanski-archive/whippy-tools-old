@@ -25,7 +25,9 @@
 package pl.bmstefanski.tools.command;
 
 import org.apache.commons.lang.StringUtils;
-import pl.bmstefanski.commands.Arguments;
+import org.bukkit.command.CommandSender;
+import pl.bmstefanski.commands.CommandArguments;
+import pl.bmstefanski.commands.CommandExecutor;
 import pl.bmstefanski.commands.Messageable;
 import pl.bmstefanski.commands.annotation.Command;
 import pl.bmstefanski.commands.annotation.GameOnly;
@@ -33,7 +35,7 @@ import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.storage.configuration.Messages;
 
-public class ReloadCommand implements Messageable {
+public class ReloadCommand implements Messageable, CommandExecutor {
 
     private final Tools plugin;
     private final Messages messages;
@@ -46,15 +48,14 @@ public class ReloadCommand implements Messageable {
     @Command(name = "tools-reload")
     @Permission("tools.command.reload")
     @GameOnly(false)
-    public void command(Arguments arguments) {
-
+    @Override
+    public void execute(CommandSender commandSender, CommandArguments commandArguments) {
         long startedTime = System.currentTimeMillis();
-
-        // todo CHUUUUJ
 
         long elapsedTime = (System.currentTimeMillis() - startedTime);
         float elapsedTimeSecond = elapsedTime / 1000F;
 
-        sendMessage(arguments.getSender(), StringUtils.replace(messages.getSuccessfullyReloaded(), "%time%", elapsedTimeSecond + ""));
+        sendMessage(commandSender, StringUtils.replace(messages.getSuccessfullyReloaded(), "%time%", elapsedTimeSecond + ""));
     }
+
 }

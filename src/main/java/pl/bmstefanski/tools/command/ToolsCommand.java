@@ -24,7 +24,9 @@
 
 package pl.bmstefanski.tools.command;
 
-import pl.bmstefanski.commands.Arguments;
+import org.bukkit.command.CommandSender;
+import pl.bmstefanski.commands.CommandArguments;
+import pl.bmstefanski.commands.CommandExecutor;
 import pl.bmstefanski.commands.Messageable;
 import pl.bmstefanski.commands.annotation.Command;
 import pl.bmstefanski.commands.annotation.GameOnly;
@@ -32,7 +34,7 @@ import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.storage.configuration.PluginConfig;
 
-public class ToolsCommand implements Messageable {
+public class ToolsCommand implements Messageable, CommandExecutor {
 
     private final Tools plugin;
     private final PluginConfig config;
@@ -45,11 +47,12 @@ public class ToolsCommand implements Messageable {
     @Command(name = "tools")
     @Permission("tools.command.tools")
     @GameOnly(false)
-    public void command(Arguments arguments) {
-
+    @Override
+    public void execute(CommandSender commandSender, CommandArguments commandArguments) {
         String message = "&e" + plugin.getDescription().getName() +" &7" + plugin.getDescription().getVersion() +
-                " by §e" + plugin.getDescription().getAuthors();
+                " by &e" + plugin.getDescription().getAuthors();
 
-        sendMessage(arguments.getSender(), message);
+        sendMessage(commandSender, message);
     }
+
 }

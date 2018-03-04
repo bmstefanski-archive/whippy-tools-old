@@ -24,26 +24,24 @@
 
 package pl.bmstefanski.tools.command;
 
+import jdk.nashorn.internal.runtime.regexp.joni.constants.Arguments;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import pl.bmstefanski.commands.Arguments;
+import pl.bmstefanski.commands.CommandArguments;
+import pl.bmstefanski.commands.CommandExecutor;
 import pl.bmstefanski.commands.Messageable;
 import pl.bmstefanski.commands.annotation.Command;
-import pl.bmstefanski.commands.annotation.Completer;
 import pl.bmstefanski.commands.annotation.GameOnly;
 import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.manager.LocationManager;
 import pl.bmstefanski.tools.manager.TeleportManager;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.util.TabCompleterUtils;
 
-import java.util.List;
-
-public class BackCommand implements Messageable {
+public class BackCommand implements Messageable, CommandExecutor {
 
     private final Tools plugin;
     private final Messages messages;
@@ -56,43 +54,35 @@ public class BackCommand implements Messageable {
     @Command(name = "back", usage = "[player]", max = 1)
     @Permission("tools.command.back")
     @GameOnly(false)
-    public void command(Arguments arguments) {
-
-        CommandSender sender = arguments.getSender();
+    @Override
+    public void execute(CommandSender commandSender, CommandArguments commandArguments) {
         TeleportManager teleportManager = new TeleportManager(plugin);
 
-        if (arguments.getArgs().length == 0) {
+        if (commandArguments.getSize() == 0) {
 
-            if (!(sender instanceof Player)) {
-                sendMessage(sender, messages.getOnlyPlayer());
+            if (!(commandSender instanceof Player)) {
+                sendMessage(commandSender, messages.getOnlyPlayer());
                 return;
             }
 
-            Player player = (Player) sender;
+            Player player = (Player) commandSender;
 
             Location location = LocationManager.getLastLocation(player);
             teleportManager.teleport(player, location, plugin.getConfiguration().getBackDelay());
             return;
         }
 
-        if (sender.hasPermission("tools.command.back.other")) {
+        if (commandSender.hasPermission("tools.command.back.other")) {
 
-            if (Bukkit.getPlayer(arguments.getArgs(0)) == null) {
-                sendMessage(sender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", arguments.getArgs(0)));
+            if (Bukkit.getPlayer(commandArguments.getParam(0)) == null) {
+                sendMessage(commandSender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", commandArguments.getParam(0)));
                 return;
             }
 
-            Player target = Bukkit.getPlayer(arguments.getArgs(0));
+            Player target = Bukkit.getPlayer(commandArguments.getParam(0));
             Location location = LocationManager.getLastLocation(target);
             target.teleport(location);
         }
     }
 
-    @Completer("back")
-    public List<String> completer(Arguments arguments) {
-        List<String> availableList = TabCompleterUtils.getAvailableList(arguments);
-        if (availableList != null) return availableList;
-
-        return null;
-    }
 }

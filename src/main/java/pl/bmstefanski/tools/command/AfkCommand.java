@@ -2,8 +2,10 @@ package pl.bmstefanski.tools.command;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import pl.bmstefanski.commands.Arguments;
+import pl.bmstefanski.commands.CommandArguments;
+import pl.bmstefanski.commands.CommandExecutor;
 import pl.bmstefanski.commands.Messageable;
 import pl.bmstefanski.commands.annotation.Command;
 import pl.bmstefanski.commands.annotation.GameOnly;
@@ -13,7 +15,7 @@ import pl.bmstefanski.tools.api.basic.User;
 import pl.bmstefanski.tools.basic.manager.UserManager;
 import pl.bmstefanski.tools.storage.configuration.Messages;
 
-public class AfkCommand implements Messageable {
+public class AfkCommand implements Messageable, CommandExecutor {
 
     private final Tools plugin;
     private final Messages messages;
@@ -26,8 +28,10 @@ public class AfkCommand implements Messageable {
     @Command(name = "afk")
     @Permission("tools.command.afk")
     @GameOnly
-    public void command(Arguments arguments) {
-        Player player = (Player) arguments.getSender();
+    @Override
+    public void execute(CommandSender commandSender, CommandArguments commandArguments) {
+        Player player = (Player) commandSender;
+
         User user = UserManager.getUser(player.getUniqueId());
 
         if(user.isAfk()){

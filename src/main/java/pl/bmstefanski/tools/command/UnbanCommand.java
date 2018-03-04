@@ -28,10 +28,10 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
-import pl.bmstefanski.commands.Arguments;
+import pl.bmstefanski.commands.CommandArguments;
+import pl.bmstefanski.commands.CommandExecutor;
 import pl.bmstefanski.commands.Messageable;
 import pl.bmstefanski.commands.annotation.Command;
-import pl.bmstefanski.commands.annotation.Completer;
 import pl.bmstefanski.commands.annotation.GameOnly;
 import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
@@ -40,11 +40,8 @@ import pl.bmstefanski.tools.api.basic.User;
 import pl.bmstefanski.tools.basic.manager.BanManager;
 import pl.bmstefanski.tools.basic.manager.UserManager;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.util.TabCompleterUtils;
 
-import java.util.List;
-
-public class UnbanCommand implements Messageable {
+public class UnbanCommand implements Messageable, CommandExecutor {
 
     private final Tools plugin;
     private final Messages messages;
@@ -57,36 +54,26 @@ public class UnbanCommand implements Messageable {
     @Command(name = "unban", usage = "[player]", min = 1, max = 2)
     @Permission("tools.command.unban")
     @GameOnly(false)
-    public void command(Arguments arguments) {
-
-        CommandSender sender = arguments.getSender();
-
-        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(arguments.getArgs(0));
+    @Override
+    public void execute(CommandSender commandSender, CommandArguments commandArguments) {
+        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(commandArguments.getParam(0));
         User user = UserManager.getUser(offlinePlayer.getUniqueId());
 
         if (!offlinePlayer.hasPlayedBefore()) {
-            sendMessage(sender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", arguments.getArgs(0)));
+            sendMessage(commandSender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", commandArguments.getParam(0)));
             return;
         }
 
         if (!user.isBanned()) {
-            sendMessage(sender, StringUtils.replace(messages.getNotBanned(), "%player%", offlinePlayer.getName()));
+            sendMessage(commandSender, StringUtils.replace(messages.getNotBanned(), "%player%", offlinePlayer.getName()));
             return;
         }
 
         Ban ban = BanManager.getBan(user.getUUID());
         plugin.getBanResource().remove(ban);
 
-        sendMessage(sender, StringUtils.replace(messages.getSuccessfullyUnbanned(), "%player%", offlinePlayer.getName()));
+        sendMessage(commandSender, StringUtils.replace(messages.getSuccessfullyUnbanned(), "%player%", offlinePlayer.getName()));
+
     }
-
-    @Completer("unban")
-    public List<String> completer(Arguments arguments) {
-        List<String> availableList = TabCompleterUtils.getAvailableList(arguments);
-        if (availableList != null) return availableList;
-
-        return null;
-    }
-
 
 }

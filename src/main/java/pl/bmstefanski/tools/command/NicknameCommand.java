@@ -29,7 +29,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import pl.bmstefanski.commands.Arguments;
+import pl.bmstefanski.commands.CommandArguments;
+import pl.bmstefanski.commands.CommandExecutor;
 import pl.bmstefanski.commands.Messageable;
 import pl.bmstefanski.commands.annotation.Command;
 import pl.bmstefanski.commands.annotation.GameOnly;
@@ -37,7 +38,7 @@ import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.storage.configuration.Messages;
 
-public class NicknameCommand implements Messageable {
+public class NicknameCommand implements Messageable, CommandExecutor {
 
     private final Tools plugin;
     private final Messages messages;
@@ -50,45 +51,44 @@ public class NicknameCommand implements Messageable {
     @Command(name = "nick", min = 1, max = 2, usage = "[player] [nickname]", aliases = {"setnick", "nickname"})
     @Permission("tools.command.nick")
     @GameOnly(false)
-    public void command(Arguments arguments) {
+    @Override
+    public void execute(CommandSender commandSender, CommandArguments commandArguments) {
 
-        CommandSender sender = arguments.getSender();
+        if (commandArguments.getSize() == 1) {
 
-        if (arguments.length() == 1) {
-
-            if (!(sender instanceof Player)) {
-                sendMessage(sender, messages.getOnlyPlayer());
+            if (!(commandSender instanceof Player)) {
+                sendMessage(commandSender, messages.getOnlyPlayer());
                 return;
             }
 
-            Player player = (Player) sender;
-            String nickname = fixColor(arguments.getArgs(0) + ChatColor.RESET);
+            Player player = (Player) commandSender;
+            String nickname = fixColor(commandArguments.getParam(0) + ChatColor.RESET);
 
             player.setDisplayName(nickname);
             player.setPlayerListName(nickname);
 
-            sendMessage(player, StringUtils.replace(messages.getSetNickname(), "%nickname%", arguments.getArgs(0)));
+            sendMessage(player, StringUtils.replace(messages.getSetNickname(), "%nickname%", commandArguments.getParam(0)));
 
             return;
         }
 
-        if (sender.hasPermission("tools.command.nick.other")) {
+        if (commandSender.hasPermission("tools.command.nick.other")) {
 
-            if (Bukkit.getPlayer(arguments.getArgs(0)) == null) {
-                sendMessage(sender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", arguments.getArgs(0)));
+            if (Bukkit.getPlayer(commandArguments.getParam(0)) == null) {
+                sendMessage(commandSender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", commandArguments.getParam(0)));
                 return;
             }
 
-            Player target = Bukkit.getPlayer(arguments.getArgs(0));
-            String nickname = fixColor(arguments.getArgs(1) + ChatColor.RESET);
+            Player target = Bukkit.getPlayer(commandArguments.getParam(0));
+            String nickname = fixColor(commandArguments.getParam(1) + ChatColor.RESET);
 
             target.setDisplayName(nickname);
             target.setPlayerListName(nickname);
 
-            sendMessage(target, StringUtils.replace(messages.getSetNickname(), "%nickname%", arguments.getArgs(1)));
-            sendMessage(sender, StringUtils.replaceEach(messages.getSetNicknameOther(),
+            sendMessage(target, StringUtils.replace(messages.getSetNickname(), "%nickname%", commandArguments.getParam(1)));
+            sendMessage(commandSender, StringUtils.replaceEach(messages.getSetNicknameOther(),
                     new String[] {"%player%", "%nickname%"},
-                    new String[] {target.getName(), arguments.getArgs(1)}
+                    new String[] {target.getName(), commandArguments.getParam(1)}
             ));
         }
 

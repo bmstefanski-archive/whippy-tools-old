@@ -29,10 +29,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import pl.bmstefanski.commands.Arguments;
+import pl.bmstefanski.commands.CommandArguments;
+import pl.bmstefanski.commands.CommandExecutor;
 import pl.bmstefanski.commands.Messageable;
 import pl.bmstefanski.commands.annotation.Command;
-import pl.bmstefanski.commands.annotation.Completer;
 import pl.bmstefanski.commands.annotation.GameOnly;
 import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
@@ -41,11 +41,8 @@ import pl.bmstefanski.tools.api.basic.User;
 import pl.bmstefanski.tools.basic.BanImpl;
 import pl.bmstefanski.tools.basic.manager.UserManager;
 import pl.bmstefanski.tools.storage.configuration.Messages;
-import pl.bmstefanski.tools.util.TabCompleterUtils;
 
-import java.util.List;
-
-public class BanCommand implements Messageable {
+public class BanCommand implements Messageable, CommandExecutor {
 
     private final Tools plugin;
     private final Messages messages;
@@ -58,34 +55,33 @@ public class BanCommand implements Messageable {
     @Command(name = "ban", usage = "[player] [reason]", min = 1, max = 16)
     @Permission("tools.command.ban")
     @GameOnly(false)
-    public void command(Arguments arguments) {
+    @Override
+    public void execute(CommandSender commandSender, CommandArguments commandArguments) {
+        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(commandArguments.getParam(0));
 
-        CommandSender sender = arguments.getSender();
-        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(arguments.getArgs(0));
-
-        User punisher = UserManager.getUser(sender.getName());
+        User punisher = UserManager.getUser(commandSender.getName());
         User punished = UserManager.getUser(offlinePlayer.getUniqueId());
 
         if (!offlinePlayer.hasPlayedBefore()) {
-            sendMessage(sender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", arguments.getArgs(0)));
+            sendMessage(commandSender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", commandArguments.getParam(0)));
             return;
         }
 
         if (punished.getName().equals(punisher.getName())) {
-            sendMessage(sender, messages.getCannotBanYourself());
+            sendMessage(commandSender, messages.getCannotBanYourself());
             return;
         }
 
         if (punished.isBanned()) {
-            sendMessage(sender, StringUtils.replace(messages.getAlreadyBanned(), "%player%", offlinePlayer.getName()));
+            sendMessage(commandSender, StringUtils.replace(messages.getAlreadyBanned(), "%player%", offlinePlayer.getName()));
             return;
         }
 
         String reason = "";
 
-        if (arguments.getArgs().length == 1) {
+        if (commandArguments.getSize() == 1) {
             reason = fixColor(messages.getDefaultReason());
-        } else if (arguments.getArgs().length > 1) reason = fixColor(StringUtils.join(arguments.getArgs(), " ", 1, arguments.getArgs().length));
+        } else if (commandArguments.getSize() > 1) reason = fixColor(StringUtils.join(commandArguments.getParams().toArray(), " ", 1, commandArguments.getArgs()));
 
         Ban ban = new BanImpl(punished.getUUID(), punisher.getName());
         ban.setReason(reason);
@@ -104,14 +100,6 @@ public class BanCommand implements Messageable {
                     new String[]{ban.getPunisher(), untilFormat, reason}));
         }
 
-        sendMessage(sender, StringUtils.replace(messages.getSuccessfullyBanned(), "%player%", offlinePlayer.getName()));
-    }
-
-    @Completer("ban")
-    public List<String> completer(Arguments arguments) {
-        List<String> availableList = TabCompleterUtils.getAvailableList(arguments);
-        if (availableList != null) return availableList;
-
-        return null;
+        sendMessage(commandSender, StringUtils.replace(messages.getSuccessfullyBanned(), "%player%", offlinePlayer.getName()));
     }
 }

@@ -29,7 +29,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import pl.bmstefanski.commands.Arguments;
+import pl.bmstefanski.commands.CommandArguments;
+import pl.bmstefanski.commands.CommandExecutor;
 import pl.bmstefanski.commands.Messageable;
 import pl.bmstefanski.commands.annotation.Command;
 import pl.bmstefanski.commands.annotation.GameOnly;
@@ -37,7 +38,7 @@ import pl.bmstefanski.commands.annotation.Permission;
 import pl.bmstefanski.tools.Tools;
 import pl.bmstefanski.tools.storage.configuration.Messages;
 
-public class LightningCommand implements Messageable {
+public class LightningCommand implements Messageable, CommandExecutor {
 
     private final Tools plugin;
     private final Messages messages;
@@ -50,18 +51,17 @@ public class LightningCommand implements Messageable {
     @Command(name = "lightning", usage = "[player]", max = 1, aliases = {"thorn"})
     @Permission("tools.command.lightning")
     @GameOnly(false)
-    public void command(Arguments arguments) {
+    @Override
+    public void execute(CommandSender commandSender, CommandArguments commandArguments) {
 
-        CommandSender sender = arguments.getSender();
+        if (commandArguments.getSize() == 0) {
 
-        if (arguments.getArgs().length == 0) {
-
-            if (!(sender instanceof Player)) {
-                sendMessage(sender, messages.getOnlyPlayer());
+            if (!(commandSender instanceof Player)) {
+                sendMessage(commandSender, messages.getOnlyPlayer());
                 return;
             }
 
-            Player player = (Player) sender;
+            Player player = (Player) commandSender;
             World world = player.getWorld();
 
             world.strikeLightning(player.getLocation());
@@ -71,22 +71,21 @@ public class LightningCommand implements Messageable {
             return;
         }
 
-        if (sender.hasPermission("tools.command.lightning.other")) {
+        if (commandSender.hasPermission("tools.command.lightning.other")) {
 
-            if (Bukkit.getPlayer(arguments.getArgs(0)) == null) {
-                sendMessage(sender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", arguments.getArgs(0)));
+            if (Bukkit.getPlayer(commandArguments.getParam(0)) == null) {
+                sendMessage(commandSender, StringUtils.replace(messages.getPlayerNotFound(), "%player%", commandArguments.getParam(0)));
                 return;
             }
 
-            Player target = Bukkit.getPlayer(arguments.getArgs(0));
+            Player target = Bukkit.getPlayer(commandArguments.getParam(0));
 
             World world = target.getWorld();
             world.strikeLightning(target.getLocation());
 
-            sendMessage(sender, StringUtils.replace(messages.getStruckOther(), "%player%", target.getName()));
+            sendMessage(commandSender, StringUtils.replace(messages.getStruckOther(), "%player%", target.getName()));
             sendMessage(target, messages.getStruck());
         }
-
     }
 
 }

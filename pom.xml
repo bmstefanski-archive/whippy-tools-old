@@ -30,7 +30,6 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>\
                     </descriptorRefs>
-                    <outputDirectory>D:\Serwer\plugins</outputDirectory>
                 </configuration>
             </plugin>
         </plugins>

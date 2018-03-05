@@ -23,7 +23,7 @@ public class KickAllCommand implements Messageable, CommandExecutor {
         this.messages = plugin.getMessages();
     }
 
-    @Command(name = "kickall")
+    @Command(name = "kickall", max = 16)
     @Permission("tools.command.kickall")
     @GameOnly(false)
     @Override
@@ -31,9 +31,9 @@ public class KickAllCommand implements Messageable, CommandExecutor {
 
         String reason = "";
 
-        if (commandArguments.getSize() == 1) {
+        if (commandArguments.getSize() == 0) {
             reason = fixColor(messages.getDefaultReason());
-        } else if (commandArguments.getSize() > 1) reason = fixColor(StringUtils.join(commandArguments.getParams().toArray(), " ", 1, commandArguments.getArgs()));
+        } else if (commandArguments.getSize() > 0) reason = fixColor(StringUtils.join(commandArguments.getParams().toArray(), " ", 0, commandArguments.getArgs()));
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.kickPlayer(reason);

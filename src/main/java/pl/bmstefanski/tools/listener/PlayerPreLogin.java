@@ -55,6 +55,8 @@ public class PlayerPreLogin implements Listener, Messageable {
         Player player = Bukkit.getPlayer(event.getUniqueId());
         User user = UserManager.getUser(event.getUniqueId());
 
+        new LoadDataTask(user).runTaskAsynchronously(plugin);
+
         Ban ban = BanManager.getBan(user.getUUID());
 
         if (ban == null) {
@@ -73,6 +75,5 @@ public class PlayerPreLogin implements Listener, Messageable {
                 new String[]{"%punisher%", "%until%", "%reason%"},
                 new String[]{ban.getPunisher(), ban.getTime() <= 0 ? untilFormat : ban.getTime() + "", ban.getReason()}));
 
-        new LoadDataTask(user).runTask(plugin);
     }
 }

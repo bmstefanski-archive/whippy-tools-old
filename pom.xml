@@ -28,8 +28,9 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>\
                     </descriptorRefs>
+                    <outputDirectory>D:\Serwer\plugins</outputDirectory>
                 </configuration>
             </plugin>
         </plugins>
@@ -66,6 +67,12 @@
             <groupId>com.github.whippytools</groupId>
             <artifactId>bukkit-commands</artifactId>
             <version>1.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.bmstefanski</groupId>
+            <artifactId>commands</artifactId>
+            <version>1.5</version>
         </dependency>
 
         <dependency>

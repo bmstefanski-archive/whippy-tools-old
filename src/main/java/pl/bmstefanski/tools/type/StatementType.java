@@ -33,8 +33,8 @@ import java.sql.SQLException;
 public enum StatementType {
 
     LOAD_PLAYER("SELECT * FROM `players` WHERE `uuid` = ?"),
-    SAVE_PLAYER("INSERT INTO `players` (`uuid`, `name`) VALUES (?, ?) ON DUPLICATE KEY UPDATE `uuid`=?, `name`=?"),
-    CHECK_PLAYER("CREATE TABLE IF NOT EXISTS `players`(`uuid` BINARY(16) NOT NULL,`name` VARCHAR(50) NOT NULL,PRIMARY KEY (`uuid`));"),
+    SAVE_PLAYER("INSERT INTO `players` (`uuid`, `name`) VALUES (?, ?) ON DUPLICATE KEY UPDATE `name`=?"),
+    CHECK_PLAYER("CREATE TABLE IF NOT EXISTS `players`(`uuid` BINARY(16) NOT NULL,`name` VARCHAR(50) NOT NULL,PRIMARY KEY (`uuid`),UNIQUE INDEX (`name`));"),
     LOAD_BANS("SELECT * FROM `bans`"),
     SAVE_BANS("UPDATE `BANS` SET `reason`=?, `until`=? WHERE `punished`=?"),
     ADD_BAN("INSERT INTO `BANS` (`punisher`, `punished`, `until`, `reason`) VALUES (?, ?, ?, ?)"),

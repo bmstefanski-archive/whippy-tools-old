@@ -110,8 +110,6 @@ public interface PluginConfig extends Config {
     @CustomKey("blocked-commands")
     List<String> getBlockedCommands();
 
-    boolean containsBlockedCommands(String string);
-
     @CustomKey("mysql")
     default MySQL getMySQLSection() {
         return ConfigManager.createInstance(MySQL.class);

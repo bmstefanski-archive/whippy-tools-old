@@ -153,6 +153,7 @@ public class Tools extends JavaPlugin implements ToolsAPI {
 
         for (CommandExecutor commandExecutor : executors) {
             this.bukkitCommands.register(commandExecutor);
+            this.bukkitCommands.unregisterBlockedCommands(commandExecutor, this.pluginConfig.getBlockedCommands());
         }
 
     }

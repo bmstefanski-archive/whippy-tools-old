@@ -1,84 +1,20 @@
 ## <img src="https://avatars1.githubusercontent.com/u/35628511?s=200&v=4" width="48">  Whippy Tools
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/6f800b26da2148a1b5f2b69da656cacf)](https://www.codacy.com/app/bmstefanski/whippy-tools?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=whippytools/whippy-tools&amp;utm_campaign=Badge_Grade) [![Discord](https://img.shields.io/badge/discord-whippytools-738bd7.svg?style=square)](https://discord.gg/rXPDmSw)
 
-# How to build
-To build with [Maven](https://maven.apache.org/), use that commands:
-```
-$ git clone https://github.com/whippytools/whippy-tools.git
-$ mvn clean package
-```
+Whippy tools is a minecraft plugin which adds a lot of commands and other cool functionalities.  
+We are seeking to make this plugin as customizable as possible.
 
-# Goals
-If you want help, pick one of goals to do, and just create pull request with it.
+**Website:** [https://wwww.whippytools.pl/](https://wwww.whippytools.pl)
 
-#### Kits
-- [ ] Delay per kit
-- [ ] Time limited kits
-- [ ] Kit permission (e.g. only player with the permission can see this kit)
+## About project
+[Commands list with details](https://github.com/whippytools/whippy-tools/blob/master/.github/COMMANDS_LIST.md)  
+[Config overview](https://github.com/whippytools/whippy-tools/blob/master/.github/CONFIG_OVERVIEW.md)
 
-#### Warps
-- [ ] Top 10 visited warps
-- [ ] Delay per warp
-- [ ] Time limited warps
-- [ ] Warp permission (e.g. only player with the permission can see this warp)
-- [ ] Payable warps
+## How to contribute
+[See contributing rules here](https://github.com/whippytools/whippy-tools/blob/master/.github/CONTRIBUTING.md)  
+[See code of conduct here](https://github.com/whippytools/whippy-tools/blob/master/.github/CODE_OF_CONDUCT.md)  
+[See issue template here](https://github.com/whippytools/whippy-tools/blob/master/.github/ISSUE_TEMPLATE.md)  
 
-#### Commands
-- [x] Tp
-- [x] Back
-- [x] Ban
-- [ ] Tempban
-- [x] Kick
-- [x] Broadcast
-- [x] Clear (inventory)
-- [x] Enderchest
-- [x] Feed
-- [x] Fly
-- [x] Gamemode
-- [x] God
-- [x] Heal
-- [x] List
-- [x] Setspawn
-- [x] Spawn
-- [x] Unban
-- [x] Whois
-- [x] Workbench
-- [ ] Tpa (tpaaccept, tpadeny)
-- [x] Day
-- [x] Night
-- [ ] Weather
-- [ ] Give
-- [x] Repair
-- [ ] Chat (toggle, clear and the like)
-- [x] Skull
-- [x] Hat
-- [ ] Power Tool
-- [ ] World
-- [x] Afk
-- [ ] Burn
-- [ ] Vanish
-- [x] Tppos
-- [x] Tpall
-- [x] Tphere
-- [ ] Spawnmob
-- [ ] Speed
-- [ ] SocialSpy
-- [x] Nickname
-- [x] Realname
-- [ ] Mute
-- [x] Lightning
-- [x] Kickall
-- [ ] Ignore
-- [x] Invsee
-- [ ] Helpop
-- [ ] Fireworks
-- [ ] Freeze
-- [ ] Fireball
-- [ ] Motd
-- [ ] Spawner
-
-#### Others
-- [ ] Homes' system
-- [ ] Jails' system
-- [x] New commands' system
-- [ ] PMs' system (reply)
+## How to build
+[Building with maven](https://github.com/whippytools/whippy-tools/blob/master/.github/BUILD_MAVEN.md)   
+[Building with gradle](https://github.com/whippytools/whippy-tools/blob/master/.github/BUILD_GRADLE.md)

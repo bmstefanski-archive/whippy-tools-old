@@ -16,5 +16,4 @@ We are seeking to make this plugin as customizable as possible.
 [See issue template here](https://github.com/whippytools/whippy-tools/blob/master/.github/ISSUE_TEMPLATE.md)  
 
 ## How to build
-[Building with maven](https://github.com/whippytools/whippy-tools/blob/master/.github/BUILD_MAVEN.md)   
-[Building with gradle](https://github.com/whippytools/whippy-tools/blob/master/.github/BUILD_GRADLE.md)
+[Building with maven](https://github.com/whippytools/whippy-tools/blob/master/.github/BUILD_MAVEN.md)

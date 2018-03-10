@@ -25,8 +25,6 @@
 package pl.bmstefanski.tools.listener;
 
 import org.apache.commons.lang3.StringUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
@@ -52,7 +50,6 @@ public class PlayerPreLogin implements Listener, Messageable {
     @EventHandler
     public void onPlayerPreLogin(AsyncPlayerPreLoginEvent event) {
 
-        Player player = Bukkit.getPlayer(event.getUniqueId());
         User user = UserManager.getUser(event.getUniqueId());
 
         new LoadDataTask(user).runTaskAsynchronously(plugin);

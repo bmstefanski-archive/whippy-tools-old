@@ -30,20 +30,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.diorite.config.ConfigManager;
 import pl.bmstefanski.commands.BukkitCommands;
 import pl.bmstefanski.commands.CommandExecutor;
-import pl.bmstefanski.commands.annotation.Command;
 import pl.bmstefanski.tools.api.ToolsAPI;
 import pl.bmstefanski.tools.api.storage.Database;
 import pl.bmstefanski.tools.basic.manager.UserManager;
 import pl.bmstefanski.tools.command.*;
+import pl.bmstefanski.tools.listener.*;
 import pl.bmstefanski.tools.storage.DatabaseStorageConnector;
 import pl.bmstefanski.tools.storage.configuration.Messages;
 import pl.bmstefanski.tools.storage.configuration.PluginConfig;
-import pl.bmstefanski.tools.listener.*;
 import pl.bmstefanski.tools.storage.resource.BanResourceManager;
 import pl.bmstefanski.tools.type.DatabaseType;
 
 import java.io.File;
-import java.lang.reflect.Method;
 import java.sql.SQLException;
 
 public class Tools extends JavaPlugin implements ToolsAPI {
@@ -137,7 +135,8 @@ public class Tools extends JavaPlugin implements ToolsAPI {
                 new NightCommand(this),
                 new LightningCommand(this),
                 new NicknameCommand(this),
-                new RealnameCommand(this)
+                new RealnameCommand(this),
+                new TpAllCommand(this)
         );
 
     }

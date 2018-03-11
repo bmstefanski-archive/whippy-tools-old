@@ -36,9 +36,9 @@ public enum StatementType {
     SAVE_PLAYER("INSERT INTO `players` (`uuid`, `name`) VALUES (?, ?) ON DUPLICATE KEY UPDATE `name`=?"),
     CHECK_PLAYER("CREATE TABLE IF NOT EXISTS `players`(`uuid` BINARY(16) NOT NULL,`name` VARCHAR(50) NOT NULL,PRIMARY KEY (`uuid`),UNIQUE INDEX (`name`));"),
     LOAD_BANS("SELECT * FROM `bans`"),
-    SAVE_BANS("UPDATE `BANS` SET `reason`=?, `until`=? WHERE `punished`=?"),
-    ADD_BAN("INSERT INTO `BANS` (`punisher`, `punished`, `until`, `reason`) VALUES (?, ?, ?, ?)"),
-    REMOVE_BAN("DELETE FROM `BANS` WHERE `punished`=?"),
+    SAVE_BANS("UPDATE `bans` SET `reason`=?, `until`=? WHERE `punished`=?"),
+    ADD_BAN("INSERT INTO `bans` (`punisher`, `punished`, `until`, `reason`) VALUES (?, ?, ?, ?)"),
+    REMOVE_BAN("DELETE FROM `bans` WHERE `punished`=?"),
     CHECK_BAN("CREATE TABLE IF NOT EXISTS `bans`(`punisher` VARCHAR(100) NOT NULL,`punished` BINARY(16) NOT NULL,`until` BIGINT NOT NULL,`reason` VARCHAR(100) NOT NULL);");
 
     private String sql;

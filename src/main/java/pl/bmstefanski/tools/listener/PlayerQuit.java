@@ -49,7 +49,7 @@ public class PlayerQuit implements Listener, Messageable {
         Player player = event.getPlayer();
         User user = UserManager.getUser(player.getUniqueId());
 
-        new SaveDataTask(user).runTaskAsynchronously(plugin);
+        new SaveDataTask(user).runTask(plugin);
 
         user.setIp(player.getAddress().getHostName());
 

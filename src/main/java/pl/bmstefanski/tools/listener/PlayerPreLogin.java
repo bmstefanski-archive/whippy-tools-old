@@ -52,7 +52,7 @@ public class PlayerPreLogin implements Listener, Messageable {
 
         User user = UserManager.getUser(event.getUniqueId());
 
-        new LoadDataTask(user).runTaskAsynchronously(plugin);
+        new LoadDataTask(user).runTask(plugin);
 
         Ban ban = BanManager.getBan(user.getUUID());
 

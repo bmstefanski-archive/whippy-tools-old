@@ -26,10 +26,6 @@ package pl.bmstefanski.tools.util;
 
 public class SafeUtils {
 
-    private SafeUtils() {
-
-    }
-
     private static void reportUnsafe(Throwable throwable) {
         System.out.println(throwable.toString());
     }
@@ -45,6 +41,10 @@ public class SafeUtils {
 
     @FunctionalInterface
     public interface SafeInitializer<T> {
+
         T initialize() throws Exception;
     }
+
+    private SafeUtils() {}
+
 }

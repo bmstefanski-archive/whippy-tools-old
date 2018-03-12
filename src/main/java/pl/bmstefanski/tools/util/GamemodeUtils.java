@@ -44,4 +44,6 @@ public class GamemodeUtils {
         } else return getGameMode(string);
     }
 
+    private GamemodeUtils() {}
+
 }

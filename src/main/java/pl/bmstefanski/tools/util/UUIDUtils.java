@@ -45,4 +45,6 @@ public class UUIDUtils {
         return new UUID(high, low);
     }
 
+    private UUIDUtils() {}
+
 }

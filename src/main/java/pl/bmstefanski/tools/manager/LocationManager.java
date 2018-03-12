@@ -21,4 +21,7 @@ public class LocationManager {
     public static void setLastLocation(Player player) {
         LOCATION_MAP.put(player, player.getLocation());
     }
+
+    private LocationManager() {}
+
 }

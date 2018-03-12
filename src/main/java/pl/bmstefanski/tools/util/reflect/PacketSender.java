@@ -70,4 +70,7 @@ public class PacketSender {
             ex.printStackTrace();
         }
     }
+
+    private PacketSender() {}
+
 }

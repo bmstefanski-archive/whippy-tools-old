@@ -110,6 +110,11 @@ public interface PluginConfig extends Config {
     @CustomKey("blocked-commands")
     List<String> getBlockedCommands();
 
+    @CustomKey("god-while-afk")
+    default boolean getGodWhileAfk() {
+        return true;
+    }
+
     @CustomKey("mysql")
     default MySQL getMySQLSection() {
         return ConfigManager.createInstance(MySQL.class);

@@ -36,13 +36,21 @@ public class AfkCommand implements Messageable, CommandExecutor {
 
         if(user.isAfk()){
             user.setAfk(false);
+            user.setGod(false);
+
             sendMessage(player, messages.getNoLongerAfk());
             Bukkit.getOnlinePlayers().forEach(p ->
                     sendMessage(p, StringUtils.replace(messages.getNoLongerAfkGlobal(), "%player%", player.getName())));
+
             return;
         }
 
         user.setAfk(true);
+
+        if (plugin.getConfiguration().getGodWhileAfk()) {
+            user.setGod(true);
+        }
+
         sendMessage(player, messages.getAfk());
         Bukkit.getOnlinePlayers().forEach(p ->
                 sendMessage(p, StringUtils.replace(messages.getAfkGlobal(), "%player%", player.getName())));

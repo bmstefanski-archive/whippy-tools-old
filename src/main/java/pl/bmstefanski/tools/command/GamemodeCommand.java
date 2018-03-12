@@ -54,6 +54,7 @@ public class GamemodeCommand implements Messageable, CommandExecutor {
     @GameOnly(false)
     @Override
     public void execute(CommandSender commandSender, CommandArguments commandArguments) {
+
         if (commandArguments.getSize() == 1) {
 
             if (!(commandSender instanceof Player)) {
@@ -69,8 +70,14 @@ public class GamemodeCommand implements Messageable, CommandExecutor {
                 return;
             }
 
-            player.setGameMode(gameMode);
-            sendMessage(player, StringUtils.replace(messages.getGamemodeSuccess(), "%gamemode%", gameMode.toString()));
+            if (player.hasPermission("tools.command.gamemode." + gameMode.toString().toLowerCase())) {
+                player.setGameMode(gameMode);
+                sendMessage(player, StringUtils.replace(messages.getGamemodeSuccess(), "%gamemode%", gameMode.toString()));
+                return;
+            }
+
+            sendMessage(commandSender, StringUtils.replace(messages.getNoPermissions(),
+                    "%permission%", "tools.command.gamemode." + gameMode.toString().toLowerCase()));
 
             return;
         }
@@ -90,14 +97,22 @@ public class GamemodeCommand implements Messageable, CommandExecutor {
                 return;
             }
 
-            target.setGameMode(gameMode);
+            if (target.hasPermission("tools.command.gamemode." + gameMode.toString().toLowerCase() + ".other")) {
+                target.setGameMode(gameMode);
 
-            sendMessage(target, StringUtils.replace(messages.getGamemodeSuccess(), "%gamemode%", gameMode.toString()));
-            sendMessage(commandSender, StringUtils.replaceEach(messages.getGamemodeSuccessOther(),
-                    new String[] {"%gamemode%", "%player%"},
-                    new String[] {gameMode.toString(), target.getName()}));
+                sendMessage(target, StringUtils.replace(messages.getGamemodeSuccess(), "%gamemode%", gameMode.toString()));
+                sendMessage(commandSender, StringUtils.replaceEach(messages.getGamemodeSuccessOther(),
+                        new String[] {"%gamemode%", "%player%"},
+                        new String[] {gameMode.toString(), target.getName()}));
+                return;
+            }
 
+            sendMessage(commandSender, StringUtils.replace(messages.getNoPermissions(),
+                    "%permission%", "tools.command.gamemode." + gameMode.toString().toLowerCase() + ".other"));
+            return;
         }
+
+        sendMessage(commandSender, StringUtils.replace(messages.getNoPermissions(), "%permission%", "tools.command.gamemode.other"));
     }
 
 }

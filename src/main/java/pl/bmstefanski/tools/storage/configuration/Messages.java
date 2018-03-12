@@ -25,57 +25,58 @@
 package pl.bmstefanski.tools.storage.configuration;
 
 import org.diorite.config.Config;
+import org.diorite.config.annotations.CustomKey;
 
 import java.util.Arrays;
 import java.util.List;
 
 public interface Messages extends Config {
 
-    default String getBooleanOn() {
+    @CustomKey("boolean-on") default String getBooleanOn() {
         return "&awlaczone";
     }
 
-    default String getBooleanOff() {
+    @CustomKey("boolean-off") default String getBooleanOff() {
         return "&cwylaczone";
     }
 
-    default String getNoPermissions() {
+    @CustomKey("no-permissions") default String getNoPermissions() {
         return "&cNie masz uprawnien do wykonania tej komendy! &7(%permission%)";
     }
 
-    default String getOnlyPlayer() {
+    @CustomKey("only-player") default String getOnlyPlayer() {
         return "&cTa komende moze wykonac tylko gracz!";
     }
 
-    default String getUnknownCommand() {
+    @CustomKey("unknown-command") default String getUnknownCommand() {
         return "&cNie znaleziono takiej komendy! &7(%command%)";
     }
 
-    default String getListFull() {
+    @CustomKey("list-full") default String getListFull() {
         return "&7Aktualnie na serwerze: &e%online%";
     }
 
-    default String getListBasic() {
+    @CustomKey("list-basic") default String getListBasic() {
         return "&7Aktualnie na serwerze jest &e%online%&7/&e%max% &7graczy!";
     }
 
-    default String getPlayerNotFound() {
+    @CustomKey("player-not-found") default String getPlayerNotFound() {
         return "&cNie znaleziono gracza o nicku &7%player%&c!";
     }
 
-    default String getGamemodeSuccess() {
+    @CustomKey("gamemode-success") default String getGamemodeSuccess() {
         return "&7Zmieniono tryb gry na &e%gamemode%&7!";
     }
 
-    default String getGamemodeSuccessOther() {
+    @CustomKey("gamemode-success-other") default String getGamemodeSuccessOther() {
         return "&7Zmieniono tryb gry na &e%gamemode% &7dla &e%player%&7!";
     }
 
-    default String getSuccessfullyReloaded() {
+    @CustomKey("successfully-reloaded") default String getSuccessfullyReloaded() {
         return "&aPlugin zostal ponowanie zaladowany w &7%time% &asekund!";
     }
 
-    default String getSuccessfullyDisabled() {
+    @CustomKey("successfully-disabled") default String getSuccessfullyDisabled() {
         return "&cPomyslnie wylaczono plugin!";
     }
 
@@ -83,7 +84,7 @@ public interface Messages extends Config {
         return "&7Zostales uleczony!";
     }
 
-    default String getHealedOther() {
+    @CustomKey("healed-other") default String getHealedOther() {
         return "&7Uleczono gracza o nicku &e%player%&7!";
     }
 
@@ -91,47 +92,47 @@ public interface Messages extends Config {
         return "&7Zostales nakarmiony!";
     }
 
-    default String getFedOther() {
+    @CustomKey("fed-other") default String getFedOther() {
         return "&7Nakarmiono gracza o nicku &e%player%&7!";
     }
 
-    default String getFlySwitched() {
+    @CustomKey("fly-switched") default String getFlySwitched() {
         return "&7Latanie zostalo %state%&7!";
     }
 
-    default String getFlySwitchedOther() {
+    @CustomKey("fly-switched-other") default String getFlySwitchedOther() {
         return "&7Latanie zostalo %state% &7dla gracza &e%player%&7!";
     }
 
-    default String getSetspawnSuccess() {
+    @CustomKey("setspawn-success") default String getSetspawnSuccess() {
         return "&7Pomyslnie utworzono spawn na koordynatach: &e%x%&7, &e%y%&7, &e%z%&7, &e%world%&7!";
     }
 
-    default String getSpawnFailed() {
+    @CustomKey("spawn-failed") default String getSpawnFailed() {
         return "&cSpawn nie jest utworzony! Uzyj komendy &7/setspawn&c, aby utworzyc";
     }
 
-    default String getTeleportCancelled() {
+    @CustomKey("teleport-cancelled") default String getTeleportCancelled() {
         return "&cTeleportacja zostala przerwana!";
     }
 
-    default String getCurrentlyTeleporting() {
+    @CustomKey("currently-teleporting") default String getCurrentlyTeleporting() {
         return "&cJuz sie teleportujesz!";
     }
 
-    default String getGodSwitched() {
+    @CustomKey("god-switched") default String getGodSwitched() {
         return "&7God zostal %state%&7!";
     }
 
-    default String getGodSwitchedOther() {
+    @CustomKey("god-switched-other") default String getGodSwitchedOther() {
         return "&7God zostal %state% &7dla &e%player%&7!";
     }
 
-    default String getTeleportSuccess() {
+    @CustomKey("teleport-success") default String getTeleportSuccess() {
         return "&7Pomyslnie teleportowano!";
     }
 
-    default String getBroadcastFormat() {
+    @CustomKey("broadcast-format") default String getBroadcastFormat() {
         return "&8[&3OGLOSZENIE&8] &7%message%";
     }
 
@@ -139,7 +140,7 @@ public interface Messages extends Config {
         return "&7Wyczyszczono twoj ekwipunek!";
     }
 
-    default String getClearOther() {
+    @CustomKey("clear-other") default String getClearOther() {
         return "&7Wyczyszczono ekwipunek gracza &e%player%&7!";
     }
 
@@ -160,11 +161,11 @@ public interface Messages extends Config {
                 "&8&m-----------------------------------------");
     }
 
-    default String getGamemodeFail() {
+    @CustomKey("gamemode-fail") default String getGamemodeFail() {
         return "&cMusisz wybrac tryb!";
     }
 
-    default List<String> getBanFormat() {
+    @CustomKey("ban-format") default List<String> getBanFormat() {
         return Arrays.asList(
                 "&8&m---------------------------------------------------&r",
                 "  &cZostales zbanowany przez: &e%punisher% &cdo &e%until%",
@@ -174,31 +175,31 @@ public interface Messages extends Config {
         );
     }
 
-    default String getAlreadyBanned() {
+    @CustomKey("already-banned") default String getAlreadyBanned() {
         return "&cGracz &7%player% &cjest juz zbanowany!";
     }
 
-    default String getDefaultReason() {
+    @CustomKey("default-reason") default String getDefaultReason() {
         return "&cAdmin ma zawsze racje!";
     }
 
-    default String getPermanentBan() {
+    @CustomKey("permanent-ban") default String getPermanentBan() {
         return "&cna zawsze";
     }
 
-    default String getNotBanned() {
+    @CustomKey("not-banned") default String getNotBanned() {
         return "&cGracz &7%player% &cnie jest zbanowany.";
     }
 
-    default String getSuccessfullyUnbanned() {
+    @CustomKey("successfully-unbanned") default String getSuccessfullyUnbanned() {
         return "&cPomyslnie odbanowano gracza &7%player%";
     }
 
-    default String getSuccessfullyBanned() {
+    @CustomKey("successfully-banned") default String getSuccessfullyBanned() {
         return "&cPomyslnie zbanowano gracza &7%player%";
     }
 
-    default String getCannotBanYourself() {
+    @CustomKey("cannot-ban-yourself") default String getCannotBanYourself() {
         return "&cNie mozesz sie zbanowac!";
     }
 
@@ -206,27 +207,27 @@ public interface Messages extends Config {
         return "&7Teleportuje...";
     }
 
-    default String getNoLongerAfk() { return "&5Nie jestes juz dluzej AFK"; }
+    @CustomKey("no-longer-afk") default String getNoLongerAfk() { return "&5Nie jestes juz dluzej AFK"; }
 
-    default String getNoLongerAfkGlobal() { return "&5Gracz &7%player% &5nie jest juz dluzej AFK"; }
+    @CustomKey("no-longer-afk-global") default String getNoLongerAfkGlobal() { return "&5Gracz &7%player% &5nie jest juz dluzej AFK"; }
 
     default String getAfk() { return "&5Jestes AFK"; }
 
-    default String getAfkGlobal() { return "&5Gracz &7%player% &5jest teraz AFK"; }
+    @CustomKey("afk-global") default String getAfkGlobal() { return "&5Gracz &7%player% &5jest teraz AFK"; }
  
-    default String getHatCantBeAir() { return "&cNie masz nic w rece!"; }
+    @CustomKey("hat-cant-be-air") default String getHatCantBeAir() { return "&cNie masz nic w rece!"; }
 
     default String getHat() { return "&6Ciesz sie nowa czapka!"; }
 
-    default String getSkullOnly() { return "&6Dostales swoja glowe!"; }
+    @CustomKey("skull-only") default String getSkullOnly() { return "&6Dostales swoja glowe!"; }
 
-    default String getSkullSomeone() { return "&6Dostales glowe gracza &7%player%"; }
+    @CustomKey("skull-someone") default String getSkullSomeone() { return "&6Dostales glowe gracza &7%player%"; }
 
-    default String getTpSuccess() {
+    @CustomKey("tp-success") default String getTpSuccess() {
         return "&7Pomyslnie przeteleportowano gracza &e%player% &7do gracza &e%target%";
     }
 
-    default String getTpFailed() {
+    @CustomKey("tp-failed") default String getTpFailed() {
         return "&cNie mozna teleportowac, poniewaz &7%player% &club &7%target% &cjest offline";
     }
 
@@ -238,7 +239,7 @@ public interface Messages extends Config {
         return "&7Ustawiono dzien na swiecie &e%world%";
     }
 
-    default String getWorldNotFound() {
+    @CustomKey("world-not-found") default String getWorldNotFound() {
         return "&cNie znaleziono swiata o nazwie &7%world%";
     }
 
@@ -246,17 +247,17 @@ public interface Messages extends Config {
         return "&7Ustawiono noc na swiecie &e%world%";
     }
 
-    default String getCannotRepair() { return "&cNie mozesz naprawic niczego!"; }
+    @CustomKey("cannot-repair") default String getCannotRepair() { return "&cNie mozesz naprawic niczego!"; }
 
-    default String getCannotRepairFull() { return "&cNie mozesz naprawic "; }
+    @CustomKey("cannot-repair-full") default String getCannotRepairFull() { return "&cNie mozesz naprawic "; }
 
     default String getRepaired() { return "&aNaprawiles &7%item%"; }
 
-    default String getCannotKickYourself() {
+    @CustomKey("cannot-kick-yourself") default String getCannotKickYourself() {
         return "&cNie mozesz wyrzucic samego siebie!";
     }
 
-    default String getTooLongNickname() {
+    @CustomKey("too-long-nickname") default String getTooLongNickname() {
         return "&cTwoj nick jest za dlugi! Maksymalna dlugosc nicku to: &7%max%";
     }
 
@@ -264,15 +265,15 @@ public interface Messages extends Config {
         return "&7Zostales uderzony piorunem!";
     }
 
-    default String getStruckOther() {
+    @CustomKey("struck-other") default String getStruckOther() {
         return "&7Uderzyles piorunem gracza o nicku &e%player%.";
     }
 
-    default String getSetNickname() {
+    @CustomKey("set-nickname") default String getSetNickname() {
         return "&7Twoj nickname zostal zmieniony na %nickname%";
     }
 
-    default String getSetNicknameOther() {
+    @CustomKey("set-nickname-other") default String getSetNicknameOther() {
         return "&7Zmieniles nickname gracza &e%player%&7, na %nickname%";
     }
 
@@ -280,7 +281,7 @@ public interface Messages extends Config {
         return "&7Twoj prawdziwy nickname: %nickname%";
     }
 
-    default String getRealnameOther() {
+    @CustomKey("realname-other") default String getRealnameOther() {
         return "&7Prawdziwy nickname gracza &e%player%&7 to %nickname%";
     }
 

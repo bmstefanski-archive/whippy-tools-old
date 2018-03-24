@@ -46,9 +46,11 @@ public class SkullCommand implements Messageable, CommandExecutor {
         }
 
         OfflinePlayer skullOwner = Bukkit.getOfflinePlayer(commandArguments.getParam(0));
+
         skullMeta.setOwningPlayer(skullOwner);
         skullItem.setItemMeta(skullMeta);
         player.getInventory().addItem(skullItem);
+
         sendMessage(player, StringUtils.replace(messages.getSkullSomeone(), "%player%", commandArguments.getParam(0)));
     }
 

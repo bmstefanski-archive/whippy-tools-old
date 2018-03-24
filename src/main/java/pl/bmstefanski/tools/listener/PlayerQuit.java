@@ -52,8 +52,7 @@ public class PlayerQuit implements Listener, Messageable {
         user.setIp(player.getAddress().getHostName());
 
         event.setQuitMessage(fixColor(StringUtils.replace(plugin.getConfiguration().getQuitFormat(), "%player%", player.getName())));
-
-
+        
         if (plugin.getConfiguration().getRemoveGodOnDisconnect() && user.isGod()) {
             user.setGod(false);
         }

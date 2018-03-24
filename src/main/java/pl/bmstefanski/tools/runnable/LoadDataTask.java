@@ -58,8 +58,6 @@ public class LoadDataTask extends BukkitRunnable {
 
             resultSet.close();
             preparedStatement.close();
-
-            System.out.println("Loaded from database " + user.getName() + " | " + user.getIp());
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

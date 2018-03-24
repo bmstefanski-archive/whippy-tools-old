@@ -62,7 +62,6 @@ public class PlayerMove implements Listener, Messageable {
 
             if (plugin.getConfiguration().getFreezeAfkPlayers()) {
                 event.setTo(event.getFrom());
-
                 return;
             }
 

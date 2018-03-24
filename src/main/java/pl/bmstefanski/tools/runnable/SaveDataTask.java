@@ -51,8 +51,6 @@ public class SaveDataTask extends BukkitRunnable {
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
-
-            System.out.println("Saved to database " + user.getName() + " | " + user.getIp());
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

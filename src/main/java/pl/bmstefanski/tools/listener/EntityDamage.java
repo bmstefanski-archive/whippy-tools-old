@@ -42,16 +42,13 @@ public class EntityDamage implements Listener {
 
     @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {
+
         if (!(event.getEntity() instanceof Player)) {
             return;
         }
 
         Player player = (Player) event.getEntity();
         User user = UserManager.getUser(player.getUniqueId());
-
-        if (user == null) {
-            return;
-        }
 
         if (user.isGod()) {
             event.setCancelled(true);

@@ -34,7 +34,6 @@ import pl.bmstefanski.tools.api.basic.Ban;
 import pl.bmstefanski.tools.api.basic.User;
 import pl.bmstefanski.tools.basic.manager.BanManager;
 import pl.bmstefanski.tools.basic.manager.UserManager;
-import pl.bmstefanski.tools.runnable.LoadDataTask;
 import pl.bmstefanski.tools.storage.configuration.Messages;
 
 public class PlayerPreLogin implements Listener, Messageable {

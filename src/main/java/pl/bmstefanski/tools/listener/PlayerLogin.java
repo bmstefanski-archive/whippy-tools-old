@@ -36,7 +36,6 @@ public class PlayerLogin implements Listener {
 
         if (player.getName().length() > maxNicknameLength) {
             event.disallow(PlayerLoginEvent.Result.KICK_OTHER, StringUtils.replace(messages.getTooLongNickname(), "%max%", maxNicknameLength + ""));
-
             return;
         }
 

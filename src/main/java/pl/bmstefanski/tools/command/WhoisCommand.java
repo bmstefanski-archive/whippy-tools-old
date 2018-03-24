@@ -27,7 +27,6 @@ package pl.bmstefanski.tools.command;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import pl.bmstefanski.commands.CommandArguments;
@@ -66,10 +65,8 @@ public class WhoisCommand implements Messageable, Parser, CommandExecutor {
             }
 
             Player player = (Player) commandSender;
-            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(player.getUniqueId());
 
-            sendMessage(player, messageContent(offlinePlayer));
-
+            sendMessage(player, messageContent(player));
             return;
         }
 
@@ -81,34 +78,32 @@ public class WhoisCommand implements Messageable, Parser, CommandExecutor {
             }
 
             Player target = Bukkit.getPlayer(commandArguments.getParam(0));
-            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(target.getUniqueId());
 
-            sendMessage(commandSender, messageContent(offlinePlayer));
-
+            sendMessage(commandSender, messageContent(target));
         }
     }
 
-    private String messageContent(OfflinePlayer offlinePlayer) {
-        User user = UserManager.getUser(offlinePlayer.getUniqueId());
+    private String messageContent(Player player) {
+        User user = UserManager.getUser(player.getUniqueId());
 
-        Location location = offlinePlayer.getPlayer().getLocation();
-        String playerHealth = offlinePlayer.getPlayer().getHealth() + "/20";
-        String playerFoodLevel = offlinePlayer.getPlayer().getFoodLevel() + "/20";
-        String playerGamemode = offlinePlayer.getPlayer().getGameMode().toString().toLowerCase();
+        Location location = player.getLocation();
+        String playerHealth = player.getHealth() + "/20";
+        String playerFoodLevel = player.getFoodLevel() + "/20";
+        String playerGamemode = player.getGameMode().toString().toLowerCase();
         String playerLocation = "("
-                + offlinePlayer.getPlayer().getWorld().getName() + ", "
+                + player.getWorld().getName() + ", "
                 + location.getBlockX() + ", "
                 + location.getBlockY() + ", "
                 + location.getBlockZ() + ")";
-        String playerJoin = parseLong(offlinePlayer.getFirstPlayed());
-        String playerLast = user.isOnline() ? "online" : parseLong(offlinePlayer.getLastPlayed());
+        String playerJoin = parseLong(player.getFirstPlayed());
+        String playerLast = user.isOnline() ? "online" : parseLong(player.getLastPlayed());
         String whois = listToString(messages.getWhois());
 
         return StringUtils.replaceEach(whois,
                 new String[] {"%nickname%", "%uuid%", "%ip%", "%registered%", "%last%", "%location%", "%hp%", "%hunger%", "%gamemode%", "%god%", "%fly%"},
-                new String[] {offlinePlayer.getName(), offlinePlayer.getUniqueId().toString(), offlinePlayer.getPlayer().getAddress().getAddress().toString(),
+                new String[] {player.getName(), player.getUniqueId().toString(), player.getAddress().getAddress().toString(),
                         playerJoin, playerLast, playerLocation, playerHealth, playerFoodLevel, playerGamemode, parseBoolean(user.isGod()),
-                        parseBoolean(offlinePlayer.getPlayer().isFlying())
+                        parseBoolean(player.isFlying())
                 });
     }
 

@@ -68,7 +68,5 @@ public class PlayerPreLogin implements Listener, Messageable {
         event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, StringUtils.replaceEach(banFormat,
                 new String[]{"%punisher%", "%until%", "%reason%"},
                 new String[]{ban.getPunisher(), ban.getTime() <= 0 ? untilFormat : ban.getTime() + "", ban.getReason()}));
-
-        new LoadDataTask(user).runTask(plugin);
     }
 }

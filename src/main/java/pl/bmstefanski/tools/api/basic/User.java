@@ -61,4 +61,8 @@ public interface User {
 
     @Deprecated
     void setSecure(boolean secure);
+
+    boolean isMark();
+
+    void setMark(boolean mark);
 }

@@ -136,7 +136,8 @@ public class Tools extends JavaPlugin implements ToolsAPI {
                 new LightningCommand(this),
                 new NicknameCommand(this),
                 new RealnameCommand(this),
-                new TpAllCommand(this)
+                new TpAllCommand(this),
+                new MarkCommand(this)
         );
 
     }

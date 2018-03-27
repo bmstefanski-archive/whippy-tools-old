@@ -285,4 +285,12 @@ public interface Messages extends Config {
         return "&7Prawdziwy nickname gracza &e%player%&7 to %nickname%";
     }
 
+    default String getMarked() {
+        return "&7Status oznaczonego zostal %state%";
+    }
+
+    @CustomKey("marked-other") default String getMarkedOther() {
+        return "&7Zmieniles status oznaczonego dla &e%player%&7 na &e%state%";
+    }
+
 }

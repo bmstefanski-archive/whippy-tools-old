@@ -41,6 +41,7 @@ public class UserImpl implements User {
     private boolean god;
     private boolean afk;
     private boolean secure;
+    private boolean mark;
 
     public UserImpl(UUID uuid) {
         this.uuid = uuid;
@@ -145,4 +146,15 @@ public class UserImpl implements User {
     public String toString() {
         return this.name;
     }
+
+    @Override
+    public boolean isMark() {
+        return mark;
+    }
+
+    @Override
+    public void setMark(boolean mark) {
+        this.mark = mark;
+    }
+
 }

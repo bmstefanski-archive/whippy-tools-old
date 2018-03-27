@@ -35,9 +35,8 @@ public class KickAllCommand implements Messageable, CommandExecutor {
             reason = fixColor(messages.getDefaultReason());
         } else if (commandArguments.getSize() > 0) reason = fixColor(StringUtils.join(commandArguments.getParams().toArray(), " ", 0, commandArguments.getArgs()));
 
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            player.kickPlayer(reason);
-        }
+        String finalReason = reason;
+        Bukkit.getOnlinePlayers().forEach(o -> o.kickPlayer(finalReason));
 
     }
 

@@ -66,10 +66,6 @@ public class GodCommand implements Messageable, Parser, CommandExecutor {
             Player player = (Player) commandSender;
             User user = UserManager.getUser(player.getUniqueId());
 
-            if (user == null) {
-                return;
-            }
-
             boolean godState = !user.isGod();
             user.setGod(godState);
 

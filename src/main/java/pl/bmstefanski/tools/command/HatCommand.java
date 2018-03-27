@@ -42,7 +42,6 @@ public class HatCommand implements Messageable, CommandExecutor {
             return;
         }
 
-
         if (playerInventory.getHelmet() == null) {
             playerInventory.setHelmet(item);
             playerInventory.removeItem(item);
